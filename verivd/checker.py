@@ -17,7 +17,7 @@ class Checker(SpatialiteData):
 	def load_layer(self, topic):
 		self.topic = topic
 		self.sqlRequest = '"topic" = "{}"'.format(self.topic)
-		self.groupName = "Résultat du checker - {}".format(self.topic)
+		self.group_name = "Résultat du checker - {}".format(self.topic)
 		self.markerShape = ('square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle', 'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead')
 
 		self.infoLayer = (

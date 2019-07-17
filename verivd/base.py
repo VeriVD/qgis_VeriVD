@@ -9,7 +9,7 @@ class BaseBiens_fonds(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Biens fonds"
+        self.group_name = "Base - Biens fonds"
         # set layer's parameter in a dict list
         self.infoLayer = (
             ['Numéros des DDP', '006_ITF_BF_Pos_DDP', '', ['qml'], '', ''],
@@ -25,7 +25,7 @@ class BaseCouverture_du_sol(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Couverture du sol"
+        self.group_name = "Base - Couverture du sol"
         self.infoLayer = (
             ['Nom et numéro CS', '002_ITF_CS_Pos_Surface_CS', '', ['qml'], '', ''],
             ["Point particulier CS", '002_ITF_CS_Point_particulier', '', ['qml'], '', ''],
@@ -39,7 +39,7 @@ class BaseObjets_divers(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Objets divers"
+        self.group_name = "Base - Objets divers"
         self.infoLayer = (
             ['OD linéaire', '003_ITF_OD_Element_lineaire', '', ['qml'], '', ''],
             ['OD surfacique', '003_ITF_OD_Element_surfacique', '', [
@@ -57,7 +57,7 @@ class BaseNomenclature(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Nomenclature"
+        self.group_name = "Base - Nomenclature"
         self.infoLayer = (
             ['Lieux dits texte', '005_itf_no_pos_lieudit', '', ['qml'], '', ''],
             ['Nom local texte', '005_itf_no_posnom_local', '', ['qml'], '', ''],
@@ -70,7 +70,7 @@ class BaseConduite(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Conduite"
+        self.group_name = "Base - Conduite"
         self.infoLayer = (
             ['CO Conduite', '007_itf_co_element_conduite', '', ['qml'], '', ''],
             ['CO Conduite Nom', '007_itf_co_poselement_conduite', '', ['qml'], '', '']
@@ -81,7 +81,7 @@ class BasePoints_fixes(SpatialiteData):
     """Class used to load local names's layers"""
 
     def __init__(self, pathSQliteDB):
-        self.groupName = "Base - Points fixes"
+        self.group_name = "Base - Points fixes"
         SpatialiteData.__init__(self, pathSQliteDB)
         self.infoLayer = [
             ['PFP-PFA3', '001_itf_pf_points_fixes', '', ['qml'], '', ''],
@@ -92,7 +92,7 @@ class BaseAltimetrie(SpatialiteData):
     """Class used to load local names's layers"""
 
     def __init__(self, pathSQliteDB):
-        self.groupName = "Base - Courbes de nivea"
+        self.group_name = "Base - Courbes de nivea"
         SpatialiteData.__init__(self, pathSQliteDB)
         self.infoLayer = [
             ['Courbes de nivea', '004_itf_al_courbes_de_nivea', '', ['qml'], '', '']
@@ -103,7 +103,7 @@ class BaseRepartition_des_plans(SpatialiteData):
     """Class used to load local names's layers"""
 
     def __init__(self, pathSQliteDB):
-        self.groupName = "Base - Répartition des plans"
+        self.group_name = "Base - Répartition des plans"
         SpatialiteData.__init__(self, pathSQliteDB)
         self.infoLayer = [
             ['Plan', '105_itf_rp', '', ['qml'], '', '']
@@ -115,7 +115,7 @@ class BaseAdresses_des_batiments(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Adresses des bâtiments"
+        self.group_name = "Base - Adresses des bâtiments"
         self.infoLayer = (
             ["Numéro d'entrée", '009_itf_bat_posentree_batiment', '', ['qml'], '', ''],
             ['Nom de localisation', '009_itf_bat_posnom_localisation', '', ['qml'], '', ''],
@@ -130,7 +130,7 @@ class BaseLimites_territoriales(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Limites térritoriales"
+        self.group_name = "Base - Limites térritoriales"
         self.infoLayer = (
             ["Point limite térritoriale",'008_itf_lt_point_limite_ter', '', ['qml'], '', ''],
             ['Limite commune', '008_itf_lt_limite_commune', '', ['qml'], '', ''],
@@ -143,7 +143,7 @@ class BaseTous_les_topics(SpatialiteData):
 
     def __init__(self, pathSQliteDB):
         SpatialiteData.__init__(self, pathSQliteDB)
-        self.groupName = "Base - Tous les topics"
+        self.group_name = "Base - Tous les topics"
         self.infoLayer = (
             ['Nom et numéro CS', '002_ITF_CS_Pos_Surface_CS', '', ['qml'], '', ''],
             ['Numéros des DDP', '006_ITF_BF_Pos_DDP', '', ['qml'], '', ''],

@@ -25,13 +25,13 @@ class SpatialiteData(object):
 		self.symbols = None
 		self.properties = None
 
-	def uniqueFieldFinder(self, field):
+	def unique_field_finder(self, field):
 		self.field = field
-		self.fni = self.layer.fieldNameIndex(self.field) 	# based on the field's unique values
+		self.fni = self.layer.fields().indexFromName(self.field)
 		self.unique_values = self.layer.dataProvider().uniqueValues(self.fni)
 		return self.unique_values
 
-	def createSimpleSymbol(self, **kwargs):
+	def create_simple_symbol(self, **kwargs):
 		self.renderer = self.layer.renderer()
 		if self.layer.geometryType() == Qgis.Point:
 			self.simpleSymbol = QgsMarkerSymbol.createSimple(kwargs)
@@ -41,7 +41,7 @@ class SpatialiteData(object):
 			self.simpleSymbol = QgsFillSymbol.createSimple(kwargs)
 		self.renderer.setSymbol(self.simpleSymbol)
 
-	def changeProperties(self, **kwargs):
+	def change_properties(self, **kwargs):
 		if self.layer.renderer() is not None:
 			self.properties = self.kwargs
 			self.symbols = self.layer.renderer().symbols()
@@ -50,7 +50,7 @@ class SpatialiteData(object):
 					self.symbol.symbolLayer(0).setDataDefinedProperty(self.propertie,self.propertieValue)
 			self.layer.triggerRepaint()
 
-	def createSimpleFillSymbolLayer(self, fillColor):
+	def create_simple_fill_symbol_layer(self, fillColor):
 		# initialize the default symbol for this geometry type
 		self.symbol = QgsSymbol.defaultSymbol(self.layer.geometryType())
 		# configure a symbol layer
@@ -61,12 +61,12 @@ class SpatialiteData(object):
 		if self.symbol_layer is not None:
 			self.symbol.changeSymbolLayer(0, self.symbol_layer)
 
-	def randomCatSymb(self, **kwargs):
+	def random_cat_symb(self, **kwargs):
 		self.field = kwargs.get('field')  # get the value with key 'field'
-		self.uniqueFieldFinder(self.field)
+		self.unique_field_finder(self.field)
 		self.categories = []
 		for self.unique_value in self.unique_values:
-			self.createSimpleFillSymbolLayer('%d, %d, %d' % (randrange(0, 256), randrange(0, 256), randrange(0, 256)))
+			self.create_simple_fill_symbol_layer('%d, %d, %d' % (randrange(0, 256), randrange(0, 256), randrange(0, 256)))
 			self.category = QgsRendererCategory(self.unique_value, self.symbol, self.unique_value.encode('Latin-1'))
 			# entry for the list of category items
 			self.categories.append(self.category)
@@ -75,9 +75,9 @@ class SpatialiteData(object):
 		# assign the created renderer to the layer
 		if self.renderer is not None:
 			self.layer.setRenderer(self.renderer)
-			self.changeProperties(**self.kwargs)
+			self.change_properties(**self.kwargs)
 
-	def layerConfig(self, display_name, schema, layerName, geom_column='', sqlRequest=''):
+	def layer_config(self, display_name, schema, layerName, geom_column='', sqlRequest=''):
 		# set uri connection parameter
 		self.uri.setDataSource(schema, layerName, geom_column, sqlRequest)
 		# construct the layer
@@ -85,7 +85,7 @@ class SpatialiteData(object):
 		return self.layer
 
 	def loadTableList(self, dataSource, fieldName=1, countField=2):
-		self.layerConfig('', self.schema, dataSource, '', '')
+		self.layer_config('', self.schema, dataSource, '', '')
 		listFeatDict={}
 		if self.layer.isValid():
 			features = self.layer.getFeatures()
@@ -96,7 +96,7 @@ class SpatialiteData(object):
 
 	def load_layer(self):
 		# set the layers group in the tree
-		self.groupLayer = QgsProject.instance().layerTreeRoot().insertGroup(0, self.groupName)
+		self.groupLayer = QgsProject.instance().layerTreeRoot().insertGroup(0, self.group_name)
 		self.groupLayer.setExpanded(False)
 		self.layers = []
 		# loop through layer's parameters
@@ -105,22 +105,22 @@ class SpatialiteData(object):
 				self.geom_column = "GEOMETRY"
 			else:
 				self.geom_column = ""
-			self.layerConfig(self.display_name, self.schema, self.layerName, self.geom_column, self.sqlRequest)
+			self.layer_config(self.display_name, self.schema, self.layerName, self.geom_column, self.sqlRequest)
 			self.layer.crs().createFromId(2056) # Set de coordinate system to LV95
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
 			if self.layer.isValid() and self.layer.featureCount() != 0:
-				self.qmlSpecFile = "{}\\qml\\{}_{}.qml".format(self.plugin_path, self.__class__.__name__, self.layerName)
-				self.qmlGenFile = "{}\\qml\\{}.qml".format(self.plugin_path, self.layerName)
+				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, self.layerName))
+				qml_gen_file = os.path.join(self.plugin_path, 'qml', '{}.qml'.format(self.layerName))
 				# Check if a specific qml file exist for this layer
 				# if yes add it to layer
 				# if not, check if a generic qml file exist
 				# if yes add it to layer
 				# else print a warning message
 				if self.symb[0] == 'qml':
-					if os.path.isfile(self.qmlSpecFile):
-						self.layer.loadNamedStyle(self.qmlSpecFile)
-					elif os.path.isfile(self.qmlGenFile):
-						self.layer.loadNamedStyle(self.qmlGenFile)
+					if os.path.isfile(qml_spec_file):
+						self.layer.loadNamedStyle(qml_spec_file)
+					elif os.path.isfile(qml_gen_file):
+						self.layer.loadNamedStyle(qml_gen_file)
 					else:
 						QMessageBox.warning(
 							QDialog(), "Message",
@@ -130,10 +130,10 @@ class SpatialiteData(object):
 							))
 				elif self.symb[0] == 'randomCategorized':
 					self.kwargs = self.symb[1]
-					self.randomCatSymb(**self.kwargs)
+					self.random_cat_symb(**self.kwargs)
 				elif self.symb[0] == 'simple':
 					self.kwargs = self.symb[1]
-					self.createSimpleSymbol(**self.kwargs)
+					self.create_simple_symbol(**self.kwargs)
 				if self.trans:
 					self.layer.setLayerTransparency(self.trans)
 				QgsProject.instance().addMapLayer(self.layer, False)

@@ -214,10 +214,8 @@ class VeriVD:
         QMessageBox.information(QDialog(), "Aide", Help().messageVerif)
 
     def ouvrirFichier(self):
-        #Set the variables to global 
+        # Set the variables to global
         global modelBase, modelIliValidator, modelChecker, modelTest, strFile, uFile, donneesBase, donneesTopic, donneesTest
-
-        #Set plugin's variables
 
         donneesBase = (
             "Base - Tous les topics",
@@ -271,7 +269,7 @@ class VeriVD:
             '*.sqlite'
         )
 
-        if file != '':
+        if file:
             trace = "Fichier ouvert:\n\n{}".format(file)
             self.dockwidget.labelFile.setText(trace)
             strFile = file.encode("utf-8")
@@ -357,14 +355,15 @@ class VeriVD:
                 item.setCheckState(Qt.Unchecked) 
         
         for checked_item in checked_items:
-                topicClassName = getattr(sys.modules[__name__], checked_item)		#find the class matching the checked items
-                Topic = topicClassName(uFile)
-                Topic.layers = Topic.load_layer()
-                Topic.infoText = ""
-                for Topic.layer in Topic.layers:
-                    Topic.infoText = Topic.infoText + str(Topic.layer.featureCount()) + ' ' + Topic.layer.name() + '\n'
-                if Topic.infoText == "":
-                    QMessageBox.warning(QDialog(), "Information", "Aucun objet dans ce thème.")
+            # find the class matching the checked items
+            topicClassName = getattr(sys.modules[__name__], checked_item)
+            Topic = topicClassName(uFile)
+            Topic.layers = Topic.load_layer()
+            Topic.infoText = ""
+            for Topic.layer in Topic.layers:
+                Topic.infoText = Topic.infoText + str(Topic.layer.featureCount()) + ' ' + Topic.layer.name() + '\n'
+            if Topic.infoText == "":
+                QMessageBox.warning(QDialog(), "Information", "Aucun objet dans ce thème.")
     
     def chargerIliValidator(self):
         # get the checked items
@@ -411,7 +410,7 @@ class VeriVD:
                 Test.layers = Test.load_layer()
                 Test.infoText = ""
                 for Test.layer in Test.layers:
-                    if Test.layer.name() in Test.checkLayer:
+                    if Test.layer.name() in Test.check_layer:
                         Test.infoText = Test.infoText + str(Test.layer.featureCount()) + ' ' + Test.layer.name() + '\n'
                 if Test.infoText == "":
                     QMessageBox.warning(QDialog(), "Information", "Les scripts de vérification n'ont pas détecté d'élément particulier sur ce thème.")

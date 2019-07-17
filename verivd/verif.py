@@ -9,7 +9,7 @@ class VerifBiens_fonds(SpatialiteData):
 	"""Class used to load test on BF's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = u"Vérification - biens fonds"
+		self.group_name = u"Vérification - biens fonds"
 		# set layer's parameter in a dict list
 		self.infoLayer = (	
 			["Sommet manquant sous un point limite", '100_verif_bf_sommet_manquant_sous_pl', '', ['qml'], '', ''],
@@ -34,7 +34,7 @@ class VerifBiens_fonds(SpatialiteData):
 			["Plans en vigueur à proximité du lot",'111_bdmo_repartition_plans_alentours', '', ['qml'], '', ''],
 			["Plans en vigueur du lot",'111_bdmo_repartition_plan_en_vigueur_du_lot', '', ['qml'], '', '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			"Sommet manquant sous un point limite",
 			"Sommet proche d'une limite",
 			"Point limite manquant sur un sommet",
@@ -48,7 +48,7 @@ class VerifNomenclature(SpatialiteData):
 	"""Class used to load test on NO's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = u"Vérification des sifflets sur les biens fonds"
+		self.group_name = u"Vérification des sifflets sur les biens fonds"
 		# set layer's parameter in a dict list
 		self.infoLayer = (
 			['point divergent entre les immeubles et la nomenclature', '103_VERIF_BF_NO_Point', '', ['simple', {'color': '255,255,0', 'size':'4'}], '', ''],
@@ -57,7 +57,7 @@ class VerifNomenclature(SpatialiteData):
 			["DDP",'006_ITF_BF_DDP', '', ['qml'], '', ''],
 			['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], '', '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			'point divergent entre les immeubles et la nomenclature',
 			'Sifflet entre les immeubles et la nomenclature'
 		)
@@ -66,7 +66,7 @@ class VerifAdresses(SpatialiteData):
 	"""Class used to load test on BAT's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = u"Vérification des adresses"
+		self.group_name = u"Vérification des adresses"
 		# set layer's parameter in a dict list
 		self.infoLayer = 	(	
 			["Numéro d'entrée",'009_itf_bat_posentree_batiment', '', ['qml'], '', ''],
@@ -82,7 +82,7 @@ class VerifAdresses(SpatialiteData):
 			['DP', '006_ITF_BF_Bien_fonds', '"number" LIKE "DP%"', ['simple', {'color': '255,255,255', 'border_color':'0,0,0', 'width_border':'0.5'}], '', ''],
 			['Couverture du sol', '002_ITF_CS_Surface_CS', '', ['qml'], 50, '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			"Numéro d'entrée",
 			'Nom rue',
 			'Point de départ des tronçons',
@@ -97,7 +97,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 	"""Class used to load test on CS's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = u"Vérification de la couverture du sol et des objets divers"
+		self.group_name = u"Vérification de la couverture du sol et des objets divers"
 		# set layer's parameter in a dict list
 		self.infoLayer = 	(	
 			['OD - Element surfacique qui devrait être linéaire', '114_VERIF_OD_surfaciqueErreur', '', ['simple', {'color': '255,0,0', 'width_border':'2'}], '', ''],
@@ -122,7 +122,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 			['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], '', ''],
 			['Surface CS', '002_ITF_CS_Surface_CS', '', ['qml'], 50, '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			'OD - Element surfacique qui devrait être linéaire',
 			'OD - Element linéaire qui devrait être surfacique',
 			'Point particulier CS manquant sous un angle de bâtiment',
@@ -139,7 +139,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 	"""Class used to load test on RP's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = u"Vérification de la répartition des plans et de la numérotation des points"
+		self.group_name = u"Vérification de la répartition des plans et de la numérotation des points"
 		# set layer's parameter in a dict list
 		self.infoLayer = (	
 			['point divergent entre les immeubles et la répartition des plans', '103_VERIF_BF_RP_Point', '', ['simple', {'color': '255,255,0', 'size':'2'}], '', ''],
@@ -152,7 +152,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 			["Plans en vigueur à proximité du lot",'111_bdmo_repartition_plans_alentours', '', ['qml'], '', ''],
 			["Périmetre du lot",'112_itf_mise_a_jourrp', '', ['qml'], '', '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			'point divergent entre les immeubles et la répartition des plans',
 			'Sifflet entre les immeubles et la répartition des plans',
 			"Point sur mauvais plan",u"Objet ponctuel hors du périmètre du lot",
@@ -163,7 +163,7 @@ class VerifContinuite_des_reseaux(SpatialiteData):
 	"""Class used to load test on PF's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = u"Vérification des réseaux"
+		self.group_name = u"Vérification des réseaux"
 		# set layer's parameter in a dict list
 		self.infoLayer = 	(	
 			['CS Nom et numéro', '002_ITF_CS_Pos_Surface_CS', '"type" = "Nom_objet" AND ("number_name" LIKE "Route%" OR "number_name" LIKE "Ruisseau%" OR "number_name" LIKE "La%" OR "number_name" LIKE "Le%")', ['qml'], '', ''],
@@ -177,7 +177,7 @@ class VerifContinuite_des_reseaux(SpatialiteData):
 			['DP', '006_ITF_BF_Bien_fonds', '"number" LIKE "DP%"', ['qml'], '', ''],
 			["Périmetre du lot",'112_itf_mise_a_jourrp', '', ['qml'], '', '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			'CS Nom et numéro',
 			"OD Nom et numéro",
 			"Cours d'eau (DGE)",
@@ -192,7 +192,7 @@ class VerifPoints_fixes(SpatialiteData):
 	"""Class used to load test on PF's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = u"Vérification des points fixes"
+		self.group_name = u"Vérification des points fixes"
 		# set layer's parameter in a dict list
 		self.infoLayer = (	
 			['Point fixes dont les attributs ITF vs BDMO ne sont pas identiques', '115_itf_pfp_problemeattribut', '', ['qml'], 50,'no'],
@@ -202,7 +202,7 @@ class VerifPoints_fixes(SpatialiteData):
 			['Précision planimétrique des points fixes', '115_itf_pfp', '', ['qml'], '', ''],
 			["Périmetre du lot",'112_itf_mise_a_jourrp', '', ['qml'], '', '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			'Point fixes dont les attributs ITF vs BDMO ne sont pas identiques',
 			'Points fixes en BDMO mais pas dans le fichier ITF',
 			'Points fixes dans le fichier ITF mais pas en BDMO',
@@ -213,7 +213,7 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 	"""Class used to load test on COM's layers"""
 	def __init__(self, pathSQliteDB):
 		SpatialiteData.__init__(self, pathSQliteDB)
-		self.groupName = "Vérification des limites térritoriales et administratives"
+		self.group_name = "Vérification des limites térritoriales et administratives"
 		self.infoLayer = (	
 			['Géometrie de limite de canton incorrecte (OGC)', '116_LigneCANT_OGC_fail', '', ['simple', {'color': '255,255,0', 'size':'2'}], '', ''],
 			['Géometrie de limite de commune incorrecte (OGC)', '116_LigneCOM_OGC_fail', '', ['simple', {'color': '255,255,0', 'size':'2'}], '', ''],
@@ -230,7 +230,7 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 			["DDP",'006_ITF_BF_DDP', '', ['qml'], 50, ''],
 			['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], 50, '']
 		)
-		self.checkLayer = (
+		self.check_layer = (
 			'Géometrie de limite de canton incorrecte (OGC)',
 			'Géometrie de limite de commune incorrecte (OGC)',
 			'Géometrie de limite de district incorrecte (OGC)',
