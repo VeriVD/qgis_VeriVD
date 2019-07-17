@@ -20,14 +20,12 @@
  *                                                                         *
  ***************************************************************************/
 """
-from __future__ import absolute_import
 from builtins import str
 from builtins import range
-from builtins import object
-from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QObject 
+from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
 from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
-from qgis.PyQt import QtGui, uic
+
 from qgis.core import QgsProject, QgsProject, QgsLayerTreeGroup
 
 # Initialize Qt resources from file resources.py
@@ -42,7 +40,8 @@ from .verif import *
 
 # Import the code for the DockWidget
 from .veriVD_dockwidget import VeriVDDockWidget
-import os.path, sys
+import os.path
+import sys
 
 
 class VeriVD(object):
@@ -104,7 +103,6 @@ class VeriVD(object):
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('VeriVD', message)
 
-
     def add_action(
         self,
         icon_path,
@@ -115,7 +113,8 @@ class VeriVD(object):
         add_to_toolbar=True,
         status_tip=None,
         whats_this=None,
-        parent=None):
+        parent=None
+    ):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -177,7 +176,6 @@ class VeriVD(object):
         self.actions.append(action)
 
         return action
-
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
@@ -260,7 +258,7 @@ class VeriVD(object):
                 self.dockwidget.tabWidget.setTabEnabled(i,True)
                 i += 1
 
-            #Construct models 
+            # Construct models
             modelBase, modelIliValidator, modelChecker, modelTest = QStandardItemModel(), QStandardItemModel(), QStandardItemModel(), QStandardItemModel()
             
             for item in donneesBase:
@@ -270,7 +268,7 @@ class VeriVD(object):
                 itemBase.setCheckable(True)
                 # Add the item to the model
                 modelBase.appendRow(itemBase)
-            #Load the list in Gui
+            # Load the list in Gui
             self.dockwidget.listViewBase.setModel(modelBase)
             
             for item in donneesTest:
@@ -425,7 +423,7 @@ class VeriVD(object):
             self.dockwidget.tabWidget.setTabEnabled(i,False)
             i += 1
 
-        #Connect the files Button and Label
+        # Connect the files Button and Label
         self.dockwidget.labelFile.clear()
         trace = "Pas de fichier ouvert"
         self.dockwidget.labelFile.setText(trace)
