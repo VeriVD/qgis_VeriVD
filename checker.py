@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 #Connection class import
-from spatialite import SpatialiteData
+from __future__ import absolute_import
+from .spatialite import SpatialiteData
 
 # # Custom imports
 from random import randrange
-from PyQt4.QtGui import QMessageBox, QDialog
+from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 
 class Checker(SpatialiteData):
 	"""Class used to load checker's layers"""

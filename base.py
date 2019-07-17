@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #Connection class import
-from spatialite import SpatialiteData
+from __future__ import absolute_import
+from .spatialite import SpatialiteData
 
 class BaseBiens_fonds(SpatialiteData):
 	"""Class used to load ownership's layers"""

@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #Connection class import
-from spatialite import SpatialiteData
+from __future__ import absolute_import
+from .spatialite import SpatialiteData
 
 # # Custom imports
 from random import randrange

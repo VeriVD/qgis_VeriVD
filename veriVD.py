@@ -20,27 +20,32 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QObject 
-from PyQt4.QtGui import QAction, QIcon, QFileDialog, QDialog, QMessageBox, QStandardItemModel, QStandardItem
-from PyQt4 import QtGui, uic
+from __future__ import absolute_import
+from builtins import str
+from builtins import range
+from builtins import object
+from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt, QObject 
+from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
+from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
+from qgis.PyQt import QtGui, uic
 from qgis.core import QgsMapLayerRegistry, QgsProject, QgsLayerTreeGroup
 
 # Initialize Qt resources from file resources.py
-import resources
+from . import resources
 
 # Initialize layers
-from aide import *
-from base import *
-from iliValidator import *
-from checker import *
-from verif import *
+from .aide import *
+from .base import *
+from .iliValidator import *
+from .checker import *
+from .verif import *
 
 # Import the code for the DockWidget
-from veriVD_dockwidget import VeriVDDockWidget
+from .veriVD_dockwidget import VeriVDDockWidget
 import os.path, sys
 
 
-class VeriVD:
+class VeriVD(object):
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
@@ -243,7 +248,7 @@ class VeriVD:
         donneesTest = (u"Verif - Points fixes", u"Verif - Couverture du sol et objets divers", u"Verif - Continuite des reseaux", u"Verif - Nomenclature", u"Verif - Biens fonds", u"Verif - Repartition des plans et domaine de numerotation",u"Verif - Limites territoriales et administratives", u"Verif - Adresses")
         donneesTopic = (u"Points fixesCategorie1",u"Points fixesCategorie2",u"Points fixesCategorie3",u"Couverture du sol","Objets divers",u"Altimetrie",u"Nomenclature",u"Biens fonds",u"Conduites",u"Domaines numerotation",u"Limites commune",u"Limites district",u"Limites canton",u"Repartitions plans",u"RepartitionNT",u"Zones glissement",u"NPA Localite",u"Adresses des batiments",u"Bords de plan")
         donneesIliValidator, donneesChecker = [], []
-        file = QFileDialog.getOpenFileName(self.dockwidget, 'Ouvrir un fichier spatialite',os.path.join(os.environ["HOMEPATH"], "Desktop"), '*.sqlite')
+        file, __, __ = QFileDialog.getOpenFileName(self.dockwidget, 'Ouvrir un fichier spatialite',os.path.join(os.environ["HOMEPATH"], "Desktop"), '*.sqlite')
 
         if file != '':
             trace = "Fichier ouvert:\n\n" + file
@@ -284,7 +289,7 @@ class VeriVD:
             else:
                 for topic in donneesTopic:
                     iliValidatorTopic = topic.replace(' ','_')
-                    if iliValidatorTopic in ilivalidatorDict.keys():
+                    if iliValidatorTopic in list(ilivalidatorDict.keys()):
                         donneesIliValidator.append("IliValidator - " + topic + ': ' + str(ilivalidatorDict[iliValidatorTopic]))
             donneesIliValidator.sort()
             for item in donneesIliValidator:
@@ -297,7 +302,7 @@ class VeriVD:
                 self.dockwidget.tabWidget.setTabEnabled(3,False)
             else:
                 for topic in donneesTopic:
-                    if topic in CheckerDict.keys():
+                    if topic in list(CheckerDict.keys()):
                         donneesChecker.append("Checker - " + topic + ': ' + str(CheckerDict[topic]))
             donneesChecker.sort()
             for item in donneesChecker:

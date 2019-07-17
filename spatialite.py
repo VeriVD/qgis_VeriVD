@@ -4,9 +4,10 @@
 """ A simple class used to load a layer in QGIS """
 
 # Some commonly used imports
+from builtins import object
 from qgis.core import *
 from qgis.utils import iface
-from PyQt4.QtGui import QMessageBox, QDialog
+from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 
 # from PyQt4.QtCore import *
 import os.path
@@ -45,7 +46,7 @@ class SpatialiteData(object):
 			self.properties = self.kwargs
 			self.symbols = self.layer.rendererV2().symbols()
 			for self.symbol in self.symbols:
-				for self.propertie, self.propertieValue in self.properties.items():
+				for self.propertie, self.propertieValue in list(self.properties.items()):
 					self.symbol.symbolLayer(0).setDataDefinedProperty(self.propertie,self.propertieValue)
 			self.layer.triggerRepaint()
 

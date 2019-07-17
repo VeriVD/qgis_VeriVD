@@ -7,6 +7,7 @@
      (at your option) any later version.
 
 """
+from __future__ import absolute_import
 
 __author__ = 'fabien.simon@vd.ch'
 __date__ = '2018-11-15'
@@ -14,11 +15,11 @@ __copyright__ = 'Copyright 2018, FSN/OIT'
 
 import unittest
 
-from PyQt4.QtGui import QDockWidget
+from qgis.PyQt.QtWidgets import QDockWidget
 
 from veriVD_dockwidget import VeriVDDockWidget
 
-from utilities import get_qgis_app
+from .utilities import get_qgis_app
 
 QGIS_APP = get_qgis_app()
 
