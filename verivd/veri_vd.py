@@ -264,7 +264,12 @@ class VeriVD:
             "Bords de plan"
         )
         donneesIliValidator, donneesChecker = [], []
-        file, __, __ = QFileDialog.getOpenFileName(self.dockwidget, 'Ouvrir un fichier spatialite',os.path.join(os.environ["HOMEPATH"], "Desktop"), '*.sqlite')
+        file, __, __ = QFileDialog.getOpenFileName(
+            self.dockwidget,
+            'Ouvrir un fichier spatialite',
+            os.path.normpath(os.path.expanduser("~/Desktop")),
+            '*.sqlite'
+        )
 
         if file != '':
             trace = "Fichier ouvert:\n\n{}".format(file)
@@ -307,9 +312,11 @@ class VeriVD:
                 self.dockwidget.tabWidget.setTabEnabled(2, False)
             else:
                 for topic in donneesTopic:
-                    iliValidatorTopic = topic.replace(' ','_')
+                    iliValidatorTopic = topic.replace(' ', '_')
                     if iliValidatorTopic in list(ilivalidatorDict.keys()):
-                        donneesIliValidator.append("IliValidator - " + topic + ': ' + str(ilivalidatorDict[iliValidatorTopic]))
+                        donneesIliValidator.append('IliValidator - {}: {}'.format(
+                            topic, str(ilivalidatorDict[iliValidatorTopic]))
+                        )
             donneesIliValidator.sort()
             for item in donneesIliValidator:
                 itemIliValidator = QStandardItem(item)
@@ -322,7 +329,7 @@ class VeriVD:
             else:
                 for topic in donneesTopic:
                     if topic in list(CheckerDict.keys()):
-                        donneesChecker.append("Checker - " + topic + ': ' + str(CheckerDict[topic]))
+                        donneesChecker.append('Checker - {}: {}'.format(topic, str(CheckerDict[topic])))
             donneesChecker.sort()
             for item in donneesChecker:
                 itemChecker = QStandardItem(item)
@@ -395,7 +402,7 @@ class VeriVD:
         
             if item.checkState() == Qt.Checked:
                 checked_items.append(str(item.text()).replace(" - ", "").replace(" ", "_"))
-                #QMessageBox.warning(QDialog(), "Message", checked_items[0])
+                # QMessageBox.warning(QDialog(), "Message", checked_items[0])
                 item.setCheckState(Qt.Unchecked) 
         
         for checked_item in checked_items:
@@ -410,14 +417,12 @@ class VeriVD:
                     QMessageBox.warning(QDialog(), "Information", "Les scripts de vérification n'ont pas détecté d'élément particulier sur ce thème.")
                 #else:
                 #    QMessageBox.warning(QDialog(), "Information", test.infoText)
-    #--------------------------------------------------------------------------
+
     def run(self):
         """Run method that loads and starts the plugin"""
 
         if not self.pluginIsActive:
             self.pluginIsActive = True
-
-            #print "** STARTING VeriVD"
 
             # dockwidget may not exist if:
             #    first run of plugin
