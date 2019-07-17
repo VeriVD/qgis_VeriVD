@@ -27,7 +27,7 @@ from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
 from qgis.core import QgsProject, QgsLayerTreeGroup
 
 # Initialize Qt resources from file resources.py
-from . import resources
+import verivd.resources_rc  # NOQA
 
 # Initialize layers
 from .help import *

@@ -1,3 +1,4 @@
+*_rc.py
 *.pyc
 .idea
 .DS_Store
