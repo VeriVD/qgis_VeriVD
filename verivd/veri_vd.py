@@ -264,7 +264,7 @@ class VeriVD:
             "Bords de plan"
         )
         donneesIliValidator, donneesChecker = [], []
-        file, __, __ = QFileDialog.getOpenFileName(
+        file, __, = QFileDialog.getOpenFileName(
             self.dockwidget,
             'Ouvrir un fichier spatialite',
             os.path.normpath(os.path.expanduser("~/Desktop")),
