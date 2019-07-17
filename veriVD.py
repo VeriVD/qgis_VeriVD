@@ -34,7 +34,7 @@ from qgis.core import QgsProject, QgsProject, QgsLayerTreeGroup
 from . import resources
 
 # Initialize layers
-from .aide import *
+from .help import *
 from .base import *
 from .iliValidator import *
 from .checker import *
@@ -224,19 +224,19 @@ class VeriVD(object):
     #--------------------------------------------------------------------------
 
     def aideFichier(self):
-        QMessageBox.information(QDialog(), "Aide", Aide().messageFichier) 
+        QMessageBox.information(QDialog(), "Aide", Help().messageFichier)
 
     def aideBase(self):
-        QMessageBox.information(QDialog(), "Aide", Aide().messageBase)
+        QMessageBox.information(QDialog(), "Aide", Help().messageBase)
 
     def aideIliValidator(self):
-        QMessageBox.information(QDialog(), "Aide", Aide().messageIliValidator)
+        QMessageBox.information(QDialog(), "Aide", Help().messageIliValidator)
 
     def aideChecker(self):
-        QMessageBox.information(QDialog(), "Aide", Aide().messageChecker)
+        QMessageBox.information(QDialog(), "Aide", Help().messageChecker)
 
     def aideVerif(self):
-        QMessageBox.information(QDialog(), "Aide", Aide().messageVerif)
+        QMessageBox.information(QDialog(), "Aide", Help().messageVerif)
 
     def ouvrirFichier(self):
         #Set the variables to global 

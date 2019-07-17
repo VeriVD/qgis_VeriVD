@@ -24,6 +24,8 @@ class SpatialiteData(object):
 		self.plugin_path = os.path.dirname(__file__)
 		#set uri database connection
 		self.uri.setDatabase(pathSQliteDB)
+		self.symbols = None
+		self.properties = None
 
 	def uniqueFieldFinder(self, field):
 		self.field = field
@@ -36,12 +38,12 @@ class SpatialiteData(object):
 		if self.layer.geometryType() == Qgis.Point:
 			self.simpleSymbol = QgsMarkerSymbol.createSimple(kwargs)
 		elif self.layer.geometryType() == Qgis.Line:
-			self.simpleSymbol = QgsLineSymbolV2.createSimple(kwargs)
+			self.simpleSymbol = QgsLineSymbol.createSimple(kwargs)
 		elif self.layer.geometryType() == Qgis.Polygon:
 			self.simpleSymbol = QgsFillSymbol.createSimple(kwargs)
 		self.renderer.setSymbol(self.simpleSymbol)
 
-	def changePropertys(self, **kwargs):
+	def changeProperties(self, **kwargs):
 		if self.layer.renderer() is not None:
 			self.properties = self.kwargs
 			self.symbols = self.layer.renderer().symbols()
@@ -56,7 +58,7 @@ class SpatialiteData(object):
 		# configure a symbol layer
 		self.layer_style = {}
 		self.layer_style['color'] = fillColor
-		self.symbol_layer = QgsSimpleFillSymbolLayerV2.create(self.layer_style)
+		self.symbol_layer = QgsSimpleFillSymbolLayer.create(self.layer_style)
 		# replace default symbol layer with the configured one
 		if self.symbol_layer is not None:
 			self.symbol.changeSymbolLayer(0, self.symbol_layer)
@@ -67,15 +69,15 @@ class SpatialiteData(object):
 		self.categories = []
 		for self.unique_value in self.unique_values:
 			self.createSimpleFillSymbolLayer('%d, %d, %d' % (randrange(0,256), randrange(0,256), randrange(0,256)))
-			self.category = QgsRendererCategoryV2(self.unique_value, self.symbol, self.unique_value.encode('Latin-1'))
+			self.category = QgsRendererCategory(self.unique_value, self.symbol, self.unique_value.encode('Latin-1'))
 			# entry for the list of category items
 			self.categories.append(self.category)
 		# create renderer object
 		self.renderer = QgsCategorizedSymbolRenderer(self.field, self.categories)
 		# assign the created renderer to the layer
 		if self.renderer is not None:
-			self.layer.setRendererV2(self.renderer)
-			self.changePropertys(**self.kwargs)
+			self.layer.setRenderer(self.renderer)
+			self.changeProperties(**self.kwargs)
 
 	def layerConfig(self, display_name, schema, layerName, geom_column = '', sqlRequest = ''):
 		#set uri connection parameter
@@ -96,7 +98,7 @@ class SpatialiteData(object):
 
 	def load_layer(self):
 		#set the layers group in the tree
-		self.groupLayer = QgsProject.instance().layerTreeRoot().insertGroup(0,self.groupName)
+		self.groupLayer = QgsProject.instance().layerTreeRoot().insertGroup(0, self.groupName)
 		self.groupLayer.setExpanded(False)
 		self.layers = []
 		for self.display_name, self.layerName, self.sqlRequest, self.symb, self.trans, self.visib in self.infoLayer:		#loop through layer's parameters

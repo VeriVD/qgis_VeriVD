@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from builtins import object
-class Aide(object):
+
+
+class Help(object):
 	"""Class used to load the help"""
 	def __init__(self):
 		self.webSpatialite = 'https://www.gaia-gis.it/fossil/libspatialite/index'
