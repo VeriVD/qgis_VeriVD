@@ -44,10 +44,11 @@ class SpatialiteData(object):
 	def change_properties(self, **kwargs):
 		if self.layer.renderer() is not None:
 			self.properties = self.kwargs
+			# TODO context
 			self.symbols = self.layer.renderer().symbols()
 			for self.symbol in self.symbols:
-				for self.propertie, self.propertieValue in list(self.properties.items()):
-					self.symbol.symbolLayer(0).setDataDefinedProperty(self.propertie,self.propertieValue)
+				for property_key, property_value in list(self.properties.items()):
+					self.symbol.symbolLayer(0).setDataDefinedProperty(property_key, property_value)
 			self.layer.triggerRepaint()
 
 	def create_simple_fill_symbol_layer(self, fillColor):
@@ -67,7 +68,7 @@ class SpatialiteData(object):
 		self.categories = []
 		for self.unique_value in self.unique_values:
 			self.create_simple_fill_symbol_layer('%d, %d, %d' % (randrange(0, 256), randrange(0, 256), randrange(0, 256)))
-			self.category = QgsRendererCategory(self.unique_value, self.symbol, self.unique_value.encode('Latin-1'))
+			self.category = QgsRendererCategory(self.unique_value, self.symbol, self.unique_value) # TODO: removed encode('Latin-1'), is this causing troubles?
 			# entry for the list of category items
 			self.categories.append(self.category)
 		# create renderer object
