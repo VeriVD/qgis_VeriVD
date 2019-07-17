@@ -33,11 +33,11 @@ class SpatialiteData(object):
 
 	def create_simple_symbol(self, **kwargs):
 		self.renderer = self.layer.renderer()
-		if self.layer.geometryType() == Qgis.Point:
+		if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
 			self.simpleSymbol = QgsMarkerSymbol.createSimple(kwargs)
-		elif self.layer.geometryType() == Qgis.Line:
+		elif self.layer.geometryType() == QgsWkbTypes.LineGeometry:
 			self.simpleSymbol = QgsLineSymbol.createSimple(kwargs)
-		elif self.layer.geometryType() == Qgis.Polygon:
+		elif self.layer.geometryType() == QgsWkbTypes.PolygonGeometry:
 			self.simpleSymbol = QgsFillSymbol.createSimple(kwargs)
 		self.renderer.setSymbol(self.simpleSymbol)
 
