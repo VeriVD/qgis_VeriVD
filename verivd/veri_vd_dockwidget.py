@@ -27,7 +27,7 @@ from qgis.PyQt import QtGui, uic
 from qgis.PyQt.QtCore import pyqtSignal
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'veriVD_dockwidget_base.ui'))
+    os.path.dirname(__file__), 'veri_vd_dockwidget_base.ui'))
 
 
 class VeriVDDockWidget(QtGui.QDockWidget, FORM_CLASS):

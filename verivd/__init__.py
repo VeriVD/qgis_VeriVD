@@ -23,13 +23,6 @@
 """
 
 
-# noinspection PyPep8Naming
-def classFactory(iface):  # pylint: disable=invalid-name
-    """Load VeriVD class from file VeriVD.
-
-    :param iface: A QGIS interface instance.
-    :type iface: QgisInterface
-    """
-    #
-    from .veriVD import VeriVD
+def classFactory(iface):
+    from .veri_vd import VeriVD
     return VeriVD(iface)

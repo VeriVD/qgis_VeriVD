@@ -22,11 +22,11 @@
 """
 from builtins import str
 from builtins import range
-from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, Qt
+from qgis.PyQt.QtCore import QCoreApplication, Qt
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
 from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
 
-from qgis.core import QgsProject, QgsProject, QgsLayerTreeGroup
+from qgis.core import QgsProject, QgsLayerTreeGroup
 
 # Initialize Qt resources from file resources.py
 from . import resources
@@ -39,7 +39,7 @@ from .checker import *
 from .verif import *
 
 # Import the code for the DockWidget
-from .veriVD_dockwidget import VeriVDDockWidget
+from .veri_vd_dockwidget import VeriVDDockWidget
 import os.path
 import sys
 
@@ -49,7 +49,7 @@ class VeriVD(object):
 
     def __init__(self, iface):
         """Constructor.
-
+        
         :param iface: An interface instance that will be passed to this class
             which provides the hook by which you can manipulate the QGIS
             application at run time.
@@ -61,32 +61,16 @@ class VeriVD(object):
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
 
-        # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
-        locale_path = os.path.join(
-            self.plugin_dir,
-            'i18n',
-            'VeriVD_{}.qm'.format(locale))
-
-        if os.path.exists(locale_path):
-            self.translator = QTranslator()
-            self.translator.load(locale_path)
-
-            if qVersion() > '4.3.3':
-                QCoreApplication.installTranslator(self.translator)
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&Véri-Vaud')
+        self.menu = self.tr('&Véri-Vaud')
         # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar(u'VeriVD')
-        self.toolbar.setObjectName(u'VeriVD')
-
-        #print "** INITIALIZING VeriVD"
+        self.toolbar = self.iface.addToolBar('VeriVD')
+        self.toolbar.setObjectName('VeriVD')
 
         self.pluginIsActive = False
         self.dockwidget = None
-
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -242,24 +226,68 @@ class VeriVD(object):
 
         #Set plugin's variables
 
-        donneesBase = (u"Base - Tous les topics", u"Base - Points fixes", u"Base - Couverture du sol",u"Base - Objets divers",u"Base - Altimetrie",u"Base - Nomenclature",u"Base - Biens fonds",u"Base - Conduite",u"Base - Limites territoriales",u"Base - Adresses des batiments",u"Base - Repartition des plans")
-        donneesTest = (u"Verif - Points fixes", u"Verif - Couverture du sol et objets divers", u"Verif - Continuite des reseaux", u"Verif - Nomenclature", u"Verif - Biens fonds", u"Verif - Repartition des plans et domaine de numerotation",u"Verif - Limites territoriales et administratives", u"Verif - Adresses")
-        donneesTopic = (u"Points fixesCategorie1",u"Points fixesCategorie2",u"Points fixesCategorie3",u"Couverture du sol","Objets divers",u"Altimetrie",u"Nomenclature",u"Biens fonds",u"Conduites",u"Domaines numerotation",u"Limites commune",u"Limites district",u"Limites canton",u"Repartitions plans",u"RepartitionNT",u"Zones glissement",u"NPA Localite",u"Adresses des batiments",u"Bords de plan")
+        donneesBase = (
+            "Base - Tous les topics",
+            "Base - Points fixes",
+            "Base - Couverture du sol",
+            "Base - Objets divers",
+            "Base - Altimetrie",
+            "Base - Nomenclature",
+            "Base - Biens fonds",
+            "Base - Conduite",
+            "Base - Limites territoriales",
+            "Base - Adresses des batiments",
+            "Base - Repartition des plans"
+        )
+        donneesTest = (
+            "Verif - Points fixes",
+            "Verif - Couverture du sol et objets divers",
+            "Verif - Continuite des reseaux",
+            "Verif - Nomenclature",
+            "Verif - Biens fonds",
+            "Verif - Repartition des plans et domaine de numerotation",
+            "Verif - Limites territoriales et administratives",
+            "Verif - Adresses"
+        )
+        donneesTopic = (
+            "Points fixesCategorie1",
+            "Points fixesCategorie2",
+            "Points fixesCategorie3",
+            "Couverture du sol",
+            "Objets divers",
+            "Altimetrie",
+            "Nomenclature",
+            "Biens fonds",
+            "Conduites",
+            "Domaines numerotation",
+            "Limites commune",
+            "Limites district",
+            "Limites canton",
+            "Repartitions plans",
+            "RepartitionNT",
+            "Zones glissement",
+            "NPA Localite",
+            "Adresses des batiments",
+            "Bords de plan"
+        )
         donneesIliValidator, donneesChecker = [], []
         file, __, __ = QFileDialog.getOpenFileName(self.dockwidget, 'Ouvrir un fichier spatialite',os.path.join(os.environ["HOMEPATH"], "Desktop"), '*.sqlite')
 
         if file != '':
-            trace = "Fichier ouvert:\n\n" + file
+            trace = "Fichier ouvert:\n\n{}".format(file)
             self.dockwidget.labelFile.setText(trace)
-            strFile =  file.encode("utf-8")
+            strFile = file.encode("utf-8")
             uFile = strFile.decode("utf-8")
             i = 1
             while i <= int(self.dockwidget.tabWidget.count()):
-                self.dockwidget.tabWidget.setTabEnabled(i,True)
+                self.dockwidget.tabWidget.setTabEnabled(i, True)
                 i += 1
 
             # Construct models
-            modelBase, modelIliValidator, modelChecker, modelTest = QStandardItemModel(), QStandardItemModel(), QStandardItemModel(), QStandardItemModel()
+            modelBase = QStandardItemModel()
+            modelIliValidator = QStandardItemModel()
+            modelChecker = QStandardItemModel()
+            modelTest = QStandardItemModel()
             
             for item in donneesBase:
                 # Create an item with a caption
@@ -283,7 +311,7 @@ class VeriVD(object):
             layer_statisticsDict = DecompteDict.loadTableList('layer_statistics')
 
             if not ilivalidatorDict:
-                self.dockwidget.tabWidget.setTabEnabled(2,False)
+                self.dockwidget.tabWidget.setTabEnabled(2, False)
             else:
                 for topic in donneesTopic:
                     iliValidatorTopic = topic.replace(' ','_')
@@ -297,7 +325,7 @@ class VeriVD(object):
             self.dockwidget.listViewIliValidator.setModel(modelIliValidator)    
 
             if not CheckerDict:
-                self.dockwidget.tabWidget.setTabEnabled(3,False)
+                self.dockwidget.tabWidget.setTabEnabled(3, False)
             else:
                 for topic in donneesTopic:
                     if topic in list(CheckerDict.keys()):
@@ -310,9 +338,9 @@ class VeriVD(object):
             self.dockwidget.listViewChecker.setModel(modelChecker)
     
     def toutEffacer(self):
-        #Remove all Layers
+        # Remove all Layers
         QgsProject.instance().removeAllMapLayers()
-        #Remove all Groups
+        # Remove all Groups
         for child in  QgsProject.instance().layerTreeRoot().children():
             if isinstance(child, QgsLayerTreeGroup):
                 QgsProject.instance().layerTreeRoot().removeChildNode(child)
@@ -324,19 +352,19 @@ class VeriVD(object):
             item = modelBase.item(row)
         
             if item.checkState() == Qt.Checked:
-                #QMessageBox.warning(QDialog(), "Message", str(item.text()))
-                checked_items.append(str(item.text()).replace(" - ","").replace(" ","_"))
+                # QMessageBox.warning(QDialog(), "Message", str(item.text()))
+                checked_items.append(str(item.text()).replace(" - ", "").replace(" ", "_"))
                 item.setCheckState(Qt.Unchecked) 
         
         for checked_item in checked_items:
                 topicClassName = getattr(sys.modules[__name__], checked_item)		#find the class matching the checked items
                 Topic = topicClassName(uFile)
                 Topic.layers = Topic.load_layer()
-                Topic.infoText = u""
+                Topic.infoText = ""
                 for Topic.layer in Topic.layers:
                     Topic.infoText = Topic.infoText + str(Topic.layer.featureCount()) + ' ' + Topic.layer.name() + '\n'
                 if Topic.infoText == "":
-                    QMessageBox.warning(QDialog(), "Information", u"Aucun objet dans ce thème.")
+                    QMessageBox.warning(QDialog(), "Information", "Aucun objet dans ce thème.")
     
     def chargerIliValidator(self):
         # get the checked items
@@ -344,7 +372,7 @@ class VeriVD(object):
         for row in range(modelIliValidator.rowCount()):    
             item = modelIliValidator.item(row)
             if item.checkState() == Qt.Checked:
-                checked_items.append(str(item.text()).split(':')[0].replace("IliValidator - ","").replace(" ","_"))
+                checked_items.append(str(item.text()).split(':')[0].replace("IliValidator - ", "").replace(" ", "_"))
                 item.setCheckState(Qt.Unchecked) 
 
         for checked_item in checked_items:
@@ -358,7 +386,7 @@ class VeriVD(object):
         for row in range(modelChecker.rowCount()):    
             item = modelChecker.item(row)
             if item.checkState() == Qt.Checked:
-                checked_items.append(str(item.text()).split(':')[0].replace("Checker - ",""))
+                checked_items.append(str(item.text()).split(':')[0].replace("Checker - ", ""))
                 item.setCheckState(Qt.Unchecked) 
             
         for checked_item in checked_items:
@@ -373,7 +401,7 @@ class VeriVD(object):
             item = modelTest.item(row)
         
             if item.checkState() == Qt.Checked:
-                checked_items.append(str(item.text()).replace(" - ","").replace(" ","_"))
+                checked_items.append(str(item.text()).replace(" - ", "").replace(" ", "_"))
                 #QMessageBox.warning(QDialog(), "Message", checked_items[0])
                 item.setCheckState(Qt.Unchecked) 
         
@@ -381,12 +409,12 @@ class VeriVD(object):
                 testClassName = getattr(sys.modules[__name__], checked_item)
                 Test = testClassName(uFile)
                 Test.layers = Test.load_layer()
-                Test.infoText = u""
+                Test.infoText = ""
                 for Test.layer in Test.layers:
                     if Test.layer.name() in Test.checkLayer:
                         Test.infoText = Test.infoText + str(Test.layer.featureCount()) + ' ' + Test.layer.name() + '\n'
                 if Test.infoText == "":
-                    QMessageBox.warning(QDialog(), "Information", u"Les scripts de vérification n'ont pas détecté d'élément particulier sur ce thème.")
+                    QMessageBox.warning(QDialog(), "Information", "Les scripts de vérification n'ont pas détecté d'élément particulier sur ce thème.")
                 #else:
                 #    QMessageBox.warning(QDialog(), "Information", test.infoText)
     #--------------------------------------------------------------------------
