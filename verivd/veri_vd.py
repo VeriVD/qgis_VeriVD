@@ -20,9 +20,7 @@
  *                                                                         *
  ***************************************************************************/
 """
-from builtins import str
-from builtins import range
-from qgis.PyQt.QtCore import QCoreApplication, Qt
+from qgis.PyQt.QtCore import QCoreApplication, Qt, QLocale, QSettings, QTranslator
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
 from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
 
@@ -61,6 +59,12 @@ class VeriVD(object):
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
 
+        # initialize translation
+        qgis_locale = QLocale(QSettings().value('locale/userLocale'))
+        locale_path = os.path.join(os.path.dirname(__file__), 'i18n')
+        self.translator = QTranslator()
+        self.translator.load(qgis_locale, 'veri_vd', '_', locale_path)
+        QCoreApplication.installTranslator(self.translator)
 
         # Declare instance attributes
         self.actions = []
@@ -71,21 +75,6 @@ class VeriVD(object):
 
         self.pluginIsActive = False
         self.dockwidget = None
-
-    # noinspection PyMethodMayBeStatic
-    def tr(self, message):
-        """Get the translation for a string using Qt translation API.
-
-        We implement this ourselves since we do not inherit QObject.
-
-        :param message: String for translation.
-        :type message: str, QString
-
-        :returns: Translated version of message.
-        :rtype: QString
-        """
-        # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('VeriVD', message)
 
     def add_action(
         self,
@@ -167,7 +156,7 @@ class VeriVD(object):
         icon_path = ':/plugins/VeriVD/icon.png'
         self.add_action(
             icon_path,
-            text=self.tr(u'Vérification des mensurations vaudoises'),
+            text=self.tr('Vérification des mensurations vaudoises'),
             callback=self.run,
             parent=self.iface.mainWindow())
 
@@ -197,7 +186,7 @@ class VeriVD(object):
 
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&Véri-Vaud'),
+                self.tr('&Véri-Vaud'),
                 action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar
