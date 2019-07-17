@@ -28,7 +28,7 @@ from qgis.PyQt.QtCore import QSettings, QTranslator, qVersion, QCoreApplication,
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
 from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
 from qgis.PyQt import QtGui, uic
-from qgis.core import QgsMapLayerRegistry, QgsProject, QgsLayerTreeGroup
+from qgis.core import QgsProject, QgsProject, QgsLayerTreeGroup
 
 # Initialize Qt resources from file resources.py
 from . import resources
@@ -313,7 +313,7 @@ class VeriVD(object):
     
     def toutEffacer(self):
         #Remove all Layers
-        QgsMapLayerRegistry.instance().removeAllMapLayers()
+        QgsProject.instance().removeAllMapLayers()
         #Remove all Groups
         for child in  QgsProject.instance().layerTreeRoot().children():
             if isinstance(child, QgsLayerTreeGroup):

@@ -33,7 +33,7 @@ class IliValidator(SpatialiteData):
 		for self.layer in self.layers:
 			i=0
 			if self.layer.geometryType() == 0 : # 0, 1 and 2 are for points, lines and polygons
-				self.symbols = self.layer.rendererV2().symbols()
+				self.symbols = self.layer.renderer().symbols()
 				for self.symbol in self.symbols:
 					self.symbol.symbolLayer(0).setName(self.markerShape[i%(len(self.markerShape)-1)])
 					i=i+1

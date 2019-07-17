@@ -32,19 +32,19 @@ class SpatialiteData(object):
 		return self.unique_values
 
 	def createSimpleSymbol(self, **kwargs):
-		self.renderer = self.layer.rendererV2()
-		if self.layer.geometryType() == QGis.Point:
-			self.simpleSymbol = QgsMarkerSymbolV2.createSimple(kwargs)
-		elif self.layer.geometryType() == QGis.Line:
+		self.renderer = self.layer.renderer()
+		if self.layer.geometryType() == Qgis.Point:
+			self.simpleSymbol = QgsMarkerSymbol.createSimple(kwargs)
+		elif self.layer.geometryType() == Qgis.Line:
 			self.simpleSymbol = QgsLineSymbolV2.createSimple(kwargs)
-		elif self.layer.geometryType() == QGis.Polygon:
-			self.simpleSymbol = QgsFillSymbolV2.createSimple(kwargs)
+		elif self.layer.geometryType() == Qgis.Polygon:
+			self.simpleSymbol = QgsFillSymbol.createSimple(kwargs)
 		self.renderer.setSymbol(self.simpleSymbol)
 
 	def changePropertys(self, **kwargs):
-		if self.layer.rendererV2() is not None:
+		if self.layer.renderer() is not None:
 			self.properties = self.kwargs
-			self.symbols = self.layer.rendererV2().symbols()
+			self.symbols = self.layer.renderer().symbols()
 			for self.symbol in self.symbols:
 				for self.propertie, self.propertieValue in list(self.properties.items()):
 					self.symbol.symbolLayer(0).setDataDefinedProperty(self.propertie,self.propertieValue)
@@ -52,7 +52,7 @@ class SpatialiteData(object):
 
 	def createSimpleFillSymbolLayer(self, fillColor):
 		# initialize the default symbol for this geometry type
-		self.symbol = QgsSymbolV2.defaultSymbol(self.layer.geometryType())
+		self.symbol = QgsSymbol.defaultSymbol(self.layer.geometryType())
 		# configure a symbol layer
 		self.layer_style = {}
 		self.layer_style['color'] = fillColor
@@ -71,7 +71,7 @@ class SpatialiteData(object):
 			# entry for the list of category items
 			self.categories.append(self.category)
 		# create renderer object
-		self.renderer = QgsCategorizedSymbolRendererV2(self.field, self.categories)
+		self.renderer = QgsCategorizedSymbolRenderer(self.field, self.categories)
 		# assign the created renderer to the layer
 		if self.renderer is not None:
 			self.layer.setRendererV2(self.renderer)
@@ -127,7 +127,7 @@ class SpatialiteData(object):
 					self.createSimpleSymbol(**self.kwargs)
 				if self.trans:
 					self.layer.setLayerTransparency(self.trans)
-				QgsMapLayerRegistry.instance().addMapLayer(self.layer, False)
+				QgsProject.instance().addMapLayer(self.layer, False)
 				self.groupLayer.insertLayer(len(self.layers),self.layer)
 				if self.visib:
 					iface.legendInterface().setLayerVisible(self.layer, False)
