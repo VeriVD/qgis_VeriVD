@@ -20,11 +20,15 @@
  *                                                                         *
  ***************************************************************************/
 """
+import os.path
+import sys
+
 from qgis.PyQt.QtCore import QCoreApplication, Qt, QLocale, QSettings, QTranslator
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
 from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
 
 from qgis.core import QgsProject, QgsLayerTreeGroup
+from qgis.gui import QgisInterface
 
 # Initialize Qt resources from file resources.py
 import verivd.resources_rc  # NOQA
@@ -38,20 +42,17 @@ from .verif import *
 
 # Import the code for the DockWidget
 from .veri_vd_dockwidget import VeriVDDockWidget
-import os.path
-import sys
 
 
-class VeriVD(object):
-    """QGIS Plugin Implementation."""
+class VeriVD:
+    """ QGIS Plugin Implementation. """
 
-    def __init__(self, iface):
+    def __init__(self, iface: QgisInterface):
         """Constructor.
         
         :param iface: An interface instance that will be passed to this class
             which provides the hook by which you can manipulate the QGIS
             application at run time.
-        :type iface: QgisInterface
         """
         # Save reference to the QGIS interface
         self.iface = iface
@@ -75,6 +76,9 @@ class VeriVD(object):
 
         self.pluginIsActive = False
         self.dockwidget = None
+
+    def tr(self, source_text):
+        return QCoreApplication.translate('veri_vd', source_text)
 
     def add_action(
         self,
