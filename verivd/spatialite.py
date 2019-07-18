@@ -32,20 +32,22 @@ class SpatialiteData(object):
 		return self.unique_values
 
 	def create_simple_symbol(self, **kwargs):
-		self.renderer = self.layer.renderer()
+		renderer = self.layer.renderer()
 		if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
 			self.simpleSymbol = QgsMarkerSymbol.createSimple(kwargs)
 		elif self.layer.geometryType() == QgsWkbTypes.LineGeometry:
 			self.simpleSymbol = QgsLineSymbol.createSimple(kwargs)
 		elif self.layer.geometryType() == QgsWkbTypes.PolygonGeometry:
 			self.simpleSymbol = QgsFillSymbol.createSimple(kwargs)
-		self.renderer.setSymbol(self.simpleSymbol)
+		renderer.setSymbol(self.simpleSymbol)
 
 	def change_properties(self, **kwargs):
 		if self.layer.renderer() is not None:
 			self.properties = self.kwargs
-			# TODO context
-			self.symbols = self.layer.renderer().symbols()
+			# TODO check context
+			context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
+			context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(self.layer))
+			self.symbols = self.layer.renderer().symbols(context)
 			for self.symbol in self.symbols:
 				for property_key, property_value in list(self.properties.items()):
 					self.symbol.symbolLayer(0).setDataDefinedProperty(property_key, property_value)
@@ -63,16 +65,16 @@ class SpatialiteData(object):
 			self.symbol.changeSymbolLayer(0, self.symbol_layer)
 
 	def random_cat_symb(self, **kwargs):
-		self.field = kwargs.get('field')  # get the value with key 'field'
-		self.unique_field_finder(self.field)
-		self.categories = []
+		field = kwargs.get('field')  # get the value with key 'field'
+		self.unique_field_finder(field)
+		categories = []
 		for self.unique_value in self.unique_values:
 			self.create_simple_fill_symbol_layer('%d, %d, %d' % (randrange(0, 256), randrange(0, 256), randrange(0, 256)))
-			self.category = QgsRendererCategory(self.unique_value, self.symbol, self.unique_value) # TODO: removed encode('Latin-1'), is this causing troubles?
+			category = QgsRendererCategory(self.unique_value, self.symbol, self.unique_value)  # TODO: removed encode('Latin-1'), is this causing troubles?
 			# entry for the list of category items
-			self.categories.append(self.category)
+			categories.append(category)
 		# create renderer object
-		self.renderer = QgsCategorizedSymbolRenderer(self.field, self.categories)
+		self.renderer = QgsCategorizedSymbolRenderer(self.field, categories)
 		# assign the created renderer to the layer
 		if self.renderer is not None:
 			self.layer.setRenderer(self.renderer)
