@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from qgis.core import QgsWkbTypes
+from qgis.core import QgsWkbTypes, QgsSymbolLayer
 
 from .spatialite import SpatialiteData
 
@@ -19,11 +19,11 @@ class IliValidator(SpatialiteData):
 		self.markerShape = ('square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle', 'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead')
 
 		self.infoLayer = (
-			[u'iliValidator - ' + self.topic + u' point',"000_ilivalidator_point", self.sqlRequest,['randomCategorized',{'field':u'observation','size':'5'}],'',''],
-			[u'iliValidator - ' + self.topic + u' ligne',"000_ilivalidator_ligne", self.sqlRequest,['randomCategorized',{'field':u'observation','width':'2'}],50,''],
-			[u'iliValidator - ' + self.topic + u' surface',"000_iliValidator_point_Arc", self.sqlRequest,['randomCategorized',{'field':u'observation','width':'2'}],50,''],
-			[u'iliValidator - ' + self.topic + u' surface',"000_ilivalidator_surface", self.sqlRequest,['randomCategorized',{'field':u'observation','width':'2'}],50,''],
-			[u'iliValidator - ' + self.topic + u' sans géométrie',"000_ilivalidator_sans_geometrie", self.sqlRequest,['NoGeom'],'','']
+			[u'iliValidator - ' + self.topic + u' point',"000_ilivalidator_point", self.sqlRequest,['randomCategorized', {'field':u'observation',QgsSymbolLayer.PropertySize: '5'}], '', ''],
+			[u'iliValidator - ' + self.topic + u' ligne',"000_ilivalidator_ligne", self.sqlRequest,['randomCategorized', {'field':u'observation','width':'2'}], 50, ''],
+			[u'iliValidator - ' + self.topic + u' surface',"000_iliValidator_point_Arc", self.sqlRequest,['randomCategorized', {'field':u'observation','width': '2'}], 50, ''],
+			[u'iliValidator - ' + self.topic + u' surface',"000_ilivalidator_surface", self.sqlRequest,['randomCategorized', {'field':u'observation','width': '2'}], 50, ''],
+			[u'iliValidator - ' + self.topic + u' sans géométrie',"000_ilivalidator_sans_geometrie", self.sqlRequest, ['NoGeom'], '', '']
 		)
 
 		super(IliValidator,self).load_layer()

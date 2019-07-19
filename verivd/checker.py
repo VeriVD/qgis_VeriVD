@@ -3,8 +3,7 @@
 
 
 from .spatialite import SpatialiteData
-from qgis.core import QgsWkbTypes
-
+from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty
 
 
 class Checker(SpatialiteData):
@@ -20,9 +19,9 @@ class Checker(SpatialiteData):
 		self.markerShape = ('square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle', 'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead')
 
 		self.infoLayer = (
-			['Checker - ' + self.topic + u' point',"000_Checker_point", self.sqlRequest,['randomCategorized',{'field':u'description','size':'5'}],'',''],
-			['Checker - ' + self.topic + u' surface',"000_Checker_surface", self.sqlRequest,['randomCategorized',{'field':u'description','width':'2'}],50,''],
-			['Checker - ' + self.topic + u' sans géométrie',"000_Checker_sans_geometrie", self.sqlRequest,['NoGeom'],'','']
+			['Checker - {} point'.format(self.topic), "000_Checker_point", self.sqlRequest,['randomCategorized', {'field':u'description', QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)}], '', ''],
+			['Checker - {} surface'.format(self.topic), "000_Checker_surface", self.sqlRequest,['randomCategorized', {'field':u'description', QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)}], 50, ''],
+			['Checker - {} sans géométrie'.format(self.topic), "000_Checker_sans_geometrie", self.sqlRequest, ['NoGeom'], '', '']
 		)
 
 		super(Checker, self).load_layer()

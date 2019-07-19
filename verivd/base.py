@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from .spatialite import SpatialiteData
-
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtGui import QColor
+from qgis.core import QgsSymbolLayer, QgsProperty
 
 class BaseBiens_fonds(SpatialiteData):
     """Class used to load ownership's layers"""
@@ -30,7 +32,7 @@ class BaseCouverture_du_sol(SpatialiteData):
             ['Nom et numéro CS', '002_ITF_CS_Pos_Surface_CS', '', ['qml'], '', ''],
             ["Point particulier CS", '002_ITF_CS_Point_particulier', '', ['qml'], '', ''],
             ['Surface CS', '002_ITF_CS_Surface_CS', '', ['qml'], '', ''],
-            ['Bâtiment', '002_ITF_CS_Surface_CS', '"type" = "batiment"', ['simple', {'color': '255,210,210', 'border_color': 'black'}], '', '']
+            ['Bâtiment', '002_ITF_CS_Surface_CS', '"type" = "batiment"', ['simple', {QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 210, 210)), QgsSymbolLayer.PropertyStrokeColor: QgsProperty.fromValue(QColor(Qt.black))}], '', '']
         )
 
 
