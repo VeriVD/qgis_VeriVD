@@ -6,8 +6,6 @@ from qgis.PyQt.QtGui import QColor
 from qgis.core import QgsSymbolLayer, QgsProperty
 from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType
 
-# display_name, layerName, sqlRequest, symb, trans, visib
-
 
 class BaseBiens_fonds(SpatialiteData):
     """Class used to load ownership's layers"""
@@ -310,39 +308,17 @@ class BaseTous_les_topics(SpatialiteData):
                 display_name='OD linéaire',
                 layer_name='003_ITF_OD_Element_lineaire',
             ),
-            LayerInfo(
-                display_name='',
-                layer_name='',
-            ),
-            LayerInfo(
-                display_name='',
-                layer_name='',
-            ),
-            LayerInfo(
-                display_name='',
-                layer_name='',
-            ),
-            LayerInfo(
-                display_name='',
-                layer_name='',
-            ),
-
-            ['', '', '', ['qml'], '', ''],
-            ['', '', '', ['qml'], '', ''],
-            ["", '', '', ['qml'], '', ''],
-            ["", '', '', ['qml'], '', ''],
-            ['', '', '', ['qml'], '', ''],
-            ['OD surfacique', '003_ITF_OD_Element_surfacique', '', ['qml'], '', ''],
-            ["OD point particulier", '003_ITF_OD_Point_particulier', '', ['qml'], '', ''],
-            ['Point de départ des tronçons', '009_itf_bat_point_depart', '', ['qml'], '', ''],
-            ['Entrée des bâtiments', '009_itf_bat_entree_batiment', '', ['qml'], '', ''],
-            ['Tronçon de rue', '009_itf_bat_troncon_rue', '', ['qml'], '', ''],
-            ['CO Conduite', '007_itf_co_element_conduite', '', ['qml'], '', ''],
-            ['Courbes de nivea', '004_itf_al_courbes_de_nivea', '', ['qml'], '', 'no'],
-            ['Plan', '105_itf_rp', '', ['qml'], '', ''],
-            ['Limite commune', '008_itf_lt_limite_commune', '', ['qml'], '', ''],
-            ['Autre limite', '008_itf_lt_autre_limite', '', ['qml'], '', ''],
-            ["DDP", '006_ITF_BF_DDP', '', ['qml'], '', ''],
-            ['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], '', ''],
-            ['Surface CS', '002_ITF_CS_Surface_CS', '', ['qml'], '', ''],
+            LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
+            LayerInfo(display_name='OD point particulier', layer_name='003_ITF_OD_Point_particulier'),
+            LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart'),
+            LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
+            LayerInfo(display_name='Tronçon de rue', layer_name='009_itf_bat_troncon_rue'),
+            LayerInfo(display_name='CO Conduite', layer_name='007_itf_co_element_conduite'),
+            LayerInfo(display_name='Courbes de nivea', layer_name='004_itf_al_courbes_de_nivea', visible=False),
+            LayerInfo(display_name='Plan', layer_name='105_itf_rp'),
+            LayerInfo(display_name='Limite commune', layer_name='008_itf_lt_limite_commune'),
+            LayerInfo(display_name='Autre limite', layer_name='008_itf_lt_autre_limite'),
+            LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
+            LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
+            LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS'),
         )

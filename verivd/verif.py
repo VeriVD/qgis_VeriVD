@@ -15,23 +15,23 @@ class VerifBiens_fonds(SpatialiteData):
 		self.group_name = u"Vérification - biens fonds"
 		# set layer's parameter in a dict list
 		self.layer_infos = (	
-			["Sommet manquant sous un point limite", '100_verif_bf_sommet_manquant_sous_pl', '', ['qml'], '', ''],
+			LayerInfo(display_name='Sommet manquant sous un point limite', layer_name='100_verif_bf_sommet_manquant_sous_pl'),
 			["Sommet proche d'une limite", "100_verif_bf_sommet_proche_pl", '', ['qml'], '', ''],
 			["Point limite manquant sur un sommet",'100_verif_bf_pl_manquant_sur_sommet', '', ['qml'], '', ''],
-			['Point limite isolée', '100_verif_bf_pl_isole', '', ['qml'], '', ''],
-			['Point limite avant point', '100_verif_bf_pl_avant_point', '', ['qml'], '', ''],
-			['Point limite hors périmètre', '100_verif_bf_pl_hors_perimetre', '', ['qml'], '', ''],
-			['Point limite en bordure du périmètre', '100_verif_bf_pl_sur_bord_perimetre', '', ['qml'], '', ''],
+			LayerInfo(display_name='Point limite isolée', layer_name='100_verif_bf_pl_isole'),
+			LayerInfo(display_name='Point limite avant point', layer_name='100_verif_bf_pl_avant_point'),
+			LayerInfo(display_name='Point limite hors périmètre', layer_name='100_verif_bf_pl_hors_perimetre'),
+			LayerInfo(display_name='Point limite en bordure du périmètre', layer_name='100_verif_bf_pl_sur_bord_perimetre'),
 			["Point limite décrivant une limite quasi-alignée",'101_verif_bf_pl_aligne', '', ['qml'], '', ''],
 			["Ecart d'alignement",'101_verif_bf_distance_alignement', '', ['qml'], '', ''],
-			['Segment de biens fonds simplifié', '101_verif_bf_segment_bf_modifie', '', ['qml'], '', ''],
-			['Segment de DDP simplifié', '101_verif_ddp_segment_bf_modifie', '', ['qml'], '', ''],
-			['Précision planimétrique des points limites', '100_verif_bf_pl_precplannum', '', ['qml'], '', ''],
-			['Point limite', '006_ITF_BF_Point_limite', '', ['qml'], '', ''],
-			['Numéros des biens fonds', '006_ITF_BF_Pos_Bien_fonds', '', ['qml'], '', ''],
-			['Numéros des DDP', '006_ITF_BF_Pos_DDP', '', ['qml'], '', ''],
+			LayerInfo(display_name='Segment de biens fonds simplifié', layer_name='101_verif_bf_segment_bf_modifie'),
+			LayerInfo(display_name='Segment de DDP simplifié', layer_name='101_verif_ddp_segment_bf_modifie'),
+			LayerInfo(display_name='Précision planimétrique des points limites', layer_name='100_verif_bf_pl_precplannum'),
+			LayerInfo(display_name='Point limite', layer_name='006_ITF_BF_Point_limite'),
+			LayerInfo(display_name='Numéros des biens fonds', layer_name='006_ITF_BF_Pos_Bien_fonds'),
+			LayerInfo(display_name='Numéros des DDP', layer_name='006_ITF_BF_Pos_DDP'),
 			["DDP",'006_ITF_BF_DDP', '', ['qml'], '', ''],
-			['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], '', ''],
+			LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
 			["Biens fonds à proximité du lot",'111_bdmo_biens_fonds_alentours', '', ['qml'], '', ''],
 			["Différence des surfaces des immeubles selon 6422bis",'107_verif_6422bis', '', ['qml'], '', 'no'],
 			["Plans en vigueur à proximité du lot",'111_bdmo_repartition_plans_alentours', '', ['qml'], '', ''],
@@ -58,7 +58,7 @@ class VerifNomenclature(SpatialiteData):
 			['Sifflet entre les immeubles et la nomenclature', '103_VERIF_BF_NO_Surface', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0'}], '', ''],
 			['Nom local', '005_ITF_NO_Nom_local', '', ['randomCategorized', {'field':'name'}], 50, ''],
 			["DDP",'006_ITF_BF_DDP', '', ['qml'], '', ''],
-			['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], '', '']
+			LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds')
 		)
 		self.check_layer = (
 			'point divergent entre les immeubles et la nomenclature',
@@ -73,12 +73,12 @@ class VerifAdresses(SpatialiteData):
 		# set layer's parameter in a dict list
 		self.layer_infos = 	(	
 			["Numéro d'entrée",'009_itf_bat_posentree_batiment', '', ['qml'], '', ''],
-			['Point de départ des tronçons', '009_itf_bat_point_depart', '', ['qml'], '', ''],
-			['Entrée des bâtiments', '009_itf_bat_entree_batiment', '', ['qml'], '', ''],
-			['Entrée du RCB', '104_dwh_adresse_rcb', '', ['qml'], '', 'no'],
-			['Différence entre les entrées de la MO et celles du RCB', '104_verif_entreemo_diff_rcb', '', ['qml'], '', 'no'],
-			['Raccord des entrées vers localisation', '109_VERIF_Entree_Vers_Localisation', '', ['qml'], '', ''],
-			['Sens du tronçon', '009_ITF_BAT_Troncon_rue', '', ['qml'], '', ''],
+			LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart'),
+			LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
+			LayerInfo(display_name='Entrée du RCB', layer_name='104_dwh_adresse_rcb', visible=False),
+			LayerInfo(display_name='Différence entre les entrées de la MO et celles du RCB', layer_name='104_verif_entreemo_diff_rcb', visible=False),
+			LayerInfo(display_name='Raccord des entrées vers localisation', layer_name='109_VERIF_Entree_Vers_Localisation'),
+			LayerInfo(display_name='Sens du tronçon', layer_name='009_ITF_BAT_Troncon_rue'),
 			['Nom rue', '009_ITF_BAT_Troncon_rue', '', ['randomCategorized', {'field':'texte', 'width':'3', 'capstyle':'round', 'joinstyle':'round'}], '', ''], 
 			['Habitation sans adresses', '108_VERIF_Habitation_sans_adresse', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0,180', QgsSymbolLayer.PropertyStrokeColor: '255,255,0'}], '', 'no'],
 			['Bâtiment et surface en dur', '002_ITF_CS_Surface_CS', '"type" = "batiment" OR "vd_genre" LIKE "revetement_dur%"', ['qml'], '', ''],
@@ -113,16 +113,16 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 			["Nombre de géomètrie par objet divers surfacique",'102_verif_od_surfacique_fid', '', ['qml'], '', ''],
 			["Objets divers linéaires (relation vers les géomètries)",'102_verif_od_lineaire_fid', '', ['randomCategorized', {'field':'fid_od', 'width':'3'}], 50, ''],
 			["Objets divers surfaciques (relation vers les géomètries)",'102_verif_od_surfacique_fid', '', ['randomCategorized', {'field':'fid_od', 'width':'3'}], 50, ''],
-			['OD linéaire', '003_ITF_OD_Element_lineaire', '', ['qml'], '', ''],
-			['OD surfacique', '003_ITF_OD_Element_surfacique', '', ['qml'], '', ''],
+			LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
+			LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
 			["OD point particulier",'003_ITF_OD_Point_particulier', '', ['qml'], '', ''],
 			["OD Nom et Numéro ligne",'003_ITF_OD_Pos_Element_lineaire', '', ['qml'], '', ''],
 			["OD Nom et Numéro surface",'003_ITF_OD_Pos_Element_surfacique', '', ['qml'], '', ''],
-			['Nom et numéro CS', '002_ITF_CS_Pos_Surface_CS', '', ['qml'], '', ''],
+			LayerInfo(display_name='Nom et numéro CS', layer_name='002_ITF_CS_Pos_Surface_CS'),
 			["Point particulier CS",'002_ITF_CS_Point_particulier', '', ['qml'], '', ''],
 			['Bâtiment', '002_ITF_CS_Surface_CS', '"type" = "batiment"', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,210,210'}], '', ''],
 			["DDP",'006_ITF_BF_DDP', '', ['qml'], '', ''],
-			['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], '', ''],
+			LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
 			['Surface CS', '002_ITF_CS_Surface_CS', '', ['qml'], 50, '']
 		)
 		self.check_layer = (
@@ -172,8 +172,8 @@ class VerifContinuite_des_reseaux(SpatialiteData):
 			['CS Nom et numéro', '002_ITF_CS_Pos_Surface_CS', '"type" = "Nom_objet" AND ("number_name" LIKE "Route%" OR "number_name" LIKE "Ruisseau%" OR "number_name" LIKE "La%" OR "number_name" LIKE "Le%")', ['qml'], '', ''],
 			["OD Nom et numéro",'003_ITF_OD_Pos_Element_lineaire', '"number_name" LIKE "Ligne%"', ['qml'], '', ''],
 			["Cours d'eau (DGE)",'112_DWH_Gesreau', '', ['qml'], 50, ''],
-			['Traversé de localité (DGMR)', '112_DWH_TraverseLocalite', '', ['qml'], '', ''],
-			['Axes de maintenance du réseau routier (DGMR)', '112_dwh_axe', '', ['qml'], '', ''],
+			LayerInfo(display_name='Traversé de localité (DGMR)', layer_name='112_DWH_TraverseLocalite'),
+			LayerInfo(display_name='Axes de maintenance du réseau routier (DGMR)', layer_name='112_dwh_axe'),
 			['Couverture du sol', '002_ITF_CS_Surface_CS', '"vd_genre" IN ("eau.cours_eau", "revetement_dur.route_chemin","revetement_dur.chemin_de_fer")', ['qml'], 50, ''],
 			['Réseaux dans les objet divers linéaires', '003_ITF_OD_Element_lineaire', '"vd_genre" IN ("eau_canalisee_souterraine","tunnel_passage_inferieur_galerie","pont_passerelle","quai","ru","sentier","ligne_aerienne_a_haute_tension","mat_antenne","conduite_forcee","voie_ferree,telepherique","telecabine_telesiege","telepherique_de_chantier","skilift","bac","axe")', ['qml'], '', ''],
 			['Réseaux dans les objet divers surfaciques', '003_ITF_OD_Element_surfacique', '"vd_genre" IN ("eau_canalisee_souterraine","tunnel_passage_inferieur_galerie","pont_passerelle","quai","ru","sentier","ligne_aerienne_a_haute_tension","mat_antenne","conduite_forcee","voie_ferree,telepherique","telecabine_telesiege","telepherique_de_chantier","skilift","bac","axe")', ['qml'], '', ''],
@@ -199,10 +199,10 @@ class VerifPoints_fixes(SpatialiteData):
 		# set layer's parameter in a dict list
 		self.layer_infos = (	
 			['Point fixes dont les attributs ITF vs BDMO ne sont pas identiques', '115_itf_pfp_problemeattribut', '', ['qml'], 50,'no'],
-			['Points fixes en BDMO mais pas dans le fichier ITF', '115_bdmo_pfp_en_plus', '', ['qml'], '', ''],
-			['Points fixes dans le fichier ITF mais pas en BDMO', '115_itf_pfp_en_plus', '', ['qml'], '', 'no'],
-			['PFP-PFA3', '001_itf_pf_points_fixes', '', ['qml'], '', ''],
-			['Précision planimétrique des points fixes', '115_itf_pfp', '', ['qml'], '', ''],
+			LayerInfo(display_name='Points fixes en BDMO mais pas dans le fichier ITF', layer_name='115_bdmo_pfp_en_plus'),
+			LayerInfo(display_name='Points fixes dans le fichier ITF mais pas en BDMO', layer_name='115_itf_pfp_en_plus', visible=False),
+			LayerInfo(display_name='PFP-PFA3', layer_name='001_itf_pf_points_fixes'),
+			LayerInfo(display_name='Précision planimétrique des points fixes', layer_name='115_itf_pfp'),
 			["Périmetre du lot",'112_itf_mise_a_jourrp', '', ['qml'], '', '']
 		)
 		self.check_layer = (
@@ -228,8 +228,8 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 			['point divergent entre les immeubles et la limite de commune', '103_VERIF_BF_COM_Point', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], '', ''],
 			['Sifflet entre les immeubles et la limite de commune', '103_VERIF_BF_COM_Surface', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0'}], '', ''],
 			["Point limite térritoriale",'008_itf_lt_point_limite_ter', '', ['qml'], '', ''],
-			['Limite commune', '008_itf_lt_limite_commune', '', ['qml'], '', ''],
-			['Autre limite', '008_itf_lt_autre_limite', '', ['qml'], '', ''],
+			LayerInfo(display_name='Limite commune', layer_name='008_itf_lt_limite_commune'),
+			LayerInfo(display_name='Autre limite', layer_name='008_itf_lt_autre_limite'),
 			["DDP",'006_ITF_BF_DDP', '', ['qml'], 50, ''],
 			['Biens fonds', '006_ITF_BF_Bien_fonds', '', ['qml'], 50, '']
 		)

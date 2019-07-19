@@ -16,9 +16,10 @@ from random import randrange
 
 
 class SymbologyType(Enum):
-	QML = 1
-	SIMPLE = 2
-	RANDOM_CATEGORIZED = 3
+	NO_SYMBOL = 1
+	QML = 2
+	SIMPLE = 3
+	RANDOM_CATEGORIZED = 4
 
 
 class LayerInfo(object):
@@ -113,14 +114,14 @@ class SpatialiteData(object):
 		# set uri connection parameter
 		self.uri.setDataSource(schema, layerName, geom_column, sqlRequest)
 		# construct the layer
-		self.layer = QgsVectorLayer(self.uri.uri(), display_name, 'spatialite')
-		return self.layer
+		layer = QgsVectorLayer(self.uri.uri(), display_name, 'spatialite')
+		return layer
 
 	def loadTableList(self, dataSource, fieldName=1, countField=2):
-		self.layer_config('', self.schema, dataSource, '', '')
+		layer = self.layer_config('', self.schema, dataSource, '', '')
 		listFeatDict={}
-		if self.layer.isValid():
-			features = self.layer.getFeatures()
+		if layer.isValid():
+			features = layer.getFeatures()
 			for ft in features:
 				attrs = ft.attributes()
 				listFeatDict[attrs[fieldName]] = attrs[countField]
@@ -133,41 +134,45 @@ class SpatialiteData(object):
 		self.layers = []
 		# loop through layer's parameters
 		for layer_info in self.layer_infos:
-			if symb[0] !='NoGeom' :
+			if layer_info.symbology_type != SymbologyType.NO_SYMBOL :
 				geom_column = "GEOMETRY"
 			else:
 				geom_column = ""
-			self.layer_config(display_name, self.schema, layerName, geom_column, sqlRequest)
-			self.layer.crs().createFromId(2056) # Set de coordinate system to LV95
+			layer = self.layer_config(layer_info.display_name, self.schema, layer_info.layer_name, geom_column, layer_info.sql_request)
+			layer.crs().createFromId(2056) # Set de coordinate system to LV95
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
-			if self.layer.isValid() and self.layer.featureCount() != 0:
-				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, layerName))
-				qml_gen_file = os.path.join(self.plugin_path, 'qml', '{}.qml'.format(layerName))
+			if layer.isValid() and self.layer.featureCount() != 0:
+				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, layer_info.layer_name))
+				qml_gen_file = os.path.join(self.plugin_path, 'qml', '{}.qml'.format(layer_info.layer_name))
 				# Check if a specific qml file exist for this layer
 				# if yes add it to layer
 				# if not, check if a generic qml file exist
 				# if yes add it to layer
 				# else print a warning message
-				if symb[0] == 'qml':
+				if layer_info.symbology_type == SymbologyType.QML:
 					if os.path.isfile(qml_spec_file):
-						self.layer.loadNamedStyle(qml_spec_file)
+						layer.loadNamedStyle(qml_spec_file)
 					elif os.path.isfile(qml_gen_file):
-						self.layer.loadNamedStyle(qml_gen_file)
+						layer.loadNamedStyle(qml_gen_file)
 					else:
 						QMessageBox.warning(
 							QDialog(), "Message",
 							"Il manque le fichier .qml pour la couche: {}"
 							"\n{}\nChargement d'un symbole par défault".format(
-								display_name, layerName
+								layer_info.display_name, layer_info.layer_name
 							))
-				elif symb[0] == 'randomCategorized':
+				elif layer_info.symbology_type == 'randomCategorized':
 					self.random_cat_symb(layer_info.category_field)
-				elif symb[0] == 'simple':
-					self.create_simple_symbol(symb[1])
-				if trans:
-					self.layer.setOpacity(layer_info.opacity)
-				QgsProject.instance().addMapLayer(self.layer, False)
-				group_layer.insertLayer(len(self.layers), self.layer)
-				if visib:
-					iface.legendInterface().setLayerVisible(self.layer, False)
-				self.layers.append(self.layer)
+				elif layer_info.symbology_type == 'simple':
+					self.create_simple_symbol(layer_info.symbology_properties)
+				if layer_info.opacity != 1:
+					layer.setOpacity(layer_info.opacity)
+				QgsProject.instance().addMapLayer(layer, False)
+				group_layer.insertLayer(len(self.layers), layer)
+				if not layer_info.visible:
+					node = QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(False)
+					if node:
+						iface.legendInterface().setLayerVisible(layer, False)
+					else:
+						raise Exception("La couche n'a pas été chargée.")
+				self.layers.append(layer)

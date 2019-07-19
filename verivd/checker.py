@@ -2,11 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-from .spatialite import SpatialiteData
 from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty
+from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType
 
-
-# display_name, layerName, sqlRequest, symb, trans, visib
 
 class Checker(SpatialiteData):
 	"""Class used to load checker's layers"""
@@ -14,15 +12,34 @@ class Checker(SpatialiteData):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 
 	def load_layer(self, topic):
-		self.topic = topic
-		self.sqlRequest = '"topic" = "{}"'.format(self.topic)
-		self.group_name = "Résultat du checker - {}".format(self.topic)
+		sql_request = '"topic" = "{}"'.format(topic)
+		self.group_name = "Résultat du checker - {}".format(topic)
 		self.markerShape = ('square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle', 'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead')
 
 		self.layer_infos = (
-			['Checker - {} point'.format(self.topic), "000_Checker_point", self.sqlRequest,['randomCategorized', {'field':u'description', QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)}], '', ''],
-			['Checker - {} surface'.format(self.topic), "000_Checker_surface", self.sqlRequest,['randomCategorized', {'field':u'description', QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)}], 50, ''],
-			['Checker - {} sans géométrie'.format(self.topic), "000_Checker_sans_geometrie", self.sqlRequest, ['NoGeom'], '', '']
+			LayerInfo(
+				display_name='Checker - {} point'.format(topic),
+				layer_name='000_Checker_point',
+				sql_request=sql_request,
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='description',
+				symbology_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)}
+			),
+			LayerInfo(
+				display_name='Checker - {} surface'.format(topic),
+				layer_name='000_Checker_surface',
+				sql_request=sql_request,
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='description',
+				symbology_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+				opacity=.5
+			),
+			LayerInfo(
+				display_name='Checker - {} sans géométrie'.format(topic),
+				layer_name='000_Checker_sans_geometrie',
+				sql_request=sql_request,
+				symbology_type=SymbologyType.NO_SYMBOL
+			)
 		)
 
 		super(Checker, self).load_layer()
@@ -32,6 +49,6 @@ class Checker(SpatialiteData):
 			if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
 				self.symbols = self.layer.renderer().symbols()
 				for self.symbol in self.symbols:
-					self.symbol.symbolLayer(0).setName(self.markerShape[i%(len(self.markerShape)-1)])
+					self.symbol.symbolLayer(0).setName(self.markerShape[i%(len(self.markerShape)-1)])  # TODO: check this
 					i = i+1
 			self.iface.layerTreeView().refreshLayerSymbology(self.layer.id())
