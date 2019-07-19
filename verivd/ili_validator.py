@@ -23,8 +23,7 @@ class IliValidator(SpatialiteData):
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='observation',
 				symbology_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)},
-				sql_request=sql_request,
-				visible=False
+				sql_request=sql_request
 			),
 			LayerInfo(
 				display_name='iliValidator - {} ligne'.format(topic),
@@ -35,9 +34,30 @@ class IliValidator(SpatialiteData):
 				sql_request=sql_request,
 				opacity=.5
 			),
-			LayerInfo(display_name='iliValidator - {} surface'.format(topic), layer_name='000_iliValidator_point_Arc", sql_request,['randomCategorized', visible=False){'field':u'observation','width': '2'}], 50, ''],
-			LayerInfo(display_name='iliValidator - {} surface'.format(topic), layer_name='000_ilivalidator_surface", sql_request,['randomCategorized', visible=False){'field':u'observation','width': '2'}], 50, ''],
-			LayerInfo(display_name='iliValidator - {} sans géométrie'.format(topic), layer_name='000_ilivalidator_sans_geometrie", sql_request, ['NoGeom'], '', visible=False)'']
+			LayerInfo(
+				display_name='iliValidator - {} surface'.format(topic),
+				layer_name='000_iliValidator_point_Arc',
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='observation',
+				symbology_properties={QgsSymbolLayer.Width: QgsProperty.fromValue(2)},
+				sql_request=sql_request,
+				opacity=.5
+			),
+			LayerInfo(
+				display_name='iliValidator - {} surface'.format(topic),
+				layer_name='000_ilivalidator_surface',
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='observation',
+				symbology_properties={QgsSymbolLayer.StrokeWidth: QgsProperty.fromValue(2)},
+				sql_request=sql_request,
+				opacity=.5,
+			),
+			LayerInfo(
+				display_name='iliValidator - {} sans géométrie'.format(topic),
+				layer_name='000_ilivalidator_sans_geometrie',
+				symbology_type=SymbologyType.NO_SYMBOL,
+				sql_request=sql_request
+			)
 		)
 
 		super(IliValidator,self).load_layer()
@@ -47,6 +67,6 @@ class IliValidator(SpatialiteData):
 			if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
 				self.symbols = self.layer.renderer().symbols()
 				for self.symbol in self.symbols:
-					self.symbol.symbolLayer(0).setName(self.markerShape[i % (len(self.markerShape)-1)])
+					self.symbol.symbolLayer(0).setName(self.markerShape[i % (len(self.markerShape)-1)])  # TODO Check this with new API
 					i = i+1
 			self.iface.layerTreeView().refreshLayerSymbology(self.layer.id())
