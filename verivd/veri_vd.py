@@ -358,9 +358,9 @@ class VeriVD:
             # find the class matching the checked items
             topicClassName = getattr(sys.modules[__name__], checked_item)
             Topic = topicClassName(self.iface, uFile)
-            Topic.layers = Topic.load_layer()
+            Topic.load_layer()
             Topic.infoText = ""
-            for Topic.layer in Topic.layers:
+            for layer in Topic.layers:
                 Topic.infoText = Topic.infoText + str(Topic.layer.featureCount()) + ' ' + Topic.layer.name() + '\n'
             if Topic.infoText == "":
                 QMessageBox.warning(QDialog(), "Information", "Aucun objet dans ce thème.")
