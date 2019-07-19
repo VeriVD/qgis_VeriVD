@@ -301,7 +301,7 @@ class VeriVD:
                 modelTest.appendRow(itemTest)
             self.dockwidget.listViewTest.setModel(modelTest)
 
-            DecompteDict = SpatialiteData(uFile)
+            DecompteDict = SpatialiteData(self.iface, uFile)
             CheckerDict = DecompteDict.loadTableList('000_checker_decompte')
             ilivalidatorDict = DecompteDict.loadTableList('000_ilivalidator_decompte')
             layer_statisticsDict = DecompteDict.loadTableList('layer_statistics')
@@ -357,7 +357,7 @@ class VeriVD:
         for checked_item in checked_items:
             # find the class matching the checked items
             topicClassName = getattr(sys.modules[__name__], checked_item)
-            Topic = topicClassName(uFile)
+            Topic = topicClassName(self.iface, uFile)
             Topic.layers = Topic.load_layer()
             Topic.infoText = ""
             for Topic.layer in Topic.layers:
@@ -406,7 +406,7 @@ class VeriVD:
         
         for checked_item in checked_items:
                 testClassName = getattr(sys.modules[__name__], checked_item)
-                Test = testClassName(uFile)
+                Test = testClassName(self.iface, uFile)
                 Test.layers = Test.load_layer()
                 Test.infoText = ""
                 for Test.layer in Test.layers:

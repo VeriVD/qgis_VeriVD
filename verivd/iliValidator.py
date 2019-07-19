@@ -8,9 +8,8 @@ from .spatialite import SpatialiteData
 
 class IliValidator(SpatialiteData):
 	"""Class used to load iliValidator's layers"""
-	def __init__(self,iface, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
-		self.iface = iface
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.layers = []
 
 	def load_layer(self, topic):

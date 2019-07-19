@@ -6,6 +6,7 @@
 # Some commonly used imports
 from builtins import object
 from qgis.core import *
+from qgis.gui import QgisInterface
 from qgis.utils import iface
 from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 
@@ -15,9 +16,10 @@ from random import randrange
 
 class SpatialiteData(object):
 	"""This class Contain generic attributes and methods"""
-	def __init__(self, pathSQliteDB):
+	def __init__(self, iface: QgisInterface, pathSQliteDB: str):
+		self.iface = iface
 		self.uri = QgsDataSourceUri()
-		self.schema=''
+		self.schema = ''
 		# get the path to your plugin directory
 		self.plugin_path = os.path.dirname(__file__)
 		# set uri database connection

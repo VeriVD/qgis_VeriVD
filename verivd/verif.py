@@ -7,8 +7,8 @@ from .spatialite import SpatialiteData
 
 class VerifBiens_fonds(SpatialiteData):
 	"""Class used to load test on BF's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification - biens fonds"
 		# set layer's parameter in a dict list
 		self.infoLayer = (	
@@ -46,8 +46,8 @@ class VerifBiens_fonds(SpatialiteData):
 
 class VerifNomenclature(SpatialiteData):
 	"""Class used to load test on NO's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des sifflets sur les biens fonds"
 		# set layer's parameter in a dict list
 		self.infoLayer = (
@@ -64,8 +64,8 @@ class VerifNomenclature(SpatialiteData):
 
 class VerifAdresses(SpatialiteData):
 	"""Class used to load test on BAT's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des adresses"
 		# set layer's parameter in a dict list
 		self.infoLayer = 	(	
@@ -95,8 +95,8 @@ class VerifAdresses(SpatialiteData):
 
 class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 	"""Class used to load test on CS's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification de la couverture du sol et des objets divers"
 		# set layer's parameter in a dict list
 		self.infoLayer = 	(	
@@ -137,8 +137,8 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 
 class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 	"""Class used to load test on RP's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification de la répartition des plans et de la numérotation des points"
 		# set layer's parameter in a dict list
 		self.infoLayer = (	
@@ -161,8 +161,8 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 
 class VerifContinuite_des_reseaux(SpatialiteData):
 	"""Class used to load test on PF's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des réseaux"
 		# set layer's parameter in a dict list
 		self.infoLayer = 	(	
@@ -190,8 +190,8 @@ class VerifContinuite_des_reseaux(SpatialiteData):
 
 class VerifPoints_fixes(SpatialiteData):
 	"""Class used to load test on PF's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des points fixes"
 		# set layer's parameter in a dict list
 		self.infoLayer = (	
@@ -211,8 +211,8 @@ class VerifPoints_fixes(SpatialiteData):
 
 class VerifLimites_territoriales_et_administratives(SpatialiteData):
 	"""Class used to load test on COM's layers"""
-	def __init__(self, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
+	def __init__(self, iface, pathSQliteDB):
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = "Vérification des limites térritoriales et administratives"
 		self.infoLayer = (	
 			['Géometrie de limite de canton incorrecte (OGC)', '116_LigneCANT_OGC_fail', '', ['simple', {'color': '255,255,0', 'size':'2'}], '', ''],

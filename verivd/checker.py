@@ -10,8 +10,7 @@ from qgis.core import QgsWkbTypes
 class Checker(SpatialiteData):
 	"""Class used to load checker's layers"""
 	def __init__(self, iface, pathSQliteDB):
-		SpatialiteData.__init__(self, pathSQliteDB)
-		self.iface = iface
+		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.layers = []
 
 	def load_layer(self, topic):
