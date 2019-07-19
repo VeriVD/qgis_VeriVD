@@ -406,13 +406,13 @@ class VeriVD:
         
         for checked_item in checked_items:
                 testClassName = getattr(sys.modules[__name__], checked_item)
-                Test = testClassName(self.iface, uFile)
-                Test.layers = Test.load_layer()
-                Test.infoText = ""
-                for Test.layer in Test.layers:
-                    if Test.layer.name() in Test.check_layer:
-                        Test.infoText = Test.infoText + str(Test.layer.featureCount()) + ' ' + Test.layer.name() + '\n'
-                if Test.infoText == "":
+                test = testClassName(self.iface, uFile)
+                test.load_layer()
+                test.infoText = ""
+                for test.layer in test.layers:
+                    if test.layer.name() in test.check_layer:
+                        test.infoText = test.infoText + str(test.layer.featureCount()) + ' ' + test.layer.name() + '\n'
+                if test.infoText == "":
                     QMessageBox.warning(QDialog(), "Information", "Les scripts de vérification n'ont pas détecté d'élément particulier sur ce thème.")
                 #else:
                 #    QMessageBox.warning(QDialog(), "Information", test.infoText)
@@ -426,7 +426,7 @@ class VeriVD:
             # dockwidget may not exist if:
             #    first run of plugin
             #    removed on close (see self.onClosePlugin method)
-            if self.dockwidget == None:
+            if self.dockwidget is None:
                 # Create the dockwidget (after translation) and keep reference
                 self.dockwidget = VeriVDDockWidget()
 

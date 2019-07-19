@@ -26,6 +26,7 @@ class SpatialiteData(object):
 		self.uri.setDatabase(pathSQliteDB)
 		self.symbols = None
 		self.properties = None
+		self.infoLayer = []
 
 	def unique_field_finder(self, field):
 		self.field = field
@@ -101,27 +102,27 @@ class SpatialiteData(object):
 
 	def load_layer(self):
 		# set the layers group in the tree
-		self.groupLayer = QgsProject.instance().layerTreeRoot().insertGroup(0, self.group_name)
-		self.groupLayer.setExpanded(False)
+		group_layer = QgsProject.instance().layerTreeRoot().insertGroup(0, self.group_name)
+		group_layer.setExpanded(False)
 		self.layers = []
 		# loop through layer's parameters
-		for self.display_name, self.layerName, self.sqlRequest, self.symb, self.trans, self.visib in self.infoLayer:
-			if self.symb[0] !='NoGeom' :
-				self.geom_column = "GEOMETRY"
+		for display_name, layerName, sqlRequest, symb, trans, visib in self.infoLayer:
+			if symb[0] !='NoGeom' :
+				geom_column = "GEOMETRY"
 			else:
-				self.geom_column = ""
-			self.layer_config(self.display_name, self.schema, self.layerName, self.geom_column, self.sqlRequest)
+				geom_column = ""
+			self.layer_config(display_name, self.schema, layerName, geom_column, sqlRequest)
 			self.layer.crs().createFromId(2056) # Set de coordinate system to LV95
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
 			if self.layer.isValid() and self.layer.featureCount() != 0:
-				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, self.layerName))
-				qml_gen_file = os.path.join(self.plugin_path, 'qml', '{}.qml'.format(self.layerName))
+				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, layerName))
+				qml_gen_file = os.path.join(self.plugin_path, 'qml', '{}.qml'.format(layerName))
 				# Check if a specific qml file exist for this layer
 				# if yes add it to layer
 				# if not, check if a generic qml file exist
 				# if yes add it to layer
 				# else print a warning message
-				if self.symb[0] == 'qml':
+				if symb[0] == 'qml':
 					if os.path.isfile(qml_spec_file):
 						self.layer.loadNamedStyle(qml_spec_file)
 					elif os.path.isfile(qml_gen_file):
@@ -131,19 +132,18 @@ class SpatialiteData(object):
 							QDialog(), "Message",
 							"Il manque le fichier .qml pour la couche: {}"
 							"\n{}\nChargement d'un symbole par défault".format(
-								self.display_name, self.layerName
+								display_name, layerName
 							))
-				elif self.symb[0] == 'randomCategorized':
-					self.kwargs = self.symb[1]
+				elif symb[0] == 'randomCategorized':
+					self.kwargs = symb[1]
 					self.random_cat_symb(**self.kwargs)
-				elif self.symb[0] == 'simple':
-					self.kwargs = self.symb[1]
+				elif symb[0] == 'simple':
+					self.kwargs = symb[1]
 					self.create_simple_symbol(**self.kwargs)
-				if self.trans:
-					self.layer.setLayerTransparency(self.trans)
+				if trans:
+					self.layer.setLayerTransparency(trans)
 				QgsProject.instance().addMapLayer(self.layer, False)
-				self.groupLayer.insertLayer(len(self.layers),self.layer)
-				if self.visib:
+				group_layer.insertLayer(len(self.layers),self.layer)
+				if visib:
 					iface.legendInterface().setLayerVisible(self.layer, False)
 				self.layers.append(self.layer)
-		return self.layers
