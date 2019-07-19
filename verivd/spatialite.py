@@ -18,6 +18,7 @@ from random import randrange
 class SymbologyType(Enum):
 	QML = 1
 	SIMPLE = 2
+	RANDOM_CATEGORIZED = 3
 
 
 class LayerInfo(object):
@@ -25,8 +26,9 @@ class LayerInfo(object):
 			self,
 			display_name: str,
 			layer_name: str,
-			symbology_type: SymbologyType,
+			symbology_type: SymbologyType = SymbologyType.QML,
 			symbology_properties: dict = {},
+			category_field = None,
 			sql_request: str = '',
 			visibility: bool = True,
 			opacity: float = 1
@@ -36,6 +38,7 @@ class LayerInfo(object):
 		self.sql_request = sql_request
 		self.symbology_type = symbology_type
 		self.symbology_properties = symbology_properties
+		self.category_field = category_field
 		self.opacity = opacity
 		self.visibility = visibility
 
@@ -52,6 +55,7 @@ class SpatialiteData(object):
 		self.uri.setDatabase(pathSQliteDB)
 		self.symbols = None
 		self.properties = None
+		self.layers = []
 		self.layer_infos = []
 
 	def unique_field_finder(self, field):
@@ -90,8 +94,7 @@ class SpatialiteData(object):
 		if self.symbol_layer is not None:
 			self.symbol.changeSymbolLayer(0, self.symbol_layer)
 
-	def random_cat_symb(self, properties):
-		field = properties.pop('field')  # get the value with key 'field' and remove it from the properties
+	def random_cat_symb(self, field: str, properties: dict):
 		self.unique_field_finder(field)
 		categories = []
 		for self.unique_value in self.unique_values:
@@ -129,7 +132,7 @@ class SpatialiteData(object):
 		group_layer.setExpanded(False)
 		self.layers = []
 		# loop through layer's parameters
-		for display_name, layerName, sqlRequest, symb, trans, visib in self.layer_infos:
+		for layer_info in self.layer_infos:
 			if symb[0] !='NoGeom' :
 				geom_column = "GEOMETRY"
 			else:
@@ -158,11 +161,11 @@ class SpatialiteData(object):
 								display_name, layerName
 							))
 				elif symb[0] == 'randomCategorized':
-					self.random_cat_symb(symb[1])
+					self.random_cat_symb(layer_info.category_field)
 				elif symb[0] == 'simple':
 					self.create_simple_symbol(symb[1])
 				if trans:
-					self.layer.setOpacity(1-trans/100)  # TODO: change transparency to opacity in layer definitions
+					self.layer.setOpacity(layer_info.opacity)
 				QgsProject.instance().addMapLayer(self.layer, False)
 				group_layer.insertLayer(len(self.layers), self.layer)
 				if visib:

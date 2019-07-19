@@ -12,7 +12,6 @@ class Checker(SpatialiteData):
 	"""Class used to load checker's layers"""
 	def __init__(self, iface, pathSQliteDB):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
-		self.layers = []
 
 	def load_layer(self, topic):
 		self.topic = topic
@@ -34,5 +33,5 @@ class Checker(SpatialiteData):
 				self.symbols = self.layer.renderer().symbols()
 				for self.symbol in self.symbols:
 					self.symbol.symbolLayer(0).setName(self.markerShape[i%(len(self.markerShape)-1)])
-					i=i+1
+					i = i+1
 			self.iface.layerTreeView().refreshLayerSymbology(self.layer.id())
