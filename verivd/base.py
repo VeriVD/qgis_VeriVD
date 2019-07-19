@@ -314,7 +314,7 @@ class BaseTous_les_topics(SpatialiteData):
             LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
             LayerInfo(display_name='Tronçon de rue', layer_name='009_itf_bat_troncon_rue'),
             LayerInfo(display_name='CO Conduite', layer_name='007_itf_co_element_conduite'),
-            LayerInfo(display_name='Courbes de nivea', layer_name='004_itf_al_courbes_de_nivea', visible=False),
+            LayerInfo(display_name='Courbes de nivea', layer_name='004_itf_al_courbes_de_nivea', visibility=False),
             LayerInfo(display_name='Plan', layer_name='105_itf_rp'),
             LayerInfo(display_name='Limite commune', layer_name='008_itf_lt_limite_commune'),
             LayerInfo(display_name='Autre limite', layer_name='008_itf_lt_autre_limite'),
