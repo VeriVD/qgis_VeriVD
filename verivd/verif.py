@@ -5,13 +5,16 @@
 from .spatialite import SpatialiteData
 from qgis.core import QgsSymbolLayer
 
+
+# display_name, layerName, sqlRequest, symb, trans, visib
+
 class VerifBiens_fonds(SpatialiteData):
 	"""Class used to load test on BF's layers"""
 	def __init__(self, iface, pathSQliteDB):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification - biens fonds"
 		# set layer's parameter in a dict list
-		self.infoLayer = (	
+		self.layer_infos = (	
 			["Sommet manquant sous un point limite", '100_verif_bf_sommet_manquant_sous_pl', '', ['qml'], '', ''],
 			["Sommet proche d'une limite", "100_verif_bf_sommet_proche_pl", '', ['qml'], '', ''],
 			["Point limite manquant sur un sommet",'100_verif_bf_pl_manquant_sur_sommet', '', ['qml'], '', ''],
@@ -50,7 +53,7 @@ class VerifNomenclature(SpatialiteData):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des sifflets sur les biens fonds"
 		# set layer's parameter in a dict list
-		self.infoLayer = (
+		self.layer_infos = (
 			['point divergent entre les immeubles et la nomenclature', '103_VERIF_BF_NO_Point', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'4'}], '', ''],
 			['Sifflet entre les immeubles et la nomenclature', '103_VERIF_BF_NO_Surface', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0'}], '', ''],
 			['Nom local', '005_ITF_NO_Nom_local', '', ['randomCategorized', {'field':'name'}], 50, ''],
@@ -68,7 +71,7 @@ class VerifAdresses(SpatialiteData):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des adresses"
 		# set layer's parameter in a dict list
-		self.infoLayer = 	(	
+		self.layer_infos = 	(	
 			["Numéro d'entrée",'009_itf_bat_posentree_batiment', '', ['qml'], '', ''],
 			['Point de départ des tronçons', '009_itf_bat_point_depart', '', ['qml'], '', ''],
 			['Entrée des bâtiments', '009_itf_bat_entree_batiment', '', ['qml'], '', ''],
@@ -99,7 +102,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification de la couverture du sol et des objets divers"
 		# set layer's parameter in a dict list
-		self.infoLayer = 	(	
+		self.layer_infos = 	(	
 			['OD - Element surfacique qui devrait être linéaire', '114_VERIF_OD_surfaciqueErreur', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0', 'width_border':'2'}], '', ''],
 			['OD - Element linéaire qui devrait être surfacique', '114_VERIF_OD_lineaireErreur', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0', 'width':'2'}], '', ''],
 			['Point particulier CS manquant sous un angle de bâtiment', '113_cs_pointbatiment', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,100,200', QgsSymbolLayer.PropertySize:'2'}], '', ''],
@@ -141,7 +144,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification de la répartition des plans et de la numérotation des points"
 		# set layer's parameter in a dict list
-		self.infoLayer = (	
+		self.layer_infos = (	
 			['point divergent entre les immeubles et la répartition des plans', '103_VERIF_BF_RP_Point', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], '', ''],
 			['Sifflet entre les immeubles et la répartition des plans', '103_VERIF_BF_RP_Surface', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0'}], '', ''],
 			["Point sur mauvais plan",'105_verif_point_sur_mauvais_plan', '', ['qml'], '', ''],
@@ -165,7 +168,7 @@ class VerifContinuite_des_reseaux(SpatialiteData):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des réseaux"
 		# set layer's parameter in a dict list
-		self.infoLayer = 	(	
+		self.layer_infos = 	(	
 			['CS Nom et numéro', '002_ITF_CS_Pos_Surface_CS', '"type" = "Nom_objet" AND ("number_name" LIKE "Route%" OR "number_name" LIKE "Ruisseau%" OR "number_name" LIKE "La%" OR "number_name" LIKE "Le%")', ['qml'], '', ''],
 			["OD Nom et numéro",'003_ITF_OD_Pos_Element_lineaire', '"number_name" LIKE "Ligne%"', ['qml'], '', ''],
 			["Cours d'eau (DGE)",'112_DWH_Gesreau', '', ['qml'], 50, ''],
@@ -194,7 +197,7 @@ class VerifPoints_fixes(SpatialiteData):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = u"Vérification des points fixes"
 		# set layer's parameter in a dict list
-		self.infoLayer = (	
+		self.layer_infos = (	
 			['Point fixes dont les attributs ITF vs BDMO ne sont pas identiques', '115_itf_pfp_problemeattribut', '', ['qml'], 50,'no'],
 			['Points fixes en BDMO mais pas dans le fichier ITF', '115_bdmo_pfp_en_plus', '', ['qml'], '', ''],
 			['Points fixes dans le fichier ITF mais pas en BDMO', '115_itf_pfp_en_plus', '', ['qml'], '', 'no'],
@@ -214,7 +217,7 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 	def __init__(self, iface, pathSQliteDB):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = "Vérification des limites térritoriales et administratives"
-		self.infoLayer = (	
+		self.layer_infos = (	
 			['Géometrie de limite de canton incorrecte (OGC)', '116_LigneCANT_OGC_fail', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], '', ''],
 			['Géometrie de limite de commune incorrecte (OGC)', '116_LigneCOM_OGC_fail', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], '', ''],
 			['Géometrie de limite de district incorrecte (OGC)', '116_LigneDIST_OGC_fail', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], '', ''],

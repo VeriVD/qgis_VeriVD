@@ -4,6 +4,7 @@
 """ A simple class used to load a layer in QGIS """
 
 # Some commonly used imports
+from enum import Enum
 from builtins import object
 from qgis.core import *
 from qgis.gui import QgisInterface
@@ -12,6 +13,31 @@ from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 
 import os.path
 from random import randrange
+
+
+class SymbologyType(Enum):
+	QML = 1
+	SIMPLE = 2
+
+
+class LayerInfo(object):
+	def __init__(
+			self,
+			display_name: str,
+			layer_name: str,
+			symbology_type: SymbologyType,
+			symbology_properties: dict = {},
+			sql_request: str = '',
+			visibility: bool = True,
+			opacity: float = 1
+	):
+		self.display_name = display_name
+		self.layer_name = layer_name
+		self.sql_request = sql_request
+		self.symbology_type = symbology_type
+		self.symbology_properties = symbology_properties
+		self.opacity = opacity
+		self.visibility = visibility
 
 
 class SpatialiteData(object):
@@ -26,7 +52,7 @@ class SpatialiteData(object):
 		self.uri.setDatabase(pathSQliteDB)
 		self.symbols = None
 		self.properties = None
-		self.infoLayer = []
+		self.layer_infos = []
 
 	def unique_field_finder(self, field):
 		self.field = field
@@ -34,26 +60,23 @@ class SpatialiteData(object):
 		self.unique_values = self.layer.dataProvider().uniqueValues(self.fni)
 		return self.unique_values
 
-	def create_simple_symbol(self, **kwargs):
+	def create_simple_symbol(self, properties):
 		renderer = self.layer.renderer()
 		if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
-			self.simpleSymbol = QgsMarkerSymbol.createSimple(kwargs)
+			self.simpleSymbol = QgsMarkerSymbol.createSimple(properties)
 		elif self.layer.geometryType() == QgsWkbTypes.LineGeometry:
-			self.simpleSymbol = QgsLineSymbol.createSimple(kwargs)
+			self.simpleSymbol = QgsLineSymbol.createSimple(properties)
 		elif self.layer.geometryType() == QgsWkbTypes.PolygonGeometry:
-			self.simpleSymbol = QgsFillSymbol.createSimple(kwargs)
+			self.simpleSymbol = QgsFillSymbol.createSimple(properties)
 		renderer.setSymbol(self.simpleSymbol)
 
-	def change_properties(self, **kwargs):
+	def change_properties(self, properties):
 		if self.layer.renderer() is not None:
-			self.properties = self.kwargs
 			# TODO check context
 			context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
 			context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(self.layer))
-			self.symbols = self.layer.renderer().symbols(context)
-			for self.symbol in self.symbols:
-				for property_key, property_value in list(self.properties.items()):
-					self.symbol.symbolLayer(0).setDataDefinedProperty(property_key, property_value)
+			for symbol in self.layer.renderer().symbols(context):
+				symbol.symbolLayer(0).setDataDefinedProperties(properties)
 			self.layer.triggerRepaint()
 
 	def create_simple_fill_symbol_layer(self, fillColor):
@@ -67,8 +90,8 @@ class SpatialiteData(object):
 		if self.symbol_layer is not None:
 			self.symbol.changeSymbolLayer(0, self.symbol_layer)
 
-	def random_cat_symb(self, **kwargs):
-		field = kwargs.get('field')  # get the value with key 'field'
+	def random_cat_symb(self, properties):
+		field = properties.pop('field')  # get the value with key 'field' and remove it from the properties
 		self.unique_field_finder(field)
 		categories = []
 		for self.unique_value in self.unique_values:
@@ -81,7 +104,7 @@ class SpatialiteData(object):
 		# assign the created renderer to the layer
 		if self.renderer is not None:
 			self.layer.setRenderer(self.renderer)
-			self.change_properties(**self.kwargs)
+			self.change_properties(properties)
 
 	def layer_config(self, display_name, schema, layerName, geom_column='', sqlRequest=''):
 		# set uri connection parameter
@@ -106,7 +129,7 @@ class SpatialiteData(object):
 		group_layer.setExpanded(False)
 		self.layers = []
 		# loop through layer's parameters
-		for display_name, layerName, sqlRequest, symb, trans, visib in self.infoLayer:
+		for display_name, layerName, sqlRequest, symb, trans, visib in self.layer_infos:
 			if symb[0] !='NoGeom' :
 				geom_column = "GEOMETRY"
 			else:
@@ -135,15 +158,13 @@ class SpatialiteData(object):
 								display_name, layerName
 							))
 				elif symb[0] == 'randomCategorized':
-					self.kwargs = symb[1]
-					self.random_cat_symb(**self.kwargs)
+					self.random_cat_symb(symb[1])
 				elif symb[0] == 'simple':
-					self.kwargs = symb[1]
-					self.create_simple_symbol(**self.kwargs)
+					self.create_simple_symbol(symb[1])
 				if trans:
-					self.layer.setLayerTransparency(trans)
+					self.layer.setOpacity(1-trans/100)  # TODO: change transparency to opacity in layer definitions
 				QgsProject.instance().addMapLayer(self.layer, False)
-				group_layer.insertLayer(len(self.layers),self.layer)
+				group_layer.insertLayer(len(self.layers), self.layer)
 				if visib:
 					iface.legendInterface().setLayerVisible(self.layer, False)
 				self.layers.append(self.layer)

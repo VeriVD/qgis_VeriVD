@@ -6,6 +6,8 @@ from .spatialite import SpatialiteData
 from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty
 
 
+# display_name, layerName, sqlRequest, symb, trans, visib
+
 class Checker(SpatialiteData):
 	"""Class used to load checker's layers"""
 	def __init__(self, iface, pathSQliteDB):
@@ -18,7 +20,7 @@ class Checker(SpatialiteData):
 		self.group_name = "Résultat du checker - {}".format(self.topic)
 		self.markerShape = ('square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle', 'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead')
 
-		self.infoLayer = (
+		self.layer_infos = (
 			['Checker - {} point'.format(self.topic), "000_Checker_point", self.sqlRequest,['randomCategorized', {'field':u'description', QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)}], '', ''],
 			['Checker - {} surface'.format(self.topic), "000_Checker_surface", self.sqlRequest,['randomCategorized', {'field':u'description', QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)}], 50, ''],
 			['Checker - {} sans géométrie'.format(self.topic), "000_Checker_sans_geometrie", self.sqlRequest, ['NoGeom'], '', '']

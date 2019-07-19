@@ -36,7 +36,7 @@ import verivd.resources_rc  # NOQA
 # Initialize layers
 from .help import *
 from .base import *
-from .iliValidator import *
+from .ili_validator import *
 from .checker import *
 from .verif import *
 

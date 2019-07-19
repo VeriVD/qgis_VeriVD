@@ -5,6 +5,8 @@ from qgis.core import QgsWkbTypes, QgsSymbolLayer
 
 from .spatialite import SpatialiteData
 
+# display_name, layerName, sqlRequest, symb, trans, visib
+
 
 class IliValidator(SpatialiteData):
 	"""Class used to load iliValidator's layers"""
@@ -18,7 +20,7 @@ class IliValidator(SpatialiteData):
 		self.groupName = u"Résultat du iliValidator - " + self.topic
 		self.markerShape = ('square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle', 'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead')
 
-		self.infoLayer = (
+		self.layer_infos = (
 			[u'iliValidator - ' + self.topic + u' point',"000_ilivalidator_point", self.sqlRequest,['randomCategorized', {'field':u'observation',QgsSymbolLayer.PropertySize: '5'}], '', ''],
 			[u'iliValidator - ' + self.topic + u' ligne',"000_ilivalidator_ligne", self.sqlRequest,['randomCategorized', {'field':u'observation','width':'2'}], 50, ''],
 			[u'iliValidator - ' + self.topic + u' surface',"000_iliValidator_point_Arc", self.sqlRequest,['randomCategorized', {'field':u'observation','width': '2'}], 50, ''],
