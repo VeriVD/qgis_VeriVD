@@ -74,7 +74,6 @@ class VeriVD:
         self.toolbar = self.iface.addToolBar('VeriVD')
         self.toolbar.setObjectName('VeriVD')
 
-        self.pluginIsActive = False
         self.dockwidget = None
 
     def tr(self, source_text):
@@ -164,36 +163,17 @@ class VeriVD:
             callback=self.run,
             parent=self.iface.mainWindow())
 
-    #--------------------------------------------------------------------------
-
-    def onClosePlugin(self):
-        """Cleanup necessary items here when plugin dockwidget is closed"""
-
-        #print "** CLOSING VeriVD"
-
-        # disconnects
-        self.dockwidget.closingPlugin.disconnect(self.onClosePlugin)
-
-        # remove this statement if dockwidget is to remain
-        # for reuse if plugin is reopened
-        # Commented next statement since it causes QGIS crashe
-        # when closing the docked window:
-        # self.dockwidget = None
-
-        self.pluginIsActive = False
-
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
 
-        #print "** UNLOAD VeriVD"
+        self.dockwidget.close()
+        self.dockwidget.deleteLater()
 
         for action in self.actions:
             self.iface.removePluginMenu(
                 self.tr('&Véri-Vaud'),
                 action)
             self.iface.removeToolBarIcon(action)
-        # remove the toolbar
         del self.toolbar
 
     #--------------------------------------------------------------------------
@@ -201,23 +181,23 @@ class VeriVD:
     def aideFichier(self):
         QMessageBox.information(QDialog(), "Aide", Help().messageFichier)
 
-    def aideBase(self):
+    def aide_base(self):
         QMessageBox.information(QDialog(), "Aide", Help().messageBase)
 
-    def aideIliValidator(self):
+    def aide_ili_validator(self):
         QMessageBox.information(QDialog(), "Aide", Help().messageIliValidator)
 
-    def aideChecker(self):
+    def aide_checker(self):
         QMessageBox.information(QDialog(), "Aide", Help().messageChecker)
 
-    def aideVerif(self):
+    def aide_verif(self):
         QMessageBox.information(QDialog(), "Aide", Help().messageVerif)
 
-    def ouvrirFichier(self):
+    def ouvrir_fichier(self):
         # Set the variables to global
-        global modelBase, modelIliValidator, modelChecker, modelTest, strFile, uFile, donneesBase, donneesTopic, donneesTest
+        global model_base, model_ili_validator, model_checker, modelTest, strFile, uFile, donnees_base, donnees_topic, donnees_test
 
-        donneesBase = (
+        donnees_base = (
             "Base - Tous les topics",
             "Base - Points fixes",
             "Base - Couverture du sol",
@@ -230,7 +210,7 @@ class VeriVD:
             "Base - Adresses des batiments",
             "Base - Repartition des plans"
         )
-        donneesTest = (
+        donnees_test = (
             "Verif - Points fixes",
             "Verif - Couverture du sol et objets divers",
             "Verif - Continuite des reseaux",
@@ -240,7 +220,7 @@ class VeriVD:
             "Verif - Limites territoriales et administratives",
             "Verif - Adresses"
         )
-        donneesTopic = (
+        donnees_topic = (
             "Points fixesCategorie1",
             "Points fixesCategorie2",
             "Points fixesCategorie3",
@@ -261,7 +241,7 @@ class VeriVD:
             "Adresses des batiments",
             "Bords de plan"
         )
-        donneesIliValidator, donneesChecker = [], []
+        donnees_ili_validator, donnees_checker = [], []
         file, __, = QFileDialog.getOpenFileName(
             self.dockwidget,
             'Ouvrir un fichier spatialite',
@@ -280,62 +260,62 @@ class VeriVD:
                 i += 1
 
             # Construct models
-            modelBase = QStandardItemModel()
-            modelIliValidator = QStandardItemModel()
-            modelChecker = QStandardItemModel()
+            model_base = QStandardItemModel()
+            model_ili_validator = QStandardItemModel()
+            model_checker = QStandardItemModel()
             modelTest = QStandardItemModel()
             
-            for item in donneesBase:
+            for item in donnees_base:
                 # Create an item with a caption
                 itemBase = QStandardItem(item)
                 # Add a checkbox to it
                 itemBase.setCheckable(True)
                 # Add the item to the model
-                modelBase.appendRow(itemBase)
+                model_base.appendRow(itemBase)
             # Load the list in Gui
-            self.dockwidget.listViewBase.setModel(modelBase)
+            self.dockwidget.listViewBase.setModel(model_base)
             
-            for item in donneesTest:
+            for item in donnees_test:
                 itemTest = QStandardItem(item)
                 itemTest.setCheckable(True)
                 modelTest.appendRow(itemTest)
             self.dockwidget.listViewTest.setModel(modelTest)
 
-            DecompteDict = SpatialiteData(self.iface, uFile)
-            CheckerDict = DecompteDict.load_table_list('000_checker_decompte')
-            ilivalidatorDict = DecompteDict.load_table_list('000_ilivalidator_decompte')
-            layer_statisticsDict = DecompteDict.load_table_list('layer_statistics')
+            decompte_dict = SpatialiteData(self.iface, uFile)
+            checker_dict = decompte_dict.load_table_list('000_checker_decompte')
+            ili_validator_dict = decompte_dict.load_table_list('000_ilivalidator_decompte')
+            layer_statisticsDict = decompte_dict.load_table_list('layer_statistics')
 
-            if not ilivalidatorDict:
+            if not ili_validator_dict:
                 self.dockwidget.tabWidget.setTabEnabled(2, False)
             else:
-                for topic in donneesTopic:
-                    iliValidatorTopic = topic.replace(' ', '_')
-                    if iliValidatorTopic in list(ilivalidatorDict.keys()):
-                        donneesIliValidator.append('IliValidator - {}: {}'.format(
-                            topic, str(ilivalidatorDict[iliValidatorTopic]))
+                for topic in donnees_topic:
+                    ili_validator_topic = topic.replace(' ', '_')
+                    if ili_validator_topic in list(ili_validator_dict.keys()):
+                        donnees_ili_validator.append('IliValidator - {}: {}'.format(
+                            topic, str(ili_validator_dict[ili_validator_topic]))
                         )
-            donneesIliValidator.sort()
-            for item in donneesIliValidator:
-                itemIliValidator = QStandardItem(item)
-                itemIliValidator.setCheckable(True)
-                modelIliValidator.appendRow(itemIliValidator)
-            self.dockwidget.listViewIliValidator.setModel(modelIliValidator)    
+            donnees_ili_validator.sort()
+            for item in donnees_ili_validator:
+                item_ili_validator = QStandardItem(item)
+                item_ili_validator.setCheckable(True)
+                model_ili_validator.appendRow(item_ili_validator)
+            self.dockwidget.listViewIliValidator.setModel(model_ili_validator)
 
-            if not CheckerDict:
+            if not checker_dict:
                 self.dockwidget.tabWidget.setTabEnabled(3, False)
             else:
-                for topic in donneesTopic:
-                    if topic in list(CheckerDict.keys()):
-                        donneesChecker.append('Checker - {}: {}'.format(topic, str(CheckerDict[topic])))
-            donneesChecker.sort()
-            for item in donneesChecker:
-                itemChecker = QStandardItem(item)
-                itemChecker.setCheckable(True)
-                modelChecker.appendRow(itemChecker)
-            self.dockwidget.listViewChecker.setModel(modelChecker)
+                for topic in donnees_topic:
+                    if topic in list(checker_dict.keys()):
+                        donnees_checker.append('Checker - {}: {}'.format(topic, str(checker_dict[topic])))
+            donnees_checker.sort()
+            for item in donnees_checker:
+                item_checker = QStandardItem(item)
+                item_checker.setCheckable(True)
+                model_checker.appendRow(item_checker)
+            self.dockwidget.listViewChecker.setModel(model_checker)
     
-    def toutEffacer(self):
+    def tout_effacer(self):
         # Remove all Layers
         QgsProject.instance().removeAllMapLayers()
         # Remove all Groups
@@ -343,11 +323,11 @@ class VeriVD:
             if isinstance(child, QgsLayerTreeGroup):
                 QgsProject.instance().layerTreeRoot().removeChildNode(child)
 
-    def chargerBase(self):
+    def charger_base(self):
         # get the checked items
         checked_items = []
-        for row in range(modelBase.rowCount()):
-            item = modelBase.item(row)
+        for row in range(model_base.rowCount()):
+            item = model_base.item(row)
         
             if item.checkState() == Qt.Checked:
                 # QMessageBox.warning(QDialog(), "Message", str(item.text()))
@@ -356,34 +336,34 @@ class VeriVD:
         
         for checked_item in checked_items:
             # find the class matching the checked items
-            topicClassName = getattr(sys.modules[__name__], checked_item)
-            Topic = topicClassName(self.iface, uFile)
-            Topic.load_layer()
-            Topic.infoText = ""
-            for layer in Topic.layers:
-                Topic.infoText = Topic.infoText + str(Topic.layer.featureCount()) + ' ' + Topic.layer.name() + '\n'
-            if Topic.infoText == "":
+            topic_class_name = getattr(sys.modules[__name__], checked_item)
+            topic = topic_class_name(self.iface, uFile)
+            topic.load_layer()
+            topic.infoText = ""
+            for layer in topic.layers:
+                topic.infoText = topic.infoText + str(layer.featureCount()) + ' ' + layer.name() + '\n'
+            if topic.infoText == "":
                 QMessageBox.warning(QDialog(), "Information", "Aucun objet dans ce thème.")
     
-    def chargerIliValidator(self):
+    def charger_ili_validator(self):
         # get the checked items
         checked_items = []
-        for row in range(modelIliValidator.rowCount()):    
-            item = modelIliValidator.item(row)
+        for row in range(model_ili_validator.rowCount()):
+            item = model_ili_validator.item(row)
             if item.checkState() == Qt.Checked:
                 checked_items.append(str(item.text()).split(':')[0].replace("IliValidator - ", "").replace(" ", "_"))
                 item.setCheckState(Qt.Unchecked) 
 
         for checked_item in checked_items:
-                topic = str(checked_item)
-                layersClass = IliValidator(self.iface, uFile)
-                layersClass.load_layer(topic)
+            topic = str(checked_item)
+            layersClass = IliValidator(self.iface, uFile)
+            layersClass.load_layer(topic)
 
     def chargerChecker(self):
         # get the checked items
         checked_items = []
-        for row in range(modelChecker.rowCount()):    
-            item = modelChecker.item(row)
+        for row in range(model_checker.rowCount()):
+            item = model_checker.item(row)
             if item.checkState() == Qt.Checked:
                 checked_items.append(str(item.text()).split(':')[0].replace("Checker - ", ""))
                 item.setCheckState(Qt.Unchecked) 
@@ -405,13 +385,13 @@ class VeriVD:
                 item.setCheckState(Qt.Unchecked) 
         
         for checked_item in checked_items:
-                testClassName = getattr(sys.modules[__name__], checked_item)
-                test = testClassName(self.iface, uFile)
+                test_class_name = getattr(sys.modules[__name__], checked_item)
+                test = test_class_name(self.iface, uFile)
                 test.load_layer()
                 test.infoText = ""
-                for test.layer in test.layers:
-                    if test.layer.name() in test.check_layer:
-                        test.infoText = test.infoText + str(test.layer.featureCount()) + ' ' + test.layer.name() + '\n'
+                for layer in test.layers:
+                    if layer.name() in test.check_layer:
+                        test.infoText = test.infoText + str(layer.featureCount()) + ' ' + layer.name() + '\n'
                 if test.infoText == "":
                     QMessageBox.warning(QDialog(), "Information", "Les scripts de vérification n'ont pas détecté d'élément particulier sur ce thème.")
                 #else:
@@ -420,50 +400,34 @@ class VeriVD:
     def run(self):
         """Run method that loads and starts the plugin"""
 
-        if not self.pluginIsActive:
-            self.pluginIsActive = True
-
-            # dockwidget may not exist if:
-            #    first run of plugin
-            #    removed on close (see self.onClosePlugin method)
-            if self.dockwidget is None:
-                # Create the dockwidget (after translation) and keep reference
-                self.dockwidget = VeriVDDockWidget()
-
-            # connect to provide cleanup on closing of dockwidget
-            self.dockwidget.closingPlugin.connect(self.onClosePlugin)
-
-            # show the dockwidget
-            # TODO: fix to allow choice of dock location
+        if self.dockwidget is None:
+            # Create the dockwidget (after translation) and keep reference
+            self.dockwidget = VeriVDDockWidget()
             self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dockwidget)
-            self.dockwidget.show()
 
-            # connect to provide cleanup on closing of dockwidget
-            self.dockwidget.closingPlugin.connect(self.onClosePlugin)
+        self.dockwidget.show()
 
         # Set the first tab to open
         self.dockwidget.tabWidget.setCurrentIndex(0)
-        i = 1
-        while i <= int(self.dockwidget.tabWidget.count()):
-            self.dockwidget.tabWidget.setTabEnabled(i,False)
-            i += 1
+        for i in range(1, 1+self.dockwidget.tabWidget.count()):
+            self.dockwidget.tabWidget.setTabEnabled(i, False)
 
         # Connect the files Button and Label
         self.dockwidget.labelFile.clear()
         trace = "Pas de fichier ouvert"
         self.dockwidget.labelFile.setText(trace)
-        self.dockwidget.pushButtonFichierOuvrir.clicked.connect(self.ouvrirFichier)
+        self.dockwidget.pushButtonFichierOuvrir.clicked.connect(self.ouvrir_fichier)
         self.dockwidget.pushButtonFichierQuitter.clicked.connect(self.dockwidget.close)
         self.dockwidget.pushButtonFichierAide.clicked.connect(self.aideFichier)
-        self.dockwidget.pushButtonBaseCharger.clicked.connect(self.chargerBase)
-        self.dockwidget.pushButtonBaseEffacer.clicked.connect(self.toutEffacer)
-        self.dockwidget.pushButtonBaseAide.clicked.connect(self.aideBase)
-        self.dockwidget.pushButtonIliValidatorCharger.clicked.connect(self.chargerIliValidator)
-        self.dockwidget.pushButtonIliValidatorEffacer.clicked.connect(self.toutEffacer)
-        self.dockwidget.pushButtonIliValidatorAide.clicked.connect(self.aideIliValidator)
+        self.dockwidget.pushButtonBaseCharger.clicked.connect(self.charger_base)
+        self.dockwidget.pushButtonBaseEffacer.clicked.connect(self.tout_effacer)
+        self.dockwidget.pushButtonBaseAide.clicked.connect(self.aide_base)
+        self.dockwidget.pushButtonIliValidatorCharger.clicked.connect(self.charger_ili_validator)
+        self.dockwidget.pushButtonIliValidatorEffacer.clicked.connect(self.tout_effacer)
+        self.dockwidget.pushButtonIliValidatorAide.clicked.connect(self.aide_ili_validator)
         self.dockwidget.pushButtonCheckerCharger.clicked.connect(self.chargerChecker)
-        self.dockwidget.pushButtonCheckerEffacer.clicked.connect(self.toutEffacer)
-        self.dockwidget.pushButtonCheckerAide.clicked.connect(self.aideChecker)
+        self.dockwidget.pushButtonCheckerEffacer.clicked.connect(self.tout_effacer)
+        self.dockwidget.pushButtonCheckerAide.clicked.connect(self.aide_checker)
         self.dockwidget.pushButtonVerifCharger.clicked.connect(self.chargerVerif)
-        self.dockwidget.pushButtonVerifEffacer.clicked.connect(self.toutEffacer)
-        self.dockwidget.pushButtonVerifAide.clicked.connect(self.aideVerif)
+        self.dockwidget.pushButtonVerifEffacer.clicked.connect(self.tout_effacer)
+        self.dockwidget.pushButtonVerifAide.clicked.connect(self.aide_verif)
