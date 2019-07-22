@@ -34,11 +34,10 @@ from qgis.gui import QgisInterface
 import verivd.resources_rc  # NOQA
 
 # Initialize layers
-from .help import *
-from .base import *
-from .ili_validator import *
-from .checker import *
-from .verif import *
+from verivd.help import *
+from verivd.ili_validator import *
+from verivd.checker import *
+from verivd.verif import *
 
 # Import the code for the DockWidget
 from .veri_vd_dockwidget import VeriVDDockWidget
@@ -74,6 +73,8 @@ class VeriVD:
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
+        ico = QIcon(":/plugins/verivd/icons/icon.png")
+        print(ico.pixmap(32,32))
         self.actions['main'] = QAction(
             QIcon(":/plugins/verivd/icons/icon.png"),
             self.tr('Vérification des mensurations vaudoises'),

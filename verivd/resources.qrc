@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/VeriVD" >
+    <qresource prefix="/plugins/verivd" >
         <file>icons/icon.png</file>
     </qresource>
 </RCC>
