@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 
-from qgis.core import QgsSymbolLayer
+from qgis.core import QgsSymbolLayer, QgsProperty
+from qgis.PyQt.QtCore import Qt, QVariant
 from qgis.PyQt.QtGui import QColor
 from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType
 
@@ -95,21 +96,54 @@ class VerifAdresses(SpatialiteData):
 			LayerInfo(display_name='Numéro d\'entrée', layer_name='009_itf_bat_posentree_batiment'),
 			LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart'),
 			LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
-			LayerInfo(display_name='Entrée du RCB', layer_name='104_dwh_adresse_rcb', visible=False),
+			LayerInfo(display_name='Entrée du RCB', layer_name='104_dwh_adresse_rcb', visibility=False),
 			LayerInfo(display_name='Différence entre les entrées de la MO et celles du RCB', layer_name='104_verif_entreemo_diff_rcb', visible=False),
 			LayerInfo(display_name='Raccord des entrées vers localisation', layer_name='109_VERIF_Entree_Vers_Localisation'),
 			LayerInfo(display_name='Sens du tronçon', layer_name='009_ITF_BAT_Troncon_rue'),
 			LayerInfo(
 				display_name='Nom rue',
 				layer_name='009_ITF_BAT_Troncon_rue',
-				symbology_type=RANDOM_CATEGORIZED,
-
-				['randomCategorized', {'field':'texte', 'width':'3', 'capstyle':'round', layer_name='joinstyle':'round'}], ''''],
-			LayerInfo(display_name='Habitation sans adresses', layer_name='108_VERIF_Habitation_sans_adresse', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0,180', QgsSymbolLayer.PropertyStrokeColor: '255,255,0'}], '''no'],
-			LayerInfo(display_name='Bâtiment et surface en dur', layer_name='002_ITF_CS_Surface_CS', layer_name='"type" = "batiment" OR "vd_genre" LIKE "revetement_dur%"', ['qml'], ''''],
-			LayerInfo(display_name='DP', '006_ITF_BF_Bien_fonds', layer_name='"number" LIKE "DP%"', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,255', QgsSymbolLayer.PropertyStrokeColor: '0,0,0', layer_name='width_border':'0.5'}], ''''],
-			LayerInfo(display_name='Couverture du sol', layer_name='002_ITF_CS_Surface_CS', layer_name=''['qml'], 50, '']
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='texte',
+				symbology_properties={
+					QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3),
+					QgsSymbolLayer.PropertyCapStyle: QgsProperty.fromValue(Qt.RoundCap),
+					QgsSymbolLayer.PropertyJoinStyle: QgsProperty.fromValue(Qt.RoundJoin),
+				}
+			),
+			LayerInfo(
+				display_name='Habitation sans adresses',
+				layer_name='108_VERIF_Habitation_sans_adresse',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 0, 0, 180)),
+					QgsSymbolLayer.PropertyStrokeColor: QVariant.fromValue(QColor(255, 255, 0))
+				},
+				visibility=False
+			),
+			LayerInfo(
+				display_name='Bâtiment et surface en dur',
+				layer_name='002_ITF_CS_Surface_CS',
+				sql_request='"type" = "batiment" OR "vd_genre" LIKE "revetement_dur%"'
+			),
+			LayerInfo(
+				display_name='DP',
+				layer_name='006_ITF_BF_Bien_fonds',
+				sql_request='"number" LIKE "DP%"',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 255)),
+					QgsSymbolLayer.PropertyStrokeColor: QVariant.fromValue(QColor(0, 0, 0)),
+					QgsSymbolLayer.PropertyStokeWidth: QVariant.fromValue(.5)
+				}
+			),
+			LayerInfo(
+				display_name='Couverture du sol',
+				layer_name='002_ITF_CS_Surface_CS',
+				opacity=.5
+			)
 		)
+
 		self.check_layer = (
 			"Numéro d'entrée",
 			'Nom rue',
@@ -128,28 +162,90 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 		self.group_name = u"Vérification de la couverture du sol et des objets divers"
 		# set layer's parameter in a dict list
 		self.layer_infos = 	(	
-			LayerInfo(display_name='OD - Element surfacique qui devrait être linéaire', '114_VERIF_OD_surfaciqueErreur', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0', layer_name='width_border':'2'}], ''''],
-			LayerInfo(display_name='OD - Element linéaire qui devrait être surfacique', '114_VERIF_OD_lineaireErreur', '', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0', layer_name='width':'2'}], ''''],
-			LayerInfo(display_name='Point particulier CS manquant sous un angle de bâtiment', '113_cs_pointbatiment', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,100,200', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='Validation OGC des objets divers",'110_od_ogc_geometrie', '', ['randomCategorized', {'field':'issue_found', layer_name='width':'2'}], ''''],
-			LayerInfo(display_name='point divergent entre les immeubles et la couverture du sol', '103_verif_bf_cs_point', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='Sifflet entre les immeubles et la couverture du sol', '103_verif_bf_cs_surface', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0'}], ''''],
-			LayerInfo(display_name='Nombre de géomètrie par objet divers linéaires",'102_verif_od_lineaire_fid', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='Nombre de géomètrie par objet divers surfacique",'102_verif_od_surfacique_fid', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='Objets divers linéaires (relation vers les géomètries)",'102_verif_od_lineaire_fid', layer_name='', ['randomCategorized', {'field':'fid_od''width':'3'}], 50, ''],
-			LayerInfo(display_name='Objets divers surfaciques (relation vers les géomètries)",'102_verif_od_surfacique_fid', layer_name='', ['randomCategorized', {'field':'fid_od''width':'3'}], 50, ''],
+			LayerInfo(
+				display_name='OD - Element surfacique qui devrait être linéaire',
+				layer_name='114_VERIF_OD_surfaciqueErreur',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 0, 0)),
+					QgsSymbolLayer.PropertyStrokeWidth: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='OD - Element linéaire qui devrait être surfacique', 
+				layer_name='114_VERIF_OD_lineaireErreur',
+				symbology_type=SymbologyType.SIMPLE, 
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 0, 0)), 
+					QgsSymbolLayer.PropertyStrokeWidth: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='Point particulier CS manquant sous un angle de bâtiment', 
+				layer_name='113_cs_pointbatiment', 
+				symbology_type=SymbologyType.SIMPLE, 
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 100, 200)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='Validation OGC des objets divers',
+				layer_name='110_od_ogc_geometrie',
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='issue_found', 
+				symbology_properties={QgsSymbolLayer.PropertyStrokeWidth: QVariant.fromValue(2)}
+			),
+			LayerInfo(
+				display_name='point divergent entre les immeubles et la couverture du sol', 
+				layer_name='103_verif_bf_cs_point', 
+				symbology_type=SymbologyType.SIMPLE, 
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)), 
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='Sifflet entre les immeubles et la couverture du sol', 
+				layer_name='103_verif_bf_cs_surface', 
+				symbology_type=SymbologyType.SIMPLE, 
+				symbology_properties={QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 0, 0))}
+			),
+			LayerInfo(display_name='Nombre de géomètrie par objet divers linéaires', layer_name='102_verif_od_lineaire_fid'),
+			LayerInfo(display_name='Nombre de géomètrie par objet divers surfacique', layer_name='102_verif_od_surfacique_fid'),
+			LayerInfo(
+				display_name='Objets divers linéaires (relation vers les géomètries)', 
+				layer_name='102_verif_od_lineaire_fid', symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
+				category_field='fid_od',
+				symbology_properties={QgsSymbolLayer.PropertyWidth: QVariant.fromValue(3)},
+				opacity=.5
+			),
+			LayerInfo(
+				display_name='Objets divers surfaciques (relation vers les géomètries)',
+				layer_name='102_verif_od_surfacique_fid',
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
+				category_field='fid_od',
+				symbology_properties={QgsSymbolLayer.PropertyWidth: QVariant.fromValue(3)},
+				opacity=.5
+			),
 			LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
 			LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
-			LayerInfo(display_name='OD point particulier",'003_ITF_OD_Point_particulier', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='OD Nom et Numéro ligne",'003_ITF_OD_Pos_Element_lineaire', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='OD Nom et Numéro surface",'003_ITF_OD_Pos_Element_surfacique', layer_name='', ['qml'], ''''],
+			LayerInfo(display_name='OD point particulier', layer_name='003_ITF_OD_Point_particulier'),
+			LayerInfo(display_name='OD Nom et Numéro ligne', layer_name='003_ITF_OD_Pos_Element_lineaire'),
+			LayerInfo(display_name='OD Nom et Numéro surface', layer_name='003_ITF_OD_Pos_Element_surfacique'),
 			LayerInfo(display_name='Nom et numéro CS', layer_name='002_ITF_CS_Pos_Surface_CS'),
-			LayerInfo(display_name='Point particulier CS",'002_ITF_CS_Point_particulier', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='Bâtiment', '002_ITF_CS_Surface_CS', layer_name='"type" = "batiment"', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,210,210'}], ''''],
-			LayerInfo(display_name='DDP",'006_ITF_BF_DDP', layer_name='', ['qml'], ''''],
+			LayerInfo(display_name='Point particulier CS', layer_name='002_ITF_CS_Point_particulier'),
+			LayerInfo(
+				display_name='Bâtiment',
+				layer_name='002_ITF_CS_Surface_CS',
+				sql_request='"type" = "batiment"',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 210, 210))}),
+			LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
 			LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
-			LayerInfo(display_name='Surface CS', '002_ITF_CS_Surface_CS', layer_name=''['qml'], 50, '']
+			LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS', opacity=.5)
 		)
+
 		self.check_layer = (
 			'OD - Element surfacique qui devrait être linéaire',
 			'OD - Element linéaire qui devrait être surfacique',
@@ -163,6 +259,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 			"Objets divers surfaciques (relation vers les géomètries)"
 		)
 
+
 class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 	"""Class used to load test on RP's layers"""
 	def __init__(self, iface, pathSQliteDB):
@@ -170,15 +267,52 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 		self.group_name = u"Vérification de la répartition des plans et de la numérotation des points"
 		# set layer's parameter in a dict list
 		self.layer_infos = (	
-			LayerInfo(display_name='point divergent entre les immeubles et la répartition des plans', '103_VERIF_BF_RP_Point', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='Sifflet entre les immeubles et la répartition des plans', '103_VERIF_BF_RP_Surface', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0'}], ''''],
-			LayerInfo(display_name='Point sur mauvais plan",'105_verif_point_sur_mauvais_plan', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='Répartition des plans du lot",'105_itf_rp', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='Objet ponctuel hors du périmètre du lot",'112_itf_objet_hors_perimetrelot_point', layer_name='', ['randomCategorized', {'field':'nomtable'QgsSymbolLayer.PropertySize:'3'}], 50,'no'],
-			LayerInfo(display_name='Objet linéaire hors du périmètre du lot",'112_itf_objet_hors_perimetrelot_ligne', layer_name='', ['randomCategorized', {'field':'nomtable''width':'2'}], 50,'no'],
-			LayerInfo(display_name='Objet surfacique hors du périmètre du lot",'112_itf_objet_hors_perimetre_surface', layer_name='', ['randomCategorized', {'field':'nomtable''width_border':'2'}], 50,'no'],
-			LayerInfo(display_name='Plans en vigueur à proximité du lot",'111_bdmo_repartition_plans_alentours', layer_name='', ['qml'], ''''],
-			LayerInfo(display_name='Périmetre du lot",'112_itf_mise_a_jourrp', layer_name='', ['qml'], '''']
+			LayerInfo(
+				display_name='point divergent entre les immeubles et la répartition des plans',
+				layer_name='103_VERIF_BF_RP_Point',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='Sifflet entre les immeubles et la répartition des plans',
+				layer_name='103_VERIF_BF_RP_Surface',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 0, 0))}
+			),
+			LayerInfo(display_name='Point sur mauvais plan', layer_name='105_verif_point_sur_mauvais_plan'),
+			LayerInfo(display_name='Répartition des plans du lot', layer_name='105_itf_rp'),
+			LayerInfo(
+				display_name='Objet ponctuel hors du périmètre du lot',
+				layer_name='112_itf_objet_hors_perimetrelot_point',
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='nomtable',
+				symbology_properties={QgsSymbolLayer.PropertySize: QVariant.fromValue(3)},
+				opacity=.5,
+				visibility=False
+			),
+			LayerInfo(
+				display_name='Objet linéaire hors du périmètre du lot',
+				layer_name='112_itf_objet_hors_perimetrelot_ligne',
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+				category_field='nomtable',
+				symbology_properties={QgsSymbolLayer.PropertyWidth: QVariant.fromValue(2)},
+				opacity=.5,
+				visibility=False
+			),
+			LayerInfo(
+				display_name='Objet surfacique hors du périmètre du lot',
+				layer_name='112_itf_objet_hors_perimetre_surface',
+				symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
+				category_field='nomtable',
+				symbology_properties={QgsSymbolLayer.PropertyStrokeWidth: QVariant.fromValue(2)},
+				opacity=.5,
+				visibility=False
+			),
+			LayerInfo(display_name='Plans en vigueur à proximité du lot', layer_name='111_bdmo_repartition_plans_alentours'),
+			LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'), 
 		)
 		self.check_layer = (
 			'point divergent entre les immeubles et la répartition des plans',
@@ -187,6 +321,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 			"Objet linéaire hors du périmètre du lot",u"Objet surfacique hors du périmètre du lot"
 		)
 
+
 class VerifContinuite_des_reseaux(SpatialiteData):
 	"""Class used to load test on PF's layers"""
 	def __init__(self, iface, pathSQliteDB):
@@ -194,16 +329,40 @@ class VerifContinuite_des_reseaux(SpatialiteData):
 		self.group_name = u"Vérification des réseaux"
 		# set layer's parameter in a dict list
 		self.layer_infos = 	(	
-			LayerInfo(display_name='CS Nom et numéro', '002_ITF_CS_Pos_Surface_CS', layer_name='"type" = "Nom_objet" AND ("number_name" LIKE "Route%" OR "number_name" LIKE "Ruisseau%" OR "number_name" LIKE "La%" OR "number_name" LIKE "Le%")', ['qml'], ''''],
-			LayerInfo(display_name='OD Nom et numéro",'003_ITF_OD_Pos_Element_lineaire', layer_name='"number_name" LIKE "Ligne%"', ['qml'], ''''],
-			LayerInfo(display_name='Cours d'eau (DGE)",'112_DWH_Gesreau', layer_name=''['qml'], 50, ''],
+			LayerInfo(
+				display_name='CS Nom et numéro', 
+				layer_name='002_ITF_CS_Pos_Surface_CS', 
+				sql_request='"type" = "Nom_objet" AND ("number_name" LIKE "Route%" OR "number_name" LIKE "Ruisseau%" OR "number_name" LIKE "La%" OR "number_name" LIKE "Le%")'
+			),
+			LayerInfo(
+				display_name='OD Nom et numéro', 
+				layer_name='003_ITF_OD_Pos_Element_lineaire', 
+				sql_request='"number_name" LIKE "Ligne%"'
+			),
+			LayerInfo(display_name='Cours d\'eau (DGE)', layer_name='112_DWH_Gesreau', opacity=.5),
 			LayerInfo(display_name='Traversé de localité (DGMR)', layer_name='112_DWH_TraverseLocalite'),
 			LayerInfo(display_name='Axes de maintenance du réseau routier (DGMR)', layer_name='112_dwh_axe'),
-			LayerInfo(display_name='Couverture du sol', '002_ITF_CS_Surface_CS', '"vd_genre" IN ("eau.cours_eau', layer_name='revetement_dur.route_chemin","revetement_dur.chemin_de_fer")'['qml'], 50, ''],
-			LayerInfo(display_name='Réseaux dans les objet divers linéaires', '003_ITF_OD_Element_lineaire', layer_name='"vd_genre" IN ("eau_canalisee_souterraine","tunnel_passage_inferieur_galerie","pont_passerelle","quai","ru","sentier","ligne_aerienne_a_haute_tension","mat_antenne","conduite_forcee","voie_ferree,telepherique","telecabine_telesiege","telepherique_de_chantier","skilift","bac","axe")', ['qml'], ''''],
-			LayerInfo(display_name='Réseaux dans les objet divers surfaciques', '003_ITF_OD_Element_surfacique', layer_name='"vd_genre" IN ("eau_canalisee_souterraine","tunnel_passage_inferieur_galerie","pont_passerelle","quai","ru","sentier","ligne_aerienne_a_haute_tension","mat_antenne","conduite_forcee","voie_ferree,telepherique","telecabine_telesiege","telepherique_de_chantier","skilift","bac","axe")', ['qml'], ''''],
-			LayerInfo(display_name='DP', '006_ITF_BF_Bien_fonds', layer_name='"number" LIKE "DP%"', ['qml'], ''''],
-			LayerInfo(display_name='Périmetre du lot",'112_itf_mise_a_jourrp', layer_name='', ['qml'], '''']
+			LayerInfo(
+				display_name='Couverture du sol',
+				layer_name='002_ITF_CS_Surface_CS',
+				sql_request='"vd_genre" IN ("eau.cours_eau", "revetement_dur.route_chemin","revetement_dur.chemin_de_fer")',
+				opacity=.5
+			),
+			LayerInfo(
+				display_name='Réseaux dans les objet divers linéaires',
+				layer_name='003_ITF_OD_Element_lineaire',
+				sql_request='"vd_genre" IN ("eau_canalisee_souterraine","tunnel_passage_inferieur_galerie","pont_passerelle","quai","ru","sentier","ligne_aerienne_a_haute_tension","mat_antenne","conduite_forcee","voie_ferree,telepherique","telecabine_telesiege","telepherique_de_chantier","skilift","bac","axe")'
+			),
+			LayerInfo(
+				display_name='Réseaux dans les objet divers surfaciques',
+				layer_name='003_ITF_OD_Element_surfacique',
+				sql_request='"vd_genre" IN ("eau_canalisee_souterraine","tunnel_passage_inferieur_galerie","pont_passerelle","quai","ru","sentier","ligne_aerienne_a_haute_tension","mat_antenne","conduite_forcee","voie_ferree,telepherique","telecabine_telesiege","telepherique_de_chantier","skilift","bac","axe")'
+			),
+			LayerInfo(
+				display_name='DP',
+				layer_name='006_ITF_BF_Bien_fonds',
+				sql_request='"number" LIKE "DP%"'),
+			LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
 		)
 		self.check_layer = (
 			'CS Nom et numéro',
@@ -223,12 +382,17 @@ class VerifPoints_fixes(SpatialiteData):
 		self.group_name = u"Vérification des points fixes"
 		# set layer's parameter in a dict list
 		self.layer_infos = (	
-			LayerInfo(display_name='Point fixes dont les attributs ITF vs BDMO ne sont pas identiques', '115_itf_pfp_problemeattribut', layer_name=''['qml'], 50,'no'],
+			LayerInfo(
+				display_name='Point fixes dont les attributs ITF vs BDMO ne sont pas identiques',
+				layer_name='115_itf_pfp_problemeattribut',
+				opacity=.5,
+				visibility=False
+			),
 			LayerInfo(display_name='Points fixes en BDMO mais pas dans le fichier ITF', layer_name='115_bdmo_pfp_en_plus'),
 			LayerInfo(display_name='Points fixes dans le fichier ITF mais pas en BDMO', layer_name='115_itf_pfp_en_plus', visible=False),
 			LayerInfo(display_name='PFP-PFA3', layer_name='001_itf_pf_points_fixes'),
 			LayerInfo(display_name='Précision planimétrique des points fixes', layer_name='115_itf_pfp'),
-			LayerInfo(display_name='Périmetre du lot",'112_itf_mise_a_jourrp', layer_name='', ['qml'], '''']
+			LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
 		)
 		self.check_layer = (
 			'Point fixes dont les attributs ITF vs BDMO ne sont pas identiques',
@@ -237,26 +401,95 @@ class VerifPoints_fixes(SpatialiteData):
 			'115_itf_pfp_en_plus'
 		)
 
+
 class VerifLimites_territoriales_et_administratives(SpatialiteData):
 	"""Class used to load test on COM's layers"""
 	def __init__(self, iface, pathSQliteDB):
 		SpatialiteData.__init__(self, iface, pathSQliteDB)
 		self.group_name = "Vérification des limites térritoriales et administratives"
 		self.layer_infos = (	
-			LayerInfo(display_name='Géometrie de limite de canton incorrecte (OGC)', '116_LigneCANT_OGC_fail', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='Géometrie de limite de commune incorrecte (OGC)', '116_LigneCOM_OGC_fail', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='Géometrie de limite de district incorrecte (OGC)', '116_LigneDIST_OGC_fail', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='point de limtes térritoriales manquant sous sommet de limite de commune', '116_PL_terr_manquant_sous_sommet_COM', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='sommet de limte de commune manquant sous point de limtes térritoriales', '116_Sommet_COM_manquant_sous_PL_terr', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='sommet de limte de commune manquant sous sommet de limite de canton', '116_sommetCOM_manquant_sous_sommet_CANT', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='sommet de limte decommune manquant sous sommet de limite de district', '116_sommetCOM_manquant_sous_sommet_Dist', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='point divergent entre les immeubles et la limite de commune', '103_VERIF_BF_COM_Point', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,255,0', QgsSymbolLayer.PropertySize:'2'}], ''''],
-			LayerInfo(display_name='Sifflet entre les immeubles et la limite de commune', '103_VERIF_BF_COM_Surface', layer_name='', ['simple', {QgsSymbolLayer.PropertyFillColor: '255,0,0'}], ''''],
-			LayerInfo(display_name='Point limite térritoriale",'008_itf_lt_point_limite_ter', layer_name='', ['qml'], ''''],
+			LayerInfo(
+				display_name='Géometrie de limite de canton incorrecte (OGC)',
+				layer_name='116_LigneCANT_OGC_fail',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='Géometrie de limite de commune incorrecte (OGC)',
+				layer_name='116_LigneCOM_OGC_fail',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='Géometrie de limite de district incorrecte (OGC)',
+				layer_name='116_LigneDIST_OGC_fail',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='point de limtes térritoriales manquant sous sommet de limite de commune',
+				layer_name='116_PL_terr_manquant_sous_sommet_COM',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}),
+			LayerInfo(
+				display_name='sommet de limte de commune manquant sous point de limtes térritoriales',
+				layer_name='116_Sommet_COM_manquant_sous_PL_terr',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='sommet de limte de commune manquant sous sommet de limite de canton',
+				layer_name='116_sommetCOM_manquant_sous_sommet_CANT',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='sommet de limte decommune manquant sous sommet de limite de district',
+				layer_name='116_sommetCOM_manquant_sous_sommet_Dist',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='point divergent entre les immeubles et la limite de commune',
+				layer_name='103_VERIF_BF_COM_Point',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={
+					QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 255, 0)),
+					QgsSymbolLayer.PropertySize: QVariant.fromValue(2)
+				}
+			),
+			LayerInfo(
+				display_name='Sifflet entre les immeubles et la limite de commune',
+				layer_name='103_VERIF_BF_COM_Surface',
+				symbology_type=SymbologyType.SIMPLE,
+				symbology_properties={QgsSymbolLayer.PropertyFillColor: QVariant.fromValue(QColor(255, 0, 0))}
+			),
+			LayerInfo(display_name='Point limite térritoriale', layer_name='008_itf_lt_point_limite_ter'),
 			LayerInfo(display_name='Limite commune', layer_name='008_itf_lt_limite_commune'),
 			LayerInfo(display_name='Autre limite', layer_name='008_itf_lt_autre_limite'),
-			LayerInfo(display_name='DDP",'006_ITF_BF_DDP', layer_name=''['qml'], 50, ''],
-			LayerInfo(display_name='Biens fonds', '006_ITF_BF_Bien_fonds', layer_name=''['qml'], 50, '']
+			LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP', opacity=.5),
+			LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds', opacity=.5)
 		)
 		self.check_layer = (
 			'Géometrie de limite de canton incorrecte (OGC)',
