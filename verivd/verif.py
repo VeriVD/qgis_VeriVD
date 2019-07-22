@@ -35,7 +35,7 @@ class VerifBiens_fonds(SpatialiteData):
 			LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
 			LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
 			LayerInfo(display_name='Biens fonds à proximité du lot', layer_name='111_bdmo_biens_fonds_alentours'),
-			LayerInfo(display_name='Différence des surfaces des immeubles selon 6422bis', layer_name='107_verif_6422bis', visible=False),
+			LayerInfo(display_name='Différence des surfaces des immeubles selon 6422bis', layer_name='107_verif_6422bis', visibility=False),
 			LayerInfo(display_name='Plans en vigueur à proximité du lot', layer_name='111_bdmo_repartition_plans_alentours'),
 			LayerInfo(display_name='Plans en vigueur du lot', layer_name='111_bdmo_repartition_plan_en_vigueur_du_lot')
 		)
@@ -97,7 +97,7 @@ class VerifAdresses(SpatialiteData):
 			LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart'),
 			LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
 			LayerInfo(display_name='Entrée du RCB', layer_name='104_dwh_adresse_rcb', visibility=False),
-			LayerInfo(display_name='Différence entre les entrées de la MO et celles du RCB', layer_name='104_verif_entreemo_diff_rcb', visible=False),
+			LayerInfo(display_name='Différence entre les entrées de la MO et celles du RCB', layer_name='104_verif_entreemo_diff_rcb', visibility=False),
 			LayerInfo(display_name='Raccord des entrées vers localisation', layer_name='109_VERIF_Entree_Vers_Localisation'),
 			LayerInfo(display_name='Sens du tronçon', layer_name='009_ITF_BAT_Troncon_rue'),
 			LayerInfo(
@@ -389,7 +389,7 @@ class VerifPoints_fixes(SpatialiteData):
 				visibility=False
 			),
 			LayerInfo(display_name='Points fixes en BDMO mais pas dans le fichier ITF', layer_name='115_bdmo_pfp_en_plus'),
-			LayerInfo(display_name='Points fixes dans le fichier ITF mais pas en BDMO', layer_name='115_itf_pfp_en_plus', visible=False),
+			LayerInfo(display_name='Points fixes dans le fichier ITF mais pas en BDMO', layer_name='115_itf_pfp_en_plus', visibility=False),
 			LayerInfo(display_name='PFP-PFA3', layer_name='001_itf_pf_points_fixes'),
 			LayerInfo(display_name='Précision planimétrique des points fixes', layer_name='115_itf_pfp'),
 			LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),

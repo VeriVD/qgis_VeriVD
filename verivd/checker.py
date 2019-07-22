@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty
+from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty, QgsRenderContext, QgsExpressionContextUtils
 from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType
 
 
@@ -45,8 +45,10 @@ class Checker(SpatialiteData):
 
 		for self.layer in self.layers:
 			i = 0
+			context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
+			context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(self.layer))
 			if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
-				for symbol in self.layer.renderer().symbols():
+				for symbol in self.layer.renderer().symbols(context):
 					symbol.symbolLayer(0).setName(self.MARKER_SHAPE[i%(len(self.MARKER_SHAPE)-1)])  # TODO: check this
 					i = i+1
 			self.iface.layerTreeView().refreshLayerSymbology(self.layer.id())

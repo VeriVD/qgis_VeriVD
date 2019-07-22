@@ -146,7 +146,7 @@ class SpatialiteData(object):
 			layer = self.layer_config(layer_info.display_name, self.schema, layer_info.layer_name, geom_column, layer_info.sql_request)
 			layer.crs().createFromId(2056) # Set de coordinate system to LV95
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
-			if layer.isValid() and self.layer.featureCount() != 0:
+			if layer.isValid() and layer.featureCount() != 0:
 				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, layer_info.layer_name))
 				qml_gen_file = os.path.join(self.plugin_path, 'qml', '{}.qml'.format(layer_info.layer_name))
 				# Check if a specific qml file exist for this layer
@@ -174,10 +174,10 @@ class SpatialiteData(object):
 					layer.setOpacity(layer_info.opacity)
 				QgsProject.instance().addMapLayer(layer, False)
 				group_layer.insertLayer(len(self.layers), layer)
-				if not layer_info.visible:
-					node = QgsProject.instance().layerTreeRoot().findLayer(layer.id()).setItemVisibilityChecked(False)
+				if not layer_info.visibility:
+					node = QgsProject.instance().layerTreeRoot().findLayer(layer.id())
 					if node:
-						iface.legendInterface().setLayerVisible(layer, False)
+						node.setItemVisibilityChecked(False)
 					else:
 						raise Exception("La couche n'a pas été chargée.")
 				self.layers.append(layer)

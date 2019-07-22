@@ -48,13 +48,6 @@ class VeriVD:
     """ QGIS Plugin Implementation. """
 
     def __init__(self, iface: QgisInterface):
-        """Constructor.
-        
-        :param iface: An interface instance that will be passed to this class
-            which provides the hook by which you can manipulate the QGIS
-            application at run time.
-        """
-        # Save reference to the QGIS interface
         self.iface = iface
 
         # initialize plugin directory
@@ -68,7 +61,7 @@ class VeriVD:
         QCoreApplication.installTranslator(self.translator)
 
         # Declare instance attributes
-        self.actions = []
+        self.actions = {}
         self.menu_entry = self.tr('&Véri-Vaud')
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar('VeriVD')
@@ -95,12 +88,10 @@ class VeriVD:
         self.dockwidget.close()
         self.dockwidget.deleteLater()
 
-        for action in self.actions:
+        for action in self.actions.values():
             self.iface.removePluginMenu(self.menu_entry, action)
             self.iface.removeToolBarIcon(action)
         del self.toolbar
-
-    #--------------------------------------------------------------------------
 
     def aide_fichier(self):
         QMessageBox.information(QDialog(), "Aide", Help().messageFichier)
@@ -267,7 +258,7 @@ class VeriVD:
             for layer in topic.layers:
                 topic.infoText = topic.infoText + str(layer.featureCount()) + ' ' + layer.name() + '\n'
             if topic.infoText == "":
-                QMessageBox.warning(QDialog(), "Information", "Aucun objet dans ce thème.")
+                QMessageBox.warning(QDialog(),'Information', 'Aucun objet dans ce thème')
     
     def charger_ili_validator(self):
         # get the checked items

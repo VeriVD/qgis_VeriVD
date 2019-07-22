@@ -29,7 +29,7 @@ class IliValidator(SpatialiteData):
 				layer_name='000_ilivalidator_ligne',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='observation',
-				symbology_properties={QgsSymbolLayer.Width: QgsProperty.fromValue(2)},
+				symbology_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)},
 				sql_request=sql_request,
 				opacity=.5
 			),
@@ -38,7 +38,7 @@ class IliValidator(SpatialiteData):
 				layer_name='000_iliValidator_point_Arc',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='observation',
-				symbology_properties={QgsSymbolLayer.Width: QgsProperty.fromValue(2)},
+				symbology_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)},
 				sql_request=sql_request,
 				opacity=.5
 			),
@@ -47,7 +47,7 @@ class IliValidator(SpatialiteData):
 				layer_name='000_ilivalidator_surface',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='observation',
-				symbology_properties={QgsSymbolLayer.StrokeWidth: QgsProperty.fromValue(2)},
+				symbology_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
 				sql_request=sql_request,
 				opacity=.5,
 			),

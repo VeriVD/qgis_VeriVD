@@ -145,12 +145,12 @@ class BasePoints_fixes(SpatialiteData):
     def __init__(self, iface, pathSQliteDB):
         self.group_name = "Base - Points fixes"
         SpatialiteData.__init__(self, iface, pathSQliteDB)
-        self.layer_infos = (
+        self.layer_infos = [
             LayerInfo(
                 display_name='PFP-PFA3',
                 layer_name='001_itf_pf_points_fixes',
             )
-        )
+        ]
 
 
 class BaseAltimetrie(SpatialiteData):
@@ -159,12 +159,12 @@ class BaseAltimetrie(SpatialiteData):
     def __init__(self, iface, pathSQliteDB):
         self.group_name = "Base - Courbes de nivea"
         SpatialiteData.__init__(self, iface, pathSQliteDB)
-        self.layer_infos = (
+        self.layer_infos = [
             LayerInfo(
                 display_name='Courbes de nivea',
                 layer_name='004_itf_al_courbes_de_nivea',
             )
-        )
+        ]
 
 
 class BaseRepartition_des_plans(SpatialiteData):
@@ -173,12 +173,12 @@ class BaseRepartition_des_plans(SpatialiteData):
     def __init__(self, iface, pathSQliteDB):
         self.group_name = "Base - Répartition des plans"
         SpatialiteData.__init__(self, iface, pathSQliteDB)
-        self.layer_infos = (
+        self.layer_infos = [
             LayerInfo(
                 display_name='Plan',
                 layer_name='105_itf_rp',
             )
-        )
+        ]
 
 
 class BaseAdresses_des_batiments(SpatialiteData):
