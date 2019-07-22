@@ -16,11 +16,10 @@ install:
   - pip install qgis-plugin-ci
 
 deploy:
-  on:
-    tags: true
   provider: script
   script: qgis-plugin-ci release ${TRAVIS_TAG} --github-token ${GH_TOKEN} --create-plugin-repo
-  skip_cleanup: true
+  on:
+    tags: true
 
 
 
