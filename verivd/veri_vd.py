@@ -85,8 +85,9 @@ class VeriVD:
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
 
-        self.dockwidget.close()
-        self.dockwidget.deleteLater()
+        if self.dockwidget:
+            self.dockwidget.close()
+            self.dockwidget.deleteLater()
 
         for action in self.actions.values():
             self.iface.removePluginMenu(self.menu_entry, action)

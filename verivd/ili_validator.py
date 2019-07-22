@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty
-
-from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType
+from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType, MARKER_SHAPE
 
 
 class IliValidator(SpatialiteData):
@@ -65,6 +64,6 @@ class IliValidator(SpatialiteData):
 			i = 0
 			if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
 				for symbol in self.layer.renderer().symbols():
-					symbol.symbolLayer(0).setName(self.MARKER_SHAPE[i % (len(self.MARKER_SHAPE)-1)])  # TODO Check this with new API
+					symbol.symbolLayer(0).setName(MARKER_SHAPE[i % (len(MARKER_SHAPE)-1)])
 					i = i+1
 			self.iface.layerTreeView().refreshLayerSymbology(self.layer.id())

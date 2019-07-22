@@ -14,6 +14,18 @@ from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 import os.path
 from random import randrange
 
+MARKER_SHAPE = (
+	QgsSimpleMarkerSymbolLayerBase.Square,
+	QgsSimpleMarkerSymbolLayerBase.Diamond,
+	QgsSimpleMarkerSymbolLayerBase.Pentagon,
+	QgsSimpleMarkerSymbolLayerBase.Triangle,
+	QgsSimpleMarkerSymbolLayerBase.EquilateralTriangle,
+	QgsSimpleMarkerSymbolLayerBase.Star,
+	QgsSimpleMarkerSymbolLayerBase.Arrow,
+	QgsSimpleMarkerSymbolLayerBase.Circle,
+	QgsSimpleMarkerSymbolLayerBase.ArrowHeadFilled
+)
+
 
 class SymbologyType(Enum):
 	NO_SYMBOL = 1
@@ -23,11 +35,6 @@ class SymbologyType(Enum):
 
 
 class LayerInfo(object):
-	MARKER_SHAPE = (
-		'square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle',
-		'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead'
-	)
-
 	def __init__(
 			self,
 			display_name: str,
