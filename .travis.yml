@@ -1,0 +1,25 @@
+
+
+language: python
+
+python:
+  - 3.7
+
+env:
+  global:
+  # GH_TOKEN
+  - secure: "a98EqMfp4z89VTJTIA8EbHd7qlHrCeEeEIFJob8Mf2q8NZ6s9NsSdch/X32EiAe8D3iIPWS3zs2D/g1xtQ1fWFcwvmLx4zG+eepD02iYdx3ds2L19RI1vOc+NM3AC8sIXQPiOfLWjcvZcySM4doeNYgf7R4TZ93993D/+M0my//AqgUIeeW21snpNzSOTeOGWsiyrxu3UnaFD4SwjQNNnIDuq0Jo3sKCmm+ouePbCPch3mpLC9Yn/8jmzzNXbSXe82UwvHmfV7DSrs/BrFUSObadgpriRD7sWWhVds0htf5nhHmC45UOoPYOoLUyJkf/5wWkf3OcKDZ9lmmz3wJ5hyO0WyPhog7g2p1hjHylVH+kxsIUO4tOuWw8J+oCsuJcGcnF3h4HBV0p2spvVNtAXeMkgrnePyRTUi2p0Cq1S5bx3TF3xxePd/QAb0PR6x9IHRcZzOZWxJMpfmw+8beWdmUDuKxprVygoC8Qav1ApD+CsbXWjHGq6LXBbx9Eiil0QN1vnbnV7UDfFGTgdaf7uVZ1aTCbmcDpljmWePQ3Jy3J6T9cbwJs4D4buJbShpfTs299+kLGX87rCLiVIvScYnJAgGOeg6Bj/lV9TDnQcgcYe53c94iCkcBP54SytVUB1W1Ge09WQd1A+MC0OOP2VQbuKA72nMKz3j0lIXWnV20="
+
+install:
+  - pip install qgis-plugin-ci
+
+deploy:
+  on:
+    tags: true
+  provider: script
+  script: qgis-plugin-ci release ${TRAVIS_TAG} --github-token ${GH_TOKEN} --create-plugin-repo
+  skip_cleanup: true
+
+
+
+
