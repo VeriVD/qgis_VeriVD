@@ -302,9 +302,9 @@ class VeriVD:
             self.dockwidget.listViewTest.setModel(modelTest)
 
             DecompteDict = SpatialiteData(self.iface, uFile)
-            CheckerDict = DecompteDict.loadTableList('000_checker_decompte')
-            ilivalidatorDict = DecompteDict.loadTableList('000_ilivalidator_decompte')
-            layer_statisticsDict = DecompteDict.loadTableList('layer_statistics')
+            CheckerDict = DecompteDict.load_table_list('000_checker_decompte')
+            ilivalidatorDict = DecompteDict.load_table_list('000_ilivalidator_decompte')
+            layer_statisticsDict = DecompteDict.load_table_list('layer_statistics')
 
             if not ilivalidatorDict:
                 self.dockwidget.tabWidget.setTabEnabled(2, False)

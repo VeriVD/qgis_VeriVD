@@ -23,6 +23,11 @@ class SymbologyType(Enum):
 
 
 class LayerInfo(object):
+	MARKER_SHAPE = (
+		'square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle',
+		'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead'
+	)
+
 	def __init__(
 			self,
 			display_name: str,
@@ -117,14 +122,14 @@ class SpatialiteData(object):
 		layer = QgsVectorLayer(self.uri.uri(), display_name, 'spatialite')
 		return layer
 
-	def loadTableList(self, dataSource, fieldName=1, countField=2):
-		layer = self.layer_config('', self.schema, dataSource, '', '')
+	def load_table_list(self, data_source, field_name=1, count_field=2):
+		layer = self.layer_config('', self.schema, data_source, '', '')
 		listFeatDict={}
 		if layer.isValid():
 			features = layer.getFeatures()
 			for ft in features:
 				attrs = ft.attributes()
-				listFeatDict[attrs[fieldName]] = attrs[countField]
+				listFeatDict[attrs[field_name]] = attrs[count_field]
 		return listFeatDict
 
 	def load_layer(self):

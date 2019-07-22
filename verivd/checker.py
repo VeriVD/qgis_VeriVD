@@ -14,7 +14,6 @@ class Checker(SpatialiteData):
 	def load_layer(self, topic):
 		sql_request = '"topic" = "{}"'.format(topic)
 		self.group_name = "Résultat du checker - {}".format(topic)
-		self.markerShape = ('square', 'diamond', 'pentagon', 'triangle', 'equilateral_triangle', 'star', 'regular_star', 'arrow', 'circle', 'filled_arrowhead')
 
 		self.layer_infos = (
 			LayerInfo(
@@ -47,8 +46,7 @@ class Checker(SpatialiteData):
 		for self.layer in self.layers:
 			i = 0
 			if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
-				self.symbols = self.layer.renderer().symbols()
-				for self.symbol in self.symbols:
-					self.symbol.symbolLayer(0).setName(self.markerShape[i%(len(self.markerShape)-1)])  # TODO: check this
+				for symbol in self.layer.renderer().symbols():
+					symbol.symbolLayer(0).setName(self.MARKER_SHAPE[i%(len(self.MARKER_SHAPE)-1)])  # TODO: check this
 					i = i+1
 			self.iface.layerTreeView().refreshLayerSymbology(self.layer.id())
