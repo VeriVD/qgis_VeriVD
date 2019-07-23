@@ -1,6 +1,6 @@
 
 [general]
-name=Véri-Vaud
+name=VeriVD
 qgisMinimumVersion=3.4
 description=Vérification des mensurations vaudoises
 version=DEV
