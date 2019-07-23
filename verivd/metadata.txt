@@ -3,7 +3,7 @@
 name=Véri-Vaud
 qgisMinimumVersion=3.4
 description=Vérification des mensurations vaudoises
-version=0.1
+version=DEV
 author=FSN/OIT
 email=fabien.simon@vd.ch
 
