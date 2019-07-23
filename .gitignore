@@ -1,5 +1,6 @@
 *_rc.py
 *.pyc
+*.tokens
 .idea
 .DS_Store
 *.zip
