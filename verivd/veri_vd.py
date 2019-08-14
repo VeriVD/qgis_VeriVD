@@ -237,9 +237,10 @@ class VeriVD:
         # Remove all Layers
         QgsProject.instance().removeAllMapLayers()
         # Remove all Groups
-        for child in  QgsProject.instance().layerTreeRoot().children():
+        for child in QgsProject.instance().layerTreeRoot().children():
             if isinstance(child, QgsLayerTreeGroup):
                 QgsProject.instance().layerTreeRoot().removeChildNode(child)
+        self.iface.mapCanvas().refresh()
 
     def charger_base(self):
         # get the checked items
