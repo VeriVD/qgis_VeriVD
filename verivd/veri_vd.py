@@ -38,6 +38,7 @@ from verivd.help import *
 from verivd.ili_validator import *
 from verivd.checker import *
 from verivd.verif import *
+from verivd.base import *
 
 # Import the code for the DockWidget
 from .veri_vd_dockwidget import VeriVDDockWidget
