@@ -42,6 +42,7 @@ class LayerInfo(object):
 			layer_name: str,
 			symbology_type: SymbologyType = SymbologyType.QML,
 			symbology_properties: dict = {},
+			symbology_data_defined_properties: dict = {},
 			category_field = None,
 			sql_request: str = '',
 			visibility: bool = True,
@@ -52,6 +53,7 @@ class LayerInfo(object):
 		self.sql_request = sql_request
 		self.symbology_type = symbology_type
 		self.symbology_properties = symbology_properties
+		self.symbology_data_defined_properties = symbology_data_defined_properties
 		self.category_field = category_field
 		self.opacity = opacity
 		self.visibility = visibility
@@ -76,7 +78,7 @@ class SpatialiteData(object):
 		fni = layer.fields().indexFromName(field)
 		return layer.dataProvider().uniqueValues(fni)
 
-	def create_simple_symbol(self, layer: QgsVectorLayer, properties):
+	def create_simple_symbol(self, layer: QgsVectorLayer, properties: dict):
 		renderer = layer.renderer()
 		simple_symbol = None
 		if layer.geometryType() == QgsWkbTypes.PointGeometry:
@@ -85,6 +87,7 @@ class SpatialiteData(object):
 			simple_symbol = QgsLineSymbol.createSimple(properties)
 		elif layer.geometryType() == QgsWkbTypes.PolygonGeometry:
 			simple_symbol = QgsFillSymbol.createSimple(properties)
+
 		renderer.setSymbol(simple_symbol)
 
 	def change_properties(self, layer: QgsVectorLayer, properties: QgsPropertyCollection):
@@ -176,7 +179,7 @@ class SpatialiteData(object):
 								layer_info.display_name, layer_info.layer_name
 							))
 				elif layer_info.symbology_type == SymbologyType.RANDOM_CATEGORIZED:
-					self.random_cat_symb(layer, layer_info.category_field, layer_info.symbology_properties)
+					self.random_cat_symb(layer, layer_info.category_field, layer_info.symbology_data_defined_properties)
 				elif layer_info.symbology_type == SymbologyType.SIMPLE:
 					self.create_simple_symbol(layer, layer_info.symbology_properties)
 				if layer_info.opacity != 1:

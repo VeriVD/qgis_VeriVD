@@ -61,15 +61,15 @@ class VerifNomenclature(SpatialiteData):
 				layer_name='103_VERIF_BF_NO_Point',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(4)
+					'color': '255, 255, 0',
+					'size': '4'
 				}
 			),
 			LayerInfo(
 				display_name='Sifflet entre les immeubles et la nomenclature',
 				layer_name='103_VERIF_BF_NO_Surface',
 				symbology_type=SymbologyType.SIMPLE,
-				symbology_properties={QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 0, 0))}
+				symbology_properties={'color': '255, 0, 0'}
 			),
 			LayerInfo(
 				display_name='Nom local',
@@ -105,7 +105,7 @@ class VerifAdresses(SpatialiteData):
 				layer_name='009_ITF_BAT_Troncon_rue',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='texte',
-				symbology_properties={
+				symbology_data_defined_properties={
 					QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3),
 					QgsSymbolLayer.PropertyCapStyle: QgsProperty.fromValue(Qt.RoundCap),
 					QgsSymbolLayer.PropertyJoinStyle: QgsProperty.fromValue(Qt.RoundJoin),
@@ -116,8 +116,8 @@ class VerifAdresses(SpatialiteData):
 				layer_name='108_VERIF_Habitation_sans_adresse',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 0, 0, 180)),
-					QgsSymbolLayer.PropertyStrokeColor: QgsProperty.fromValue(QColor(255, 255, 0))
+					'color': '255, 0, 0, 180',
+					'border_color': '255, 255, 0'
 				},
 				visibility=False
 			),
@@ -132,9 +132,9 @@ class VerifAdresses(SpatialiteData):
 				sql_request='"number" LIKE "DP%"',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 255)),
-					QgsSymbolLayer.PropertyStrokeColor: QgsProperty.fromValue(QColor(0, 0, 0)),
-					QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(.5)
+					'color': '255, 255, 255',
+					'border_color': '0,0,0',
+					'width_border': '0.5'
 				}
 			),
 			LayerInfo(
@@ -167,8 +167,8 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='114_VERIF_OD_surfaciqueErreur',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 0, 0)),
-					QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
+					'color': '255, 0, 0',
+					'width': '2'
 				}
 			),
 			LayerInfo(
@@ -176,8 +176,8 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='114_VERIF_OD_lineaireErreur',
 				symbology_type=SymbologyType.SIMPLE, 
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 0, 0)), 
-					QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
+					'color': '255, 0, 0',
+					'width': '2'
 				}
 			),
 			LayerInfo(
@@ -185,8 +185,8 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='113_cs_pointbatiment', 
 				symbology_type=SymbologyType.SIMPLE, 
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 100, 200)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 100, 200',
+					'size': '2'
 				}
 			),
 			LayerInfo(
@@ -194,22 +194,22 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='110_od_ogc_geometrie',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='issue_found', 
-				symbology_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)}
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)}
 			),
 			LayerInfo(
 				display_name='point divergent entre les immeubles et la couverture du sol', 
 				layer_name='103_verif_bf_cs_point', 
 				symbology_type=SymbologyType.SIMPLE, 
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)), 
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
 				display_name='Sifflet entre les immeubles et la couverture du sol', 
 				layer_name='103_verif_bf_cs_surface', 
 				symbology_type=SymbologyType.SIMPLE, 
-				symbology_properties={QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 0, 0))}
+				symbology_properties={'color': '255, 0, 0'}
 			),
 			LayerInfo(display_name='Nombre de géomètrie par objet divers linéaires', layer_name='102_verif_od_lineaire_fid'),
 			LayerInfo(display_name='Nombre de géomètrie par objet divers surfacique', layer_name='102_verif_od_surfacique_fid'),
@@ -217,7 +217,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				display_name='Objets divers linéaires (relation vers les géomètries)', 
 				layer_name='102_verif_od_lineaire_fid', symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
 				category_field='fid_od',
-				symbology_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3)},
 				opacity=.5
 			),
 			LayerInfo(
@@ -225,7 +225,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='102_verif_od_surfacique_fid',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
 				category_field='fid_od',
-				symbology_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3)},
 				opacity=.5
 			),
 			LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
@@ -240,7 +240,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='002_ITF_CS_Surface_CS',
 				sql_request='"type" = "batiment"',
 				symbology_type=SymbologyType.SIMPLE,
-				symbology_properties={QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 210, 210))}),
+				symbology_properties={'color': '255, 210, 210'}),
 			LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
 			LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
 			LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS', opacity=.5)
@@ -272,15 +272,15 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 				layer_name='103_VERIF_BF_RP_Point',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
 				display_name='Sifflet entre les immeubles et la répartition des plans',
 				layer_name='103_VERIF_BF_RP_Surface',
 				symbology_type=SymbologyType.SIMPLE,
-				symbology_properties={QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 0, 0))}
+				symbology_properties={'color': '255, 0, 0'}
 			),
 			LayerInfo(display_name='Point sur mauvais plan', layer_name='105_verif_point_sur_mauvais_plan'),
 			LayerInfo(display_name='Répartition des plans du lot', layer_name='105_itf_rp'),
@@ -289,7 +289,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 				layer_name='112_itf_objet_hors_perimetrelot_point',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='nomtable',
-				symbology_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(3)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(3)},
 				opacity=.5,
 				visibility=False
 			),
@@ -298,7 +298,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 				layer_name='112_itf_objet_hors_perimetrelot_ligne',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='nomtable',
-				symbology_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)},
 				opacity=.5,
 				visibility=False
 			),
@@ -307,7 +307,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 				layer_name='112_itf_objet_hors_perimetre_surface',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
 				category_field='nomtable',
-				symbology_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
 				opacity=.5,
 				visibility=False
 			),
@@ -413,8 +413,8 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 				layer_name='116_LigneCANT_OGC_fail',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
@@ -422,8 +422,8 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 				layer_name='116_LigneCOM_OGC_fail',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
@@ -431,8 +431,8 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 				layer_name='116_LigneDIST_OGC_fail',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
@@ -440,16 +440,16 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 				layer_name='116_PL_terr_manquant_sous_sommet_COM',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}),
 			LayerInfo(
 				display_name='sommet de limte de commune manquant sous point de limtes térritoriales',
 				layer_name='116_Sommet_COM_manquant_sous_PL_terr',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
@@ -457,8 +457,8 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 				layer_name='116_sommetCOM_manquant_sous_sommet_CANT',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
@@ -466,8 +466,8 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 				layer_name='116_sommetCOM_manquant_sous_sommet_Dist',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
@@ -475,15 +475,15 @@ class VerifLimites_territoriales_et_administratives(SpatialiteData):
 				layer_name='103_VERIF_BF_COM_Point',
 				symbology_type=SymbologyType.SIMPLE,
 				symbology_properties={
-					QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 255, 0)),
-					QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
+					'color': '255, 255, 0',
+					'size': '2'
 				}
 			),
 			LayerInfo(
 				display_name='Sifflet entre les immeubles et la limite de commune',
 				layer_name='103_VERIF_BF_COM_Surface',
 				symbology_type=SymbologyType.SIMPLE,
-				symbology_properties={QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 0, 0))}
+				symbology_properties={'color': '255, 0, 0'}
 			),
 			LayerInfo(display_name='Point limite térritoriale', layer_name='008_itf_lt_point_limite_ter'),
 			LayerInfo(display_name='Limite commune', layer_name='008_itf_lt_limite_commune'),

@@ -22,7 +22,7 @@ class Checker(SpatialiteData):
 				sql_request=sql_request,
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='description',
-				symbology_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)}
+				symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)}
 			),
 			LayerInfo(
 				display_name='Checker - {} surface'.format(topic),
@@ -30,7 +30,7 @@ class Checker(SpatialiteData):
 				sql_request=sql_request,
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='description',
-				symbology_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
 				opacity=.5
 			),
 			LayerInfo(

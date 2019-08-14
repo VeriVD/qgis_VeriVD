@@ -61,8 +61,9 @@ class BaseCouverture_du_sol(SpatialiteData):
                 layer_name='002_ITF_CS_Surface_CS',
                 symbology_type=SymbologyType.SIMPLE,
                 symbology_properties={
-                    QgsSymbolLayer.PropertyFillColor: QgsProperty.fromValue(QColor(255, 210, 210)),
-                    QgsSymbolLayer.PropertyStrokeColor: QgsProperty.fromValue(QColor(Qt.black))}
+                    'color': '255, 210, 210',
+                    'border_color': 'black'
+                }
             )
         )
 
