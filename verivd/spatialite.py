@@ -9,6 +9,7 @@ from builtins import object
 from qgis.core import *
 from qgis.gui import QgisInterface
 from qgis.utils import iface
+from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 
 import os.path
@@ -71,73 +72,74 @@ class SpatialiteData(object):
 		self.layers = []
 		self.layer_infos = []
 
-	def unique_field_finder(self, field):
-		self.field = field
-		self.fni = self.layer.fields().indexFromName(self.field)
-		self.unique_values = self.layer.dataProvider().uniqueValues(self.fni)
-		return self.unique_values
+	def unique_field_finder(self, layer: QgsVectorLayer, field: str):
+		fni = layer.fields().indexFromName(field)
+		return layer.dataProvider().uniqueValues(fni)
 
-	def create_simple_symbol(self, properties):
-		renderer = self.layer.renderer()
-		if self.layer.geometryType() == QgsWkbTypes.PointGeometry:
-			self.simpleSymbol = QgsMarkerSymbol.createSimple(properties)
-		elif self.layer.geometryType() == QgsWkbTypes.LineGeometry:
-			self.simpleSymbol = QgsLineSymbol.createSimple(properties)
-		elif self.layer.geometryType() == QgsWkbTypes.PolygonGeometry:
-			self.simpleSymbol = QgsFillSymbol.createSimple(properties)
-		renderer.setSymbol(self.simpleSymbol)
+	def create_simple_symbol(self, layer: QgsVectorLayer, properties):
+		renderer = layer.renderer()
+		simple_symbol = None
+		if layer.geometryType() == QgsWkbTypes.PointGeometry:
+			simple_symbol = QgsMarkerSymbol.createSimple(properties)
+		elif layer.geometryType() == QgsWkbTypes.LineGeometry:
+			simple_symbol = QgsLineSymbol.createSimple(properties)
+		elif layer.geometryType() == QgsWkbTypes.PolygonGeometry:
+			simple_symbol = QgsFillSymbol.createSimple(properties)
+		renderer.setSymbol(simple_symbol)
 
-	def change_properties(self, properties):
-		if self.layer.renderer() is not None:
+	def change_properties(self, layer: QgsVectorLayer, properties: QgsPropertyCollection):
+		if layer.renderer() is not None:
 			# TODO check context
 			context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
-			context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(self.layer))
-			for symbol in self.layer.renderer().symbols(context):
+			context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(layer))
+			for symbol in layer.renderer().symbols(context):
 				symbol.symbolLayer(0).setDataDefinedProperties(properties)
-			self.layer.triggerRepaint()
+			layer.triggerRepaint()
 
-	def create_simple_fill_symbol_layer(self, fillColor):
+	def create_simple_fill_symbol_layer(self, layer: QgsVectorLayer, fill_color: QColor):
 		# initialize the default symbol for this geometry type
-		self.symbol = QgsSymbol.defaultSymbol(self.layer.geometryType())
+		symbol = QgsSymbol.defaultSymbol(layer.geometryType())
 		# configure a symbol layer
-		self.layer_style = {}
-		self.layer_style['color'] = fillColor
-		self.symbol_layer = QgsSimpleFillSymbolLayer.create(self.layer_style)
+		symbol_layer = QgsSimpleFillSymbolLayer(fill_color)
 		# replace default symbol layer with the configured one
-		if self.symbol_layer is not None:
-			self.symbol.changeSymbolLayer(0, self.symbol_layer)
+		if symbol_layer is not None:
+			symbol.changeSymbolLayer(0, symbol_layer)
+		return symbol
 
-	def random_cat_symb(self, field: str, properties: dict):
-		self.unique_field_finder(field)
+	def random_cat_symb(self, layer: QgsVectorLayer, field: str, properties: dict):
 		categories = []
-		for self.unique_value in self.unique_values:
-			self.create_simple_fill_symbol_layer('%d, %d, %d' % (randrange(0, 256), randrange(0, 256), randrange(0, 256)))
-			category = QgsRendererCategory(self.unique_value, self.symbol, self.unique_value)  # TODO: removed encode('Latin-1'), is this causing troubles?
+		for unique_value in self.unique_field_finder(layer, field):
+			symbol = self.create_simple_fill_symbol_layer(
+				layer, fill_color=QColor(randrange(0, 256), randrange(0, 256), randrange(0, 256)))
+			category = QgsRendererCategory(unique_value, symbol, unique_value)  # TODO: removed encode('Latin-1'), is this causing troubles?
 			# entry for the list of category items
 			categories.append(category)
 		# create renderer object
-		self.renderer = QgsCategorizedSymbolRenderer(self.field, categories)
+		renderer = QgsCategorizedSymbolRenderer(field, categories)
 		# assign the created renderer to the layer
-		if self.renderer is not None:
-			self.layer.setRenderer(self.renderer)
-			self.change_properties(properties)
+		if renderer is not None:
+			layer.setRenderer(renderer)
+			property_collection = QgsPropertyCollection()
+			for key, value in properties.items():
+				property_collection.setProperty(key, value)
+			self.change_properties(layer, property_collection)
 
-	def layer_config(self, display_name, schema, layerName, geom_column='', sqlRequest=''):
+	def layer_config(self, display_name, schema, layer_name, geom_column='', sql_request=''):
 		# set uri connection parameter
-		self.uri.setDataSource(schema, layerName, geom_column, sqlRequest)
+		self.uri.setDataSource(schema, layer_name, geom_column, sql_request)
 		# construct the layer
 		layer = QgsVectorLayer(self.uri.uri(), display_name, 'spatialite')
 		return layer
 
 	def load_table_list(self, data_source, field_name=1, count_field=2):
 		layer = self.layer_config('', self.schema, data_source, '', '')
-		listFeatDict={}
+		list_feat_dict = {}
 		if layer.isValid():
 			features = layer.getFeatures()
 			for ft in features:
 				attrs = ft.attributes()
-				listFeatDict[attrs[field_name]] = attrs[count_field]
-		return listFeatDict
+				list_feat_dict[attrs[field_name]] = attrs[count_field]
+		return list_feat_dict
 
 	def load_layer(self):
 		# set the layers group in the tree
@@ -173,10 +175,10 @@ class SpatialiteData(object):
 							"\n{}\nChargement d'un symbole par défault".format(
 								layer_info.display_name, layer_info.layer_name
 							))
-				elif layer_info.symbology_type == 'randomCategorized':
-					self.random_cat_symb(layer_info.category_field)
-				elif layer_info.symbology_type == 'simple':
-					self.create_simple_symbol(layer_info.symbology_properties)
+				elif layer_info.symbology_type == SymbologyType.RANDOM_CATEGORIZED:
+					self.random_cat_symb(layer, layer_info.category_field, layer_info.symbology_properties)
+				elif layer_info.symbology_type == SymbologyType.SIMPLE:
+					self.create_simple_symbol(layer, layer_info.symbology_properties)
 				if layer_info.opacity != 1:
 					layer.setOpacity(layer_info.opacity)
 				QgsProject.instance().addMapLayer(layer, False)

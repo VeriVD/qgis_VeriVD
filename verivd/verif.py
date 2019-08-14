@@ -8,7 +8,7 @@ from qgis.PyQt.QtGui import QColor
 from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType
 
 
-# display_name, layerName, sqlRequest, symb, trans, visib
+# display_name, layer_name, sql_request, symb, trans, visib
 
 class VerifBiens_fonds(SpatialiteData):
 	"""Class used to load test on BF's layers"""
