@@ -28,7 +28,7 @@ class BaseBiens_fonds(SpatialiteData):
             ),
             LayerInfo(
                 display_name='DDP',
-                layer_name='006_ITF_BF_Point_limite',
+                layer_name='006_ITF_BF_DDP',
             ),
             LayerInfo(
                 display_name='Biens fonds',
@@ -59,6 +59,7 @@ class BaseCouverture_du_sol(SpatialiteData):
             LayerInfo(
                 display_name='Bâtiment',
                 layer_name='002_ITF_CS_Surface_CS',
+				sql_request='"type" = "batiment"',
                 symbology_type=SymbologyType.SIMPLE,
                 symbology_properties={
                     'color': '255, 210, 210',

@@ -20,7 +20,7 @@ class VerifBiens_fonds(SpatialiteData):
 			LayerInfo(display_name='Sommet manquant sous un point limite', layer_name='100_verif_bf_sommet_manquant_sous_pl'),
 			LayerInfo(display_name='Sommet proche d\'une limite', layer_name='100_verif_bf_sommet_proche_pl'),
 			LayerInfo(display_name='Point limite manquant sur un sommet', layer_name='100_verif_bf_pl_manquant_sur_sommet'),
-			LayerInfo(display_name='Point limite isolée', layer_name='100_verif_bf_pl_isole'),
+			LayerInfo(display_name='Point limite isolé', layer_name='100_verif_bf_pl_isole'),
 			LayerInfo(display_name='Point limite avant point', layer_name='100_verif_bf_pl_avant_point'),
 			LayerInfo(display_name='Point limite hors périmètre', layer_name='100_verif_bf_pl_hors_perimetre'),
 			LayerInfo(display_name='Point limite en bordure du périmètre', layer_name='100_verif_bf_pl_sur_bord_perimetre'),
@@ -43,7 +43,7 @@ class VerifBiens_fonds(SpatialiteData):
 			'Sommet manquant sous un point limite',
 			'Sommet proche d\'une limite',
 			'Point limite manquant sur un sommet',
-			'Point limite isolée',
+			'Point limite isolé',
 			'Point limite avant point',
 			'Point limite en bordure du périmètre',
 			'Point limite décrivant une limite quasi-alignée'
@@ -106,7 +106,7 @@ class VerifAdresses(SpatialiteData):
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='texte',
 				symbology_data_defined_properties={
-					QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3),
+					QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3),
 					QgsSymbolLayer.PropertyCapStyle: QgsProperty.fromValue(Qt.RoundCap),
 					QgsSymbolLayer.PropertyJoinStyle: QgsProperty.fromValue(Qt.RoundJoin),
 				}
