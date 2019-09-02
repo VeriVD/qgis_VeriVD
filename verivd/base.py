@@ -163,8 +163,8 @@ class BaseAltimetrie(SpatialiteData):
         SpatialiteData.__init__(self, iface, pathSQliteDB)
         self.layer_infos = [
             LayerInfo(
-                display_name='Courbes de nivea',
-                layer_name='004_itf_al_courbes_de_nivea',
+                display_name='Courbes de niveau',
+                layer_name='004_itf_al_courbes_de_niveau',
             )
         ]
 

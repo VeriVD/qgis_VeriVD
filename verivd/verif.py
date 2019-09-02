@@ -194,7 +194,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='110_od_ogc_geometrie',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='issue_found', 
-				symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)}
+				symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)}
 			),
 			LayerInfo(
 				display_name='point divergent entre les immeubles et la couverture du sol', 
@@ -217,7 +217,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				display_name='Objets divers linéaires (relation vers les géomètries)', 
 				layer_name='102_verif_od_lineaire_fid', symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
 				category_field='fid_od',
-				symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
 				opacity=.5
 			),
 			LayerInfo(
@@ -225,7 +225,7 @@ class VerifCouverture_du_sol_et_objets_divers(SpatialiteData):
 				layer_name='102_verif_od_surfacique_fid',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED, 
 				category_field='fid_od',
-				symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(3)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(0.5)},
 				opacity=.5
 			),
 			LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
@@ -289,7 +289,7 @@ class VerifRepartition_des_plans_et_domaine_de_numerotation(SpatialiteData):
 				layer_name='112_itf_objet_hors_perimetrelot_point',
 				symbology_type=SymbologyType.RANDOM_CATEGORIZED,
 				category_field='nomtable',
-				symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(3)},
+				symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
 				opacity=.5,
 				visibility=False
 			),
