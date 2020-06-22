@@ -4,16 +4,21 @@
 """ A simple class used to load a layer in QGIS """
 
 # Some commonly used imports
-from enum import Enum
+
 from builtins import object
-from qgis.core import *
+import os.path
+from random import randrange
+
+from qgis.core import QgsSimpleMarkerSymbolLayerBase, QgsWkbTypes, QgsDataSourceUri, QgsExpressionContextUtils,\
+	QgsVectorLayer, QgsPropertyCollection, QgsSymbol, QgsSimpleFillSymbolLayer, QgsRendererCategory, \
+	QgsCategorizedSymbolRenderer, QgsCoordinateReferenceSystem, QgsMarkerSymbol, QgsLineSymbol, QgsFillSymbol, \
+	QgsRenderContext
 from qgis.gui import QgisInterface
-from qgis.utils import iface
 from qgis.PyQt.QtGui import QColor
 from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 
-import os.path
-from random import randrange
+from verivd.core.layer_info import LayerInfo
+from verivd.core.symbolgy_type import SymbologyType
 
 MARKER_SHAPE = (
 	QgsSimpleMarkerSymbolLayerBase.Square,
@@ -27,36 +32,7 @@ MARKER_SHAPE = (
 	QgsSimpleMarkerSymbolLayerBase.ArrowHeadFilled
 )
 
-
-class SymbologyType(Enum):
-	NO_SYMBOL = 1
-	QML = 2
-	SIMPLE = 3
-	RANDOM_CATEGORIZED = 4
-
-
-class LayerInfo(object):
-	def __init__(
-			self,
-			display_name: str,
-			layer_name: str,
-			symbology_type: SymbologyType = SymbologyType.QML,
-			symbology_properties: dict = {},
-			symbology_data_defined_properties: dict = {},
-			category_field = None,
-			sql_request: str = '',
-			visibility: bool = True,
-			opacity: float = 1
-	):
-		self.display_name = display_name
-		self.layer_name = layer_name
-		self.sql_request = sql_request
-		self.symbology_type = symbology_type
-		self.symbology_properties = symbology_properties
-		self.symbology_data_defined_properties = symbology_data_defined_properties
-		self.category_field = category_field
-		self.opacity = opacity
-		self.visibility = visibility
+Debug = True
 
 
 class SpatialiteData(object):
@@ -72,7 +48,6 @@ class SpatialiteData(object):
 		self.symbols = None
 		self.properties = None
 		self.layers = []
-		self.layer_infos = []
 
 	def unique_field_finder(self, layer: QgsVectorLayer, field: str):
 		fni = layer.fields().indexFromName(field)
@@ -127,15 +102,18 @@ class SpatialiteData(object):
 				property_collection.setProperty(key, value)
 			self.change_properties(layer, property_collection)
 
-	def layer_config(self, display_name, schema, layer_name, geom_column='', sql_request=''):
+	def create_layer(self, display_name, schema, layer_name, geom_column='', sql_request=''):
 		# set uri connection parameter
+		print('PPP', schema, layer_name, geom_column, sql_request)
 		self.uri.setDataSource(schema, layer_name, geom_column, sql_request)
 		# construct the layer
 		layer = QgsVectorLayer(self.uri.uri(), display_name, 'spatialite')
+		if layer.isSpatial():
+			layer.setCrs(QgsCoordinateReferenceSystem.fromEpsgId(2056))  # Set de coordinate system to LV95
 		return layer
 
 	def load_table_list(self, data_source, field_name=1, count_field=2):
-		layer = self.layer_config('', self.schema, data_source, '', '')
+		layer = self.create_layer('', self.schema, data_source, '', '')
 		list_feat_dict = {}
 		if layer.isValid():
 			features = layer.getFeatures()
@@ -144,19 +122,19 @@ class SpatialiteData(object):
 				list_feat_dict[attrs[field_name]] = attrs[count_field]
 		return list_feat_dict
 
-	def load_layer(self):
+	def create_layers(self, layer_infos: [LayerInfo]):
 		# set the layers group in the tree
-		group_layer = QgsProject.instance().layerTreeRoot().insertGroup(0, self.group_name)
-		group_layer.setExpanded(False)
-		self.layers = []
+		layers = []
 		# loop through layer's parameters
-		for layer_info in self.layer_infos:
-			if layer_info.symbology_type != SymbologyType.NO_SYMBOL :
+		for layer_info in layer_infos:
+			if layer_info.symbology_type != SymbologyType.NO_SYMBOL:
 				geom_column = "GEOMETRY"
 			else:
 				geom_column = ""
-			layer = self.layer_config(layer_info.display_name, self.schema, layer_info.layer_name, geom_column, layer_info.sql_request)
-			layer.crs().createFromId(2056) # Set de coordinate system to LV95
+			layer = self.create_layer(layer_info.display_name, self.schema, layer_info.layer_name, geom_column, layer_info.sql_request)
+
+			print('WWWW', layer.isValid(), layer.featureCount())
+
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
 			if layer.isValid() and layer.featureCount() != 0:
 				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, layer_info.layer_name))
@@ -184,12 +162,6 @@ class SpatialiteData(object):
 					self.create_simple_symbol(layer, layer_info.symbology_properties)
 				if layer_info.opacity != 1:
 					layer.setOpacity(layer_info.opacity)
-				QgsProject.instance().addMapLayer(layer, False)
-				group_layer.insertLayer(len(self.layers), layer)
-				if not layer_info.visibility:
-					node = QgsProject.instance().layerTreeRoot().findLayer(layer.id())
-					if node:
-						node.setItemVisibilityChecked(False)
-					else:
-						raise Exception("La couche n'a pas été chargée.")
-				self.layers.append(layer)
+
+				layers.append(layer)
+		return layers

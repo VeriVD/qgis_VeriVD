@@ -25,9 +25,8 @@ import os
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget
-from qgis.PyQt.QtCore import pyqtSignal
+from qgis.PyQt.QtCore import pyqtSignal, QModelIndex
 from qgis.gui import QgsFileWidget
-from verivd.core.layer_list_model import LayerModels
 
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -40,9 +39,10 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
     file_changed = pyqtSignal(str)
     closingPlugin = pyqtSignal()
 
-    def __init__(self, layer_models: LayerModels, parent=None):
+    def __init__(self, layer_models, parent=None):
         super(VeriVDDockWidget, self).__init__(parent)
         self.setupUi(self)
+        self.layer_models = layer_models
 
         self.file_widget.setDialogTitle('Ouvrir un fichier spatialite')
         self.file_widget.setRelativeStorage(QgsFileWidget.Absolute)
@@ -53,8 +53,18 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.ili_validator_list_view.setModel(layer_models.ili_validator_layer_model)
         self.checker_list_view.setModel(layer_models.checker_layer_model)
 
+        layer_models.ili_validator_layer_model.dataChanged.connect(self.update_ili_tab)
+        layer_models.checker_layer_model.dataChanged.connect(self.update_checker_tab)
+
         self.file_widget.fileChanged.connect(self.file_changed)
 
+    def update_checker_tab(self):
+        if self.layer_models.checker_layer_model.rowCount(QModelIndex()) == 0:
+            self.tabWidget.setTabEnabled(3, False)
+
+    def update_ili_tab(self):
+        if self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) == 0:
+            self.tabWidget.setTabEnabled(2, False)
 
     def closeEvent(self, event):
         self.closingPlugin.emit()

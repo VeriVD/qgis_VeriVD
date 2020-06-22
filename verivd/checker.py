@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 
-from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty, QgsRenderContext, QgsExpressionContextUtils, QgsSimpleMarkerSymbolLayerBase
-from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType, MARKER_SHAPE
+from qgis.core import QgsWkbTypes, QgsSymbolLayer, QgsProperty, QgsRenderContext, QgsExpressionContextUtils
+from verivd.core.spatialite_data import SpatialiteData, MARKER_SHAPE
+from verivd.core.symbolgy_type import SymbologyType
+from verivd.core.layer_info import LayerInfo
 
 
 class Checker(SpatialiteData):

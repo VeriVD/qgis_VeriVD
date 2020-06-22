@@ -23,9 +23,9 @@
 import os.path
 import sys
 
-from qgis.PyQt.QtCore import QCoreApplication, QLocale, QSettings, QTranslator
-from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
-from qgis.PyQt.QtGui import QIcon, QStandardItem
+from qgis.PyQt.QtCore import Qt, QCoreApplication, QLocale, QSettings, QTranslator
+from qgis.PyQt.QtWidgets import QAction, QDialog, QMessageBox
+from qgis.PyQt.QtGui import QIcon
 
 from qgis.core import QgsProject, QgsLayerTreeGroup
 from qgis.gui import QgisInterface
@@ -34,12 +34,29 @@ from qgis.gui import QgisInterface
 
 # Initialize layers
 from verivd.help import *
-from verivd.ili_validator import *
-from verivd.checker import *
-from verivd.base import *
 
-from verivd.core.layer_list_model import LayerModels
+from verivd.core.spatialite_data import SpatialiteData
+from verivd.core.models.base_model import BaseLayerModel
+from verivd.core.models.test_model import TestLayerModel
+from verivd.core.models.checker_model import CheckerLayerModel
+from verivd.core.models.ili_validator_model import IliValidatorLayerModel
+
 from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
+
+
+class LayerModels:
+    def __init__(self):
+        self.spatialite_data = None
+        self.test_layer_model = TestLayerModel()
+        self.ili_validator_layer_model = IliValidatorLayerModel()
+        self.checker_layer_model = CheckerLayerModel()
+        self.base_layer_model = BaseLayerModel()
+
+    def set_spatialite_data(self, spatialite_data):
+        self.test_layer_model.spatialite_data = spatialite_data
+        self.ili_validator_layer_model.spatialite_data = spatialite_data
+        self.checker_layer_model.spatialite_data = spatialite_data
+        self.base_layer_model.spatialite_data = spatialite_data
 
 
 class VeriVD:
@@ -51,6 +68,7 @@ class VeriVD:
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
 
+        self.spatialite_data = None
         self.layer_models = LayerModels()
 
         # initialize translation
@@ -118,31 +136,16 @@ class VeriVD:
 
     def ouvrir_fichier(self, file):
         if file:
-            trace = "Fichier ouvert:\n\n{}".format(file)
-            strFile = file.encode("utf-8")
-            uFile = strFile.decode("utf-8")
+            self.strFile = file.encode("utf-8")
+            self.uFile = self.strFile.decode("utf-8")
             i = 1
             while i <= int(self.dock_widget.tabWidget.count()):
                 self.dock_widget.tabWidget.setTabEnabled(i, True)
                 i += 1
 
-            decompte_dict = SpatialiteData(self.iface, uFile)
-            checker_dict = decompte_dict.load_table_list('000_checker_decompte')
-            ili_validator_dict = decompte_dict.load_table_list('000_ilivalidator_decompte')
-            layer_statisticsDict = decompte_dict.load_table_list('layer_statistics')
+            spatialite_data = SpatialiteData(self.iface, self.uFile)
+            self.layer_models.set_spatialite_data(spatialite_data)
 
-            if not ili_validator_dict:
-                self.dock_widget.tabWidget.setTabEnabled(2, False)
-                self.layer_models.ili_validator_layer_model.clear()
-            else:
-                self.layer_models.ili_validator_layer_model.set_ili_validator_data(ili_validator_dict)
-
-            if not checker_dict:
-                self.dock_widget.tabWidget.setTabEnabled(3, False)
-                self.layer_models.checker_layer_model.clear()
-            else:
-                self.layer_models.checker_layer_model.set_checker_data(checker_dict)
-    
     def tout_effacer(self):
         # Remove all Layers
         QgsProject.instance().removeAllMapLayers()

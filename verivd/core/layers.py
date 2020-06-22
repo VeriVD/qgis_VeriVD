@@ -40,24 +40,25 @@ DONNEES_TEST = (
     "Verif - Adresses"
 )
 
+# REMEMBER TO SORT WHEN EDITING
 DONNEES_TOPIC = (
+    "Adresses des batiments",
+    "Altimetrie",
+    "Biens fonds",
+    "Bords de plan"
+    "Conduites",
+    "Couverture du sol",
+    "Domaines numerotation",
+    "Limites canton",
+    "Limites commune",
+    "Limites district",
+    "Nomenclature",
+    "NPA Localite",
+    "Objets divers",
     "Points fixesCategorie1",
     "Points fixesCategorie2",
     "Points fixesCategorie3",
-    "Couverture du sol",
-    "Objets divers",
-    "Altimetrie",
-    "Nomenclature",
-    "Biens fonds",
-    "Conduites",
-    "Domaines numerotation",
-    "Limites commune",
-    "Limites district",
-    "Limites canton",
-    "Repartitions plans",
     "RepartitionNT",
+    "Repartitions plans",
     "Zones glissement",
-    "NPA Localite",
-    "Adresses des batiments",
-    "Bords de plan"
 )

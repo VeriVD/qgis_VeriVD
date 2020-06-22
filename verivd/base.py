@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtGui import QColor
-from qgis.core import QgsSymbolLayer, QgsProperty
-from verivd.spatialite import SpatialiteData, LayerInfo, SymbologyType
+from verivd.core.spatialite_data import SpatialiteData
+from verivd.core.symbolgy_type import SymbologyType
+from verivd.core.layer_info import LayerInfo
 
 
 class BaseBiens_fonds(SpatialiteData):
