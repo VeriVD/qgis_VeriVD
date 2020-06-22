@@ -23,25 +23,23 @@
 import os.path
 import sys
 
-from qgis.PyQt.QtCore import QCoreApplication, Qt, QLocale, QSettings, QTranslator
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, QSettings, QTranslator
 from qgis.PyQt.QtWidgets import QAction, QFileDialog, QDialog, QMessageBox
-from qgis.PyQt.QtGui import QIcon, QStandardItemModel, QStandardItem
+from qgis.PyQt.QtGui import QIcon, QStandardItem
 
 from qgis.core import QgsProject, QgsLayerTreeGroup
 from qgis.gui import QgisInterface
 
 # Initialize Qt resources from file resources.py
-import verivd.resources_rc  # NOQA
 
 # Initialize layers
 from verivd.help import *
 from verivd.ili_validator import *
 from verivd.checker import *
-from verivd.verif import *
 from verivd.base import *
 
-# Import the code for the DockWidget
-from .veri_vd_dockwidget import VeriVDDockWidget
+from verivd.core.layer_list_model import LayerModels
+from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 
 
 class VeriVD:
@@ -52,6 +50,8 @@ class VeriVD:
 
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
+
+        self.layer_models = LayerModels()
 
         # initialize translation
         qgis_locale = QLocale(QSettings().value('locale/userLocale'))
@@ -67,7 +67,7 @@ class VeriVD:
         self.toolbar = self.iface.addToolBar('VeriVD')
         self.toolbar.setObjectName('VeriVD')
 
-        self.dockwidget = None
+        self.dock_widget = None
 
     def tr(self, source_text):
         return QCoreApplication.translate('veri_vd', source_text)
@@ -84,12 +84,17 @@ class VeriVD:
         self.iface.addPluginToMenu(self.menu_entry, self.actions['main'])
         self.iface.addToolBarIcon(self.actions['main'])
 
+        self.dock_widget = VeriVDDockWidget(self.layer_models)
+        self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dock_widget)
+
+        self.dock_widget.file_changed.connect(self.ouvrir_fichier)
+
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
 
-        if self.dockwidget:
-            self.dockwidget.close()
-            self.dockwidget.deleteLater()
+        if self.dock_widget:
+            self.dock_widget.close()
+            self.dock_widget.deleteLater()
 
         for action in self.actions.values():
             self.iface.removePluginMenu(self.menu_entry, action)
@@ -111,93 +116,15 @@ class VeriVD:
     def aide_verif(self):
         QMessageBox.information(QDialog(), "Aide", Help().messageVerif)
 
-    def ouvrir_fichier(self):
-        # Set the variables to global
-        global model_base, model_ili_validator, model_checker, modelTest, strFile, uFile, donnees_base, donnees_topic, donnees_test
-
-        donnees_base = (
-            "Base - Tous les topics",
-            "Base - Points fixes",
-            "Base - Couverture du sol",
-            "Base - Objets divers",
-            "Base - Altimetrie",
-            "Base - Nomenclature",
-            "Base - Biens fonds",
-            "Base - Conduite",
-            "Base - Limites territoriales",
-            "Base - Adresses des batiments",
-            "Base - Repartition des plans"
-        )
-        donnees_test = (
-            "Verif - Points fixes",
-            "Verif - Couverture du sol et objets divers",
-            "Verif - Continuite des reseaux",
-            "Verif - Nomenclature",
-            "Verif - Biens fonds",
-            "Verif - Repartition des plans et domaine de numerotation",
-            "Verif - Limites territoriales et administratives",
-            "Verif - Adresses"
-        )
-        donnees_topic = (
-            "Points fixesCategorie1",
-            "Points fixesCategorie2",
-            "Points fixesCategorie3",
-            "Couverture du sol",
-            "Objets divers",
-            "Altimetrie",
-            "Nomenclature",
-            "Biens fonds",
-            "Conduites",
-            "Domaines numerotation",
-            "Limites commune",
-            "Limites district",
-            "Limites canton",
-            "Repartitions plans",
-            "RepartitionNT",
-            "Zones glissement",
-            "NPA Localite",
-            "Adresses des batiments",
-            "Bords de plan"
-        )
-        donnees_ili_validator, donnees_checker = [], []
-        file, __, = QFileDialog.getOpenFileName(
-            self.dockwidget,
-            'Ouvrir un fichier spatialite',
-            os.path.normpath(os.path.expanduser("~/Desktop")),
-            '*.sqlite'
-        )
-
+    def ouvrir_fichier(self, file):
         if file:
             trace = "Fichier ouvert:\n\n{}".format(file)
-            self.dockwidget.labelFile.setText(trace)
             strFile = file.encode("utf-8")
             uFile = strFile.decode("utf-8")
             i = 1
-            while i <= int(self.dockwidget.tabWidget.count()):
-                self.dockwidget.tabWidget.setTabEnabled(i, True)
+            while i <= int(self.dock_widget.tabWidget.count()):
+                self.dock_widget.tabWidget.setTabEnabled(i, True)
                 i += 1
-
-            # Construct models
-            model_base = QStandardItemModel()
-            model_ili_validator = QStandardItemModel()
-            model_checker = QStandardItemModel()
-            modelTest = QStandardItemModel()
-            
-            for item in donnees_base:
-                # Create an item with a caption
-                itemBase = QStandardItem(item)
-                # Add a checkbox to it
-                itemBase.setCheckable(True)
-                # Add the item to the model
-                model_base.appendRow(itemBase)
-            # Load the list in Gui
-            self.dockwidget.listViewBase.setModel(model_base)
-            
-            for item in donnees_test:
-                item_test = QStandardItem(item)
-                item_test.setCheckable(True)
-                modelTest.appendRow(item_test)
-            self.dockwidget.listViewTest.setModel(modelTest)
 
             decompte_dict = SpatialiteData(self.iface, uFile)
             checker_dict = decompte_dict.load_table_list('000_checker_decompte')
@@ -205,33 +132,16 @@ class VeriVD:
             layer_statisticsDict = decompte_dict.load_table_list('layer_statistics')
 
             if not ili_validator_dict:
-                self.dockwidget.tabWidget.setTabEnabled(2, False)
+                self.dock_widget.tabWidget.setTabEnabled(2, False)
+                self.layer_models.ili_validator_layer_model.clear()
             else:
-                for topic in donnees_topic:
-                    ili_validator_topic = topic.replace(' ', '_')
-                    if ili_validator_topic in list(ili_validator_dict.keys()):
-                        donnees_ili_validator.append('IliValidator - {}: {}'.format(
-                            topic, str(ili_validator_dict[ili_validator_topic]))
-                        )
-            donnees_ili_validator.sort()
-            for item in donnees_ili_validator:
-                item_ili_validator = QStandardItem(item)
-                item_ili_validator.setCheckable(True)
-                model_ili_validator.appendRow(item_ili_validator)
-            self.dockwidget.listViewIliValidator.setModel(model_ili_validator)
+                self.layer_models.ili_validator_layer_model.set_ili_validator_data(ili_validator_dict)
 
             if not checker_dict:
-                self.dockwidget.tabWidget.setTabEnabled(3, False)
+                self.dock_widget.tabWidget.setTabEnabled(3, False)
+                self.layer_models.checker_layer_model.clear()
             else:
-                for topic in donnees_topic:
-                    if topic in list(checker_dict.keys()):
-                        donnees_checker.append('Checker - {}: {}'.format(topic, str(checker_dict[topic])))
-            donnees_checker.sort()
-            for item in donnees_checker:
-                item_checker = QStandardItem(item)
-                item_checker.setCheckable(True)
-                model_checker.appendRow(item_checker)
-            self.dockwidget.listViewChecker.setModel(model_checker)
+                self.layer_models.checker_layer_model.set_checker_data(checker_dict)
     
     def tout_effacer(self):
         # Remove all Layers
@@ -318,35 +228,29 @@ class VeriVD:
 
     def run(self):
         """Run method that loads and starts the plugin"""
-
-        if self.dockwidget is None:
-            # Create the dockwidget (after translation) and keep reference
-            self.dockwidget = VeriVDDockWidget()
-            self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dockwidget)
-
-        self.dockwidget.show()
+        self.dock_widget.show()
 
         # Set the first tab to open
-        self.dockwidget.tabWidget.setCurrentIndex(0)
-        for i in range(1, 1+self.dockwidget.tabWidget.count()):
-            self.dockwidget.tabWidget.setTabEnabled(i, False)
+        self.dock_widget.tabWidget.setCurrentIndex(0)
+        for i in range(1, 1+self.dock_widget.tabWidget.count()):
+            self.dock_widget.tabWidget.setTabEnabled(i, False)
 
         # Connect the files Button and Label
-        self.dockwidget.labelFile.clear()
+        self.dock_widget.labelFile.clear()
         trace = "Pas de fichier ouvert"
-        self.dockwidget.labelFile.setText(trace)
-        self.dockwidget.pushButtonFichierOuvrir.clicked.connect(self.ouvrir_fichier)
-        self.dockwidget.pushButtonFichierQuitter.clicked.connect(self.dockwidget.close)
-        self.dockwidget.pushButtonFichierAide.clicked.connect(self.aide_fichier)
-        self.dockwidget.pushButtonBaseCharger.clicked.connect(self.charger_base)
-        self.dockwidget.pushButtonBaseEffacer.clicked.connect(self.tout_effacer)
-        self.dockwidget.pushButtonBaseAide.clicked.connect(self.aide_base)
-        self.dockwidget.pushButtonIliValidatorCharger.clicked.connect(self.charger_ili_validator)
-        self.dockwidget.pushButtonIliValidatorEffacer.clicked.connect(self.tout_effacer)
-        self.dockwidget.pushButtonIliValidatorAide.clicked.connect(self.aide_ili_validator)
-        self.dockwidget.pushButtonCheckerCharger.clicked.connect(self.charger_checker)
-        self.dockwidget.pushButtonCheckerEffacer.clicked.connect(self.tout_effacer)
-        self.dockwidget.pushButtonCheckerAide.clicked.connect(self.aide_checker)
-        self.dockwidget.pushButtonVerifCharger.clicked.connect(self.charger_verif)
-        self.dockwidget.pushButtonVerifEffacer.clicked.connect(self.tout_effacer)
-        self.dockwidget.pushButtonVerifAide.clicked.connect(self.aide_verif)
+        self.dock_widget.labelFile.setText(trace)
+        self.dock_widget.pushButtonFichierOuvrir.clicked.connect(self.ouvrir_fichier)
+        self.dock_widget.pushButtonFichierQuitter.clicked.connect(self.dock_widget.close)
+        self.dock_widget.pushButtonFichierAide.clicked.connect(self.aide_fichier)
+        self.dock_widget.pushButtonBaseCharger.clicked.connect(self.charger_base)
+        self.dock_widget.pushButtonBaseEffacer.clicked.connect(self.tout_effacer)
+        self.dock_widget.pushButtonBaseAide.clicked.connect(self.aide_base)
+        self.dock_widget.pushButtonIliValidatorCharger.clicked.connect(self.charger_ili_validator)
+        self.dock_widget.pushButtonIliValidatorEffacer.clicked.connect(self.tout_effacer)
+        self.dock_widget.pushButtonIliValidatorAide.clicked.connect(self.aide_ili_validator)
+        self.dock_widget.pushButtonCheckerCharger.clicked.connect(self.charger_checker)
+        self.dock_widget.pushButtonCheckerEffacer.clicked.connect(self.tout_effacer)
+        self.dock_widget.pushButtonCheckerAide.clicked.connect(self.aide_checker)
+        self.dock_widget.pushButtonVerifCharger.clicked.connect(self.charger_verif)
+        self.dock_widget.pushButtonVerifEffacer.clicked.connect(self.tout_effacer)
+        self.dock_widget.pushButtonVerifAide.clicked.connect(self.aide_verif)
