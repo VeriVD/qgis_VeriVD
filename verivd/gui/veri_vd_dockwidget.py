@@ -49,7 +49,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.file_widget.setSelectedFilter('*.sqlite')
 
         self.base_list_view.setModel(layer_models.base_layer_model)
-        self.test_list_view.setModel(layer_models.test_layer_model)
+        self.test_list_view.setModel(layer_models.verif_layer_model)
         self.ili_validator_list_view.setModel(layer_models.ili_validator_layer_model)
         self.checker_list_view.setModel(layer_models.checker_layer_model)
 
