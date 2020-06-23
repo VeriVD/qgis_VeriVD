@@ -37,7 +37,7 @@ from verivd.help import *
 
 from verivd.core.spatialite_data import SpatialiteData
 from verivd.core.models.base_model import BaseLayerModel
-from verivd.core.models.test_model import TestLayerModel
+from verivd.core.models.verif_model import TestLayerModel
 from verivd.core.models.checker_model import CheckerLayerModel
 from verivd.core.models.ili_validator_model import IliValidatorLayerModel
 

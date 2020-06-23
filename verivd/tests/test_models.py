@@ -19,7 +19,8 @@
 from qgis.testing import start_app, unittest
 from qgis.testing.mocked import get_iface
 
-from verivd.core.models.base_model import LAYER_INFOS, BaseLayerModel
+from verivd.core.models.base_model import BASE_LAYER_INFOS, BaseLayerModel
+from verivd.core.models.verif_model import VERIF_LAYER_INFOS, VerifLayerModel
 
 start_app()
 
@@ -33,6 +34,11 @@ class OfflineConverterTest(unittest.TestCase):
         pass
 
     def test_base_model_completeness(self):
-        base_model = BaseLayerModel(self.iface)
-        for layer in base_model._veri_layers:
-            self.assertTrue(layer.name in LAYER_INFOS, layer.name)
+        model = BaseLayerModel(self.iface)
+        for layer in model._veri_layers:
+            self.assertTrue(layer.name in BASE_LAYER_INFOS, layer.name)
+
+    def test_verif_model_completeness(self):
+        model = VerifLayerModel(self.iface)
+        for layer in model._veri_layers:
+            self.assertTrue(layer.name in VERIF_LAYER_INFOS, layer.name)

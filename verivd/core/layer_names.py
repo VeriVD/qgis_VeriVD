@@ -17,16 +17,7 @@
 
 
 
-DONNEES_TEST = (
-    "Verif - Points fixes",
-    "Verif - Couverture du sol et objets divers",
-    "Verif - Continuite des reseaux",
-    "Verif - Nomenclature",
-    "Verif - Biens fonds",
-    "Verif - Repartition des plans et domaine de numerotation",
-    "Verif - Limites territoriales et administratives",
-    "Verif - Adresses"
-)
+
 
 # REMEMBER TO SORT WHEN EDITING
 DONNEES_TOPIC = (

@@ -22,7 +22,7 @@ from verivd.core.symbolgy_type import SymbologyType
 from verivd.core.layer_list_model import LayerListModel
 
 
-LAYER_INFOS = {
+BASE_LAYER_INFOS = {
     "Base-Biens_fonds": (
         LayerInfo(display_name='Numéros des DDP', layer_name='006_ITF_BF_Pos_DDP'),
         LayerInfo(display_name='Numéros des biens fonds', layer_name='006_ITF_BF_Pos_Bien_fonds'),
@@ -136,5 +136,5 @@ class BaseLayerModel(LayerListModel):
         super(BaseLayerModel, self).__init__(iface, layers)
 
     def layer_infos(self, layer: str) -> [LayerInfo]:
-        return LAYER_INFOS[layer]
+        return BASE_LAYER_INFOS[layer]
 
