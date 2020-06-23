@@ -15,19 +15,7 @@
 """
 
 
-DONNEES_BASE = (
-    "Base - Tous les topics",
-    "Base - Points fixes",
-    "Base - Couverture du sol",
-    "Base - Objets divers",
-    "Base - Altimetrie",
-    "Base - Nomenclature",
-    "Base - Biens fonds",
-    "Base - Conduite",
-    "Base - Limites territoriales",
-    "Base - Adresses des batiments",
-    "Base - Repartition des plans"
-)
+
 
 DONNEES_TEST = (
     "Verif - Points fixes",

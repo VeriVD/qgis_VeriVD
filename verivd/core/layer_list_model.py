@@ -102,7 +102,6 @@ class LayerListModel(QAbstractListModel):
     def setData(self, index: QModelIndex, value, role: int) -> bool:
         # Qt QAbstractListModel virtual method
         if role == Qt.CheckStateRole:
-            print(value)
             if value == Qt.Checked:
                 self.__load_layer(index)
             else:

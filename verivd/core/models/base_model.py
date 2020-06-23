@@ -16,10 +16,125 @@
 
 from qgis.gui import QgisInterface
 
+from verivd.core.layer_info import LayerInfo
+from verivd.core.symbolgy_type import SymbologyType
 from verivd.core.layer_list_model import LayerListModel
-from verivd.core.layer_names import DONNEES_BASE
+
+
+DONNEES_BASE = (
+    "Base - Tous les topics",
+    "Base - Points fixes",
+    "Base - Couverture du sol",
+    "Base - Objets divers",
+    "Base - Altimetrie",
+    "Base - Nomenclature",
+    "Base - Biens fonds",
+    "Base - Conduite",
+    "Base - Limites territoriales",
+    "Base - Adresses des batiments",
+    "Base - Repartition des plans"
+)
+
+LAYER_INFOS = {
+    "Base - Biens fonds": (
+        LayerInfo(display_name='Numéros des DDP', layer_name='006_ITF_BF_Pos_DDP'),
+        LayerInfo(display_name='Numéros des biens fonds', layer_name='006_ITF_BF_Pos_Bien_fonds'),
+        LayerInfo(display_name='Point limite', layer_name='006_ITF_BF_Point_limite'),
+        LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
+        LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds')
+    ),
+    "Base - Couverture du sol": (
+        LayerInfo(display_name='Nom et numéro CS', layer_name='002_ITF_CS_Pos_Surface_CS'),
+        LayerInfo(display_name='Point particulier CS', layer_name='002_ITF_CS_Point_particulier'),
+        LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS'),
+        LayerInfo(
+            display_name='Bâtiment', layer_name='002_ITF_CS_Surface_CS',
+            sql_request='"type" = "batiment"', symbology_type=SymbologyType.SIMPLE,
+            symbology_properties={'color': '255, 210, 210', 'border_color': 'black'}
+        )
+    ),
+    "Base - Objets divers": (
+        LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
+        LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
+        LayerInfo(display_name='OD point particulier', layer_name='003_ITF_OD_Point_particulier'),
+        LayerInfo(display_name='OD Nom et Numéro ligne', layer_name='003_ITF_OD_Pos_Element_lineaire'),
+        LayerInfo(display_name='OD Nom et Numéro surface', layer_name='003_ITF_OD_Pos_Element_surfacique')
+    ),
+    "Base - Nomenclature": (
+        LayerInfo(display_name='Lieux dits texte', layer_name='005_itf_no_pos_lieudit'),
+        LayerInfo(display_name='Nom local texte', layer_name='005_itf_no_posnom_local'),
+        LayerInfo(display_name='Nom local', layer_name='005_ITF_NO_Nom_local',
+                  symbology_type=SymbologyType.RANDOM_CATEGORIZED, category_field='name')
+    ),
+    "Base - Conduite": (
+        LayerInfo(display_name='CO Conduite', layer_name='007_itf_co_element_conduite'),
+        LayerInfo(display_name='CO Conduite Nom', layer_name='007_itf_co_poselement_conduite')
+    ),
+    "Base - Points fixes": [
+        LayerInfo(display_name='PFP-PFA3', layer_name='001_itf_pf_points_fixes')
+    ],
+    "Base - Courbes de niveau": [
+        LayerInfo(display_name='Courbes de niveau', layer_name='004_itf_al_courbes_de_niveau')
+    ],
+    "Base - Répartition des plans": [
+        LayerInfo(display_name='Plan', layer_name='105_itf_rp')
+    ],
+    "Base - Adresses des bâtiments": (
+        LayerInfo(display_name="Numéro d'entrée", layer_name='009_itf_bat_posentree_batiment'),
+        LayerInfo(display_name='Nom de localisation', layer_name='009_itf_bat_posnom_localisation'),
+        LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart'),
+        LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
+        LayerInfo(display_name='Tronçon de rue', layer_name='009_itf_bat_troncon_rue')
+    ),
+    "Base - Limites térritoriales": (
+        LayerInfo(display_name='Point limite térritoriale',layer_name='008_itf_lt_point_limite_ter'),
+        LayerInfo(display_name='Limite commune', layer_name='008_itf_lt_limite_commune'),
+        LayerInfo(display_name='Autre limite', layer_name='008_itf_lt_autre_limite')
+    ),
+    "Base - Tous les topics": (
+        LayerInfo(display_name='Nom et numéro CS', layer_name='002_ITF_CS_Pos_Surface_CS'),
+        LayerInfo(display_name='Numéros des DDP', layer_name='006_ITF_BF_Pos_DDP'),
+        LayerInfo(display_name='Numéros des biens fonds', layer_name='006_ITF_BF_Pos_Bien_fonds'),
+        LayerInfo(display_name='CO Conduite Nom', layer_name='007_itf_co_poselement_conduite'),
+        LayerInfo(display_name="Numéro d'entrée", layer_name='009_itf_bat_posentree_batiment'),
+        LayerInfo(display_name='OD Nom et Numéro ligne', layer_name='003_ITF_OD_Pos_Element_lineaire'),
+        LayerInfo(display_name='OD Nom et Numéro surface', layer_name='003_ITF_OD_Pos_Element_surfacique'),
+        LayerInfo(display_name='Nom de localisation', layer_name='009_itf_bat_posnom_localisation'),
+        LayerInfo(display_name='Lieux dits texte', layer_name='005_itf_no_pos_lieudit'),
+        LayerInfo(display_name='Nom local texte', layer_name='005_itf_no_posnom_local'),
+        LayerInfo(
+            display_name='Nom local',
+            layer_name='005_ITF_NO_Nom_local',
+            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+            category_field='name',
+            opacity=.5,
+            visibility=False),
+        LayerInfo(display_name='PFP-PFA3', layer_name='001_itf_pf_points_fixes'),
+        LayerInfo(display_name='Point limite', layer_name='006_ITF_BF_Point_limite'),
+        LayerInfo(display_name='Point particulier CS', layer_name='002_ITF_CS_Point_particulier'),
+        LayerInfo(display_name='Point limite térritoriale', layer_name='008_itf_lt_point_limite_ter'),
+        LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
+        LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
+        LayerInfo(display_name='OD point particulier', layer_name='003_ITF_OD_Point_particulier'),
+        LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart'),
+        LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
+        LayerInfo(display_name='Tronçon de rue', layer_name='009_itf_bat_troncon_rue'),
+        LayerInfo(display_name='CO Conduite', layer_name='007_itf_co_element_conduite'),
+        LayerInfo(display_name='Courbes de nivea', layer_name='004_itf_al_courbes_de_nivea', visibility=False),
+        LayerInfo(display_name='Plan', layer_name='105_itf_rp'),
+        LayerInfo(display_name='Limite commune', layer_name='008_itf_lt_limite_commune'),
+        LayerInfo(display_name='Autre limite', layer_name='008_itf_lt_autre_limite'),
+        LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
+        LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
+        LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS')
+    )
+}
 
 
 class BaseLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
         super(BaseLayerModel, self).__init__(iface, DONNEES_BASE)
+
+    def layer_infos(self, layer: str) -> [LayerInfo]:
+        return LAYER_INFOS[layer]
+

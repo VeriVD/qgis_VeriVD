@@ -175,33 +175,6 @@ class VeriVD:
             if topic.infoText == "":
                 QMessageBox.warning(QDialog(),'Information', 'Aucun objet dans ce thème')
     
-    def charger_ili_validator(self):
-        # get the checked items
-        checked_items = []
-        for row in range(model_ili_validator.rowCount()):
-            item = model_ili_validator.item(row)
-            if item.checkState() == Qt.Checked:
-                checked_items.append(str(item.text()).split(':')[0].replace("IliValidator - ", "").replace(" ", "_"))
-                item.setCheckState(Qt.Unchecked) 
-
-        for checked_item in checked_items:
-            topic = str(checked_item)
-            layersClass = IliValidator(self.iface, uFile)
-            layersClass.load_layer(topic)
-
-    def charger_checker(self):
-        # get the checked items
-        checked_items = []
-        for row in range(model_checker.rowCount()):
-            item = model_checker.item(row)
-            if item.checkState() == Qt.Checked:
-                checked_items.append(str(item.text()).split(':')[0].replace("Checker - ", ""))
-                item.setCheckState(Qt.Unchecked) 
-            
-        for checked_item in checked_items:
-                topic = str(checked_item)
-                layersClass = Checker(self.iface, uFile)
-                layersClass.load_layer(topic)
 
     def charger_verif(self):
         # get the checked items
