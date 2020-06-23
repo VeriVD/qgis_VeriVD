@@ -63,7 +63,17 @@ class LayerModels:
         self.ili_validator_layer_model.unload_all()
         self.checker_layer_model.unload_all()
         self.base_layer_model.unload_all()
-        
+
+    def has_loaded_layer(self) -> bool:
+        """
+        Returns if any of the models has a loaded layer
+        """
+        for model in (self.verif_layer_model, self.ili_validator_layer_model,
+                      self.checker_layer_model, self.base_layer_model):
+            for layer in model._veri_layers:
+                if layer.loaded:
+                    return True
+        return False
 
 
 class VeriVD:
@@ -125,14 +135,15 @@ class VeriVD:
         del self.toolbar
 
     def ouvrir_fichier(self, file):
-        self.layer_models.unload_all_layers()
+        if self.layer_models.has_loaded_layer():
+            if QMessageBox.question(self.dock_widget, "Veri-VD", "Voulez-vous retirer les couches chargées ?") == QMessageBox.Yes:
+                self.layer_models.unload_all_layers()
         if file:
             self.strFile = file.encode("utf-8")
             self.uFile = self.strFile.decode("utf-8")
             spatialite_data = SpatialiteData(self.iface, self.uFile)
             self.layer_models.set_spatialite_data(spatialite_data)
             self.dock_widget.tabWidget.setEnabled(True)
-
         else:
             self.dock_widget.tabWidget.setEnabled(False)
             self.layer_models.set_spatialite_data(None)
