@@ -28,11 +28,9 @@ Debug = True
 
 
 class LayerListModel(QAbstractListModel):
-    def __init__(self, iface: QgisInterface, layers: [str] = []):
+    def __init__(self, iface: QgisInterface, layers: [VeriLayer] = []):
         self.iface = iface
-        self._veri_layers: [VeriLayer] = []
-        for layer_name in layers:
-            self._veri_layers.append(VeriLayer(layer_name))
+        self._veri_layers: [VeriLayer] = layers
         self._spatialite_data: SpatialiteData = None
         super().__init__()
 
