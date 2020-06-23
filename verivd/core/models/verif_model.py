@@ -383,3 +383,6 @@ class VerifLayerModel(LayerListModel):
             VeriLayer("Verif-Adresses", "Vérification - Adresses")
         )
         super(VerifLayerModel, self).__init__(iface, layers)
+
+    def layer_infos(self, layer: str) -> [LayerInfo]:
+        return VERIF_LAYER_INFOS[layer]
