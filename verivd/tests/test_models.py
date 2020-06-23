@@ -14,8 +14,6 @@
  ***************************************************************************/
 """
 
-import os
-
 from qgis.testing import start_app, unittest
 from qgis.testing.mocked import get_iface
 

@@ -14,6 +14,7 @@
  ***************************************************************************/
 """
 
+from qgis.PyQt.QtCore import Qt
 from qgis.core import QgsVectorLayer, QgsLayerTreeGroup
 
 
@@ -21,7 +22,7 @@ class VeriMetaLayer:
     def __init__(self, name: str, display_name: str = None):
         self._name = name
         self._display_name = display_name or name
-        self._loaded = False
+        self._loaded = Qt.Unchecked
         self._layer_tree_group = None
         self._qgis_layers: [QgsVectorLayer] = []
 

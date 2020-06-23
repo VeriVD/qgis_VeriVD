@@ -33,6 +33,8 @@ class LayerListModel(QAbstractListModel):
         self._veri_meta_layers: [VeriMetaLayer] = layers
         self._spatialite_data: SpatialiteData = None
         super().__init__()
+        self.__is_removing_layer = False
+        QgsProject.instance().layersWillBeRemoved.connect(self.layers_will_be_removed)
 
     @property
     def spatialite_data(self):
@@ -93,14 +95,14 @@ class LayerListModel(QAbstractListModel):
             return self._veri_meta_layers[index.row()].display_name
 
         if role == Qt.CheckStateRole:
-            return Qt.Checked if self._veri_meta_layers[index.row()].loaded else Qt.Unchecked
+            return self._veri_meta_layers[index.row()].loaded
 
         return None
 
     def setData(self, index: QModelIndex, value, role: int) -> bool:
         # Qt QAbstractListModel virtual method
         if role == Qt.CheckStateRole:
-            if value == Qt.Checked:
+            if value == Qt.Checked and self.data(index, role) != Qt.PartiallyChecked:
                 self.__load_layer(index)
             else:
                 self.__unload_layer(index)
@@ -131,24 +133,49 @@ class LayerListModel(QAbstractListModel):
                 else:
                     raise Exception("La couche n'a pas été chargée.")
             veri_meta_layer.qgis_layers.append(added_qgis_layer)
-        veri_meta_layer.loaded = True
+        veri_meta_layer.loaded = Qt.Checked
 
     def __unload_layer(self, index: QModelIndex):
         if Debug:
             print("Unload")
         veri_meta_layer = self._veri_meta_layers[index.row()]
+        self.__is_removing_layer = True
         for layer in veri_meta_layer.qgis_layers:
             QgsProject.instance().removeMapLayer(layer)
-        QgsProject.instance().layerTreeRoot().removeChildNode(veri_meta_layer.layer_tree_group)
+        self.__is_removing_layer = False
+        if len(veri_meta_layer.layer_tree_group.children()) == 0:
+           QgsProject.instance().layerTreeRoot().removeChildNode(veri_meta_layer.layer_tree_group)
         veri_meta_layer.layer_tree_group = None
         veri_meta_layer.qgis_layers = []
-        veri_meta_layer.loaded = False
+        veri_meta_layer.loaded = Qt.Unchecked
 
     def unload_all(self):
         self.beginResetModel()
         for row in range(0, self.rowCount(QModelIndex())):
             self.__unload_layer(self.index(row, 0))
         self.endResetModel()
+
+    def layers_will_be_removed(self, removed_layer_ids):
+        if self.__is_removing_layer:
+            return
+        self.beginResetModel()
+        for veri_layer in self._veri_meta_layers:
+            layers_to_remove = []
+            for qgis_layer in veri_layer.qgis_layers:
+                for removed_layer_id in removed_layer_ids:
+                    if removed_layer_id == qgis_layer.id():
+                        layers_to_remove.append(qgis_layer)
+            if len(layers_to_remove):
+                for layer in layers_to_remove:
+                    veri_layer.qgis_layers.remove(layer)
+                if len(veri_layer.qgis_layers) > 0:
+                    veri_layer.loaded = Qt.PartiallyChecked
+                else:
+                    veri_layer.loaded = Qt.Unchecked
+        self.endResetModel()
+
+
+
 
 
 
