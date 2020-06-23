@@ -24,5 +24,5 @@
 
 
 def classFactory(iface):
-    from .veri_vd import VeriVD
+    from verivd.gui.veri_vd_plugin import VeriVD
     return VeriVD(iface)

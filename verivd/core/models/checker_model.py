@@ -19,10 +19,10 @@ from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
-from verivd.core.layer_names import DONNEES_TOPIC
+from verivd.core.topic_layers import TOPIC_LAYERS
 from verivd.core.spatialite_data import MARKER_SHAPE
 from verivd.core.symbolgy_type import SymbologyType
-from verivd.core.veri_layer import VeriLayer
+from verivd.core.veri_meta_layer import VeriMetaLayer
 
 
 class CheckerLayerModel(LayerListModel):
@@ -34,10 +34,10 @@ class CheckerLayerModel(LayerListModel):
         if not self.spatialite_data:
             return
         checker_dict = self.spatialite_data.load_table_list('000_checker_decompte')
-        for topic in DONNEES_TOPIC:
+        for topic in TOPIC_LAYERS:
             if topic in checker_dict:
                 display_name = 'Checker - {}: {}'.format(topic, str(checker_dict[topic]))
-                self._veri_layers.append(VeriLayer(topic, display_name))
+                self._veri_layers.append(VeriMetaLayer(topic, display_name))
 
     def layer_infos(self, layer: str) -> [LayerInfo]:
         sql_request = '"topic" = "{}"'.format(layer)

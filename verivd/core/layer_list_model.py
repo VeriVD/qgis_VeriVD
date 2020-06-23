@@ -22,15 +22,15 @@ from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
 from verivd.core.spatialite_data import SpatialiteData
-from verivd.core.veri_layer import VeriLayer
+from verivd.core.veri_meta_layer import VeriMetaLayer
 
 Debug = True
 
 
 class LayerListModel(QAbstractListModel):
-    def __init__(self, iface: QgisInterface, layers: [VeriLayer] = []):
+    def __init__(self, iface: QgisInterface, layers: [VeriMetaLayer] = []):
         self.iface = iface
-        self._veri_layers: [VeriLayer] = layers
+        self._veri_meta_layers: [VeriMetaLayer] = layers
         self._spatialite_data: SpatialiteData = None
         super().__init__()
 
@@ -78,7 +78,7 @@ class LayerListModel(QAbstractListModel):
         pass
 
     def rowCount(self, parent: QModelIndex = ...) -> int:
-        return len(self._veri_layers)
+        return len(self._veri_meta_layers)
 
     def flags(self, index: QModelIndex) -> Qt.ItemFlags:
         # Qt QAbstractListModel virtual method
@@ -86,14 +86,14 @@ class LayerListModel(QAbstractListModel):
 
     def data(self, index: QModelIndex, role: int):
         # Qt QAbstractListModel virtual method
-        if index.row() < 0 or index.row() >= len(self._veri_layers):
+        if index.row() < 0 or index.row() >= len(self._veri_meta_layers):
             return None
 
         if role == Qt.DisplayRole:
-            return self._veri_layers[index.row()].display_name
+            return self._veri_meta_layers[index.row()].display_name
 
         if role == Qt.CheckStateRole:
-            return Qt.Checked if self._veri_layers[index.row()].loaded else Qt.Unchecked
+            return Qt.Checked if self._veri_meta_layers[index.row()].loaded else Qt.Unchecked
 
         return None
 
@@ -113,36 +113,36 @@ class LayerListModel(QAbstractListModel):
             print("Load layer")
         if not self.spatialite_data:
             return
-        veri_layer = self._veri_layers[index.row()]
-        group_name = self.group_name(veri_layer.name)
-        veri_layer.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
-        veri_layer.layer_tree_group.setExpanded(False)
-        layer_infos = self.layer_infos(veri_layer.name)
-        qgis_layers = self.spatialite_data.create_layers(layer_infos)
-        veri_layer.qgis_layers = []
+        veri_meta_layer = self._veri_meta_layers[index.row()]
+        group_name = self.group_name(veri_meta_layer.name)
+        veri_meta_layer.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
+        veri_meta_layer.layer_tree_group.setExpanded(False)
+        layer_infos = self.layer_infos(veri_meta_layer.name)
+        qgis_layers = self.spatialite_data.create_layers(veri_meta_layer.name, layer_infos)
+        veri_meta_layer.qgis_layers = []
         for i, qgis_layer in enumerate(qgis_layers):
             self.post_process_layer(qgis_layer, i)
             added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
-            veri_layer.layer_tree_group.insertLayer(i, added_qgis_layer)
+            veri_meta_layer.layer_tree_group.insertLayer(i, added_qgis_layer)
             if not layer_infos[i].visibility:
                 node = QgsProject.instance().layerTreeRoot().findLayer(added_qgis_layer.id())
                 if node:
                     node.setItemVisibilityChecked(False)
                 else:
                     raise Exception("La couche n'a pas été chargée.")
-            veri_layer.qgis_layers.append(added_qgis_layer)
-        veri_layer.loaded = True
+            veri_meta_layer.qgis_layers.append(added_qgis_layer)
+        veri_meta_layer.loaded = True
 
     def __unload_layer(self, index: QModelIndex):
         if Debug:
             print("Unload")
-        veri_layer = self._veri_layers[index.row()]
-        for layer in veri_layer.qgis_layers:
+        veri_meta_layer = self._veri_meta_layers[index.row()]
+        for layer in veri_meta_layer.qgis_layers:
             QgsProject.instance().removeMapLayer(layer)
-        QgsProject.instance().layerTreeRoot().removeChildNode(veri_layer.layer_tree_group)
-        veri_layer.layer_tree_group = None
-        veri_layer.qgis_layers = []
-        veri_layer.loaded = False
+        QgsProject.instance().layerTreeRoot().removeChildNode(veri_meta_layer.layer_tree_group)
+        veri_meta_layer.layer_tree_group = None
+        veri_meta_layer.qgis_layers = []
+        veri_meta_layer.loaded = False
 
     def unload_all(self):
         self.beginResetModel()

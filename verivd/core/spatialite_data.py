@@ -15,7 +15,6 @@ from qgis.core import QgsSimpleMarkerSymbolLayerBase, QgsWkbTypes, QgsDataSource
 	QgsRenderContext
 from qgis.gui import QgisInterface
 from qgis.PyQt.QtGui import QColor
-from qgis.PyQt.QtWidgets import QMessageBox, QDialog
 
 from verivd.core.layer_info import LayerInfo
 from verivd.core.symbolgy_type import SymbologyType
@@ -121,7 +120,20 @@ class SpatialiteData(object):
 				list_feat_dict[attrs[field_name]] = attrs[count_field]
 		return list_feat_dict
 
-	def create_layers(self, layer_infos: [LayerInfo]):
+	def qml_definition(self, meta_layer_name:str, layer_info: LayerInfo):
+		qml_spec_file = os.path.join(self.plugin_path, '../qml', '{}_{}.qml'.format(meta_layer_name, layer_info.layer_name))
+		qml_gen_file = os.path.join(self.plugin_path, '../qml', '{}.qml'.format(layer_info.layer_name))
+		# Check if a specific qml file exist for this layer
+		# if not, check if a generic qml file exist
+		if os.path.isfile(qml_spec_file):
+			return qml_spec_file
+		elif os.path.isfile(qml_gen_file):
+			return qml_gen_file
+		if Debug:
+			print(qml_spec_file, qml_gen_file)
+		return None
+
+	def create_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]):
 		# set the layers group in the tree
 		layers = []
 		# loop through layer's parameters
@@ -134,20 +146,13 @@ class SpatialiteData(object):
 
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
 			if layer.isValid() and layer.featureCount() != 0:
-				qml_spec_file = os.path.join(self.plugin_path, '../qml', '{}_{}.qml'.format(self.__class__.__name__, layer_info.layer_name))
-				qml_gen_file = os.path.join(self.plugin_path, '../qml', '{}.qml'.format(layer_info.layer_name))
-				# Check if a specific qml file exist for this layer
-				# if yes add it to layer
-				# if not, check if a generic qml file exist
-				# if yes add it to layer
-				# else print a warning message
 				if layer_info.symbology_type == SymbologyType.QML:
-					if os.path.isfile(qml_spec_file):
-						layer.loadNamedStyle(qml_spec_file)
-					elif os.path.isfile(qml_gen_file):
-						layer.loadNamedStyle(qml_gen_file)
+					qml_file = self.qml_definition(meta_layer_name, layer_info)
+					if qml_file:
+						layer.loadNamedStyle(qml_file)
 					else:
-						self.iface.messageBar().pushWarning("VeriVD - fichier QML manquant", layer_info.display_name)
+						self.iface.messageBar().pushWarning("VeriVD - fichier QML manquant", '{} ({})'.format(layer_info.display_name, layer_info.layer_name))
+
 				elif layer_info.symbology_type == SymbologyType.RANDOM_CATEGORIZED:
 					self.random_cat_symb(layer, layer_info.category_field, layer_info.symbology_data_defined_properties)
 				elif layer_info.symbology_type == SymbologyType.SIMPLE:

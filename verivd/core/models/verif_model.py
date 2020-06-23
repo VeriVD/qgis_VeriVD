@@ -22,11 +22,11 @@ from qgis.gui import QgisInterface
 from verivd.core.symbolgy_type import SymbologyType
 from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
-from verivd.core.veri_layer import VeriLayer
+from verivd.core.veri_meta_layer import VeriMetaLayer
 
 
 VERIF_LAYER_INFOS = {
-    "Verif-Biens_fonds": (
+    "VerifBiens_fonds": (
         LayerInfo(display_name='Sommet manquant sous un point limite', layer_name='100_verif_bf_sommet_manquant_sous_pl'),
         LayerInfo(display_name='Sommet proche d\'une limite', layer_name='100_verif_bf_sommet_proche_pl'),
         LayerInfo(display_name='Point limite manquant sur un sommet', layer_name='100_verif_bf_pl_manquant_sur_sommet'),
@@ -49,7 +49,7 @@ VERIF_LAYER_INFOS = {
         LayerInfo(display_name='Plans en vigueur à proximité du lot', layer_name='111_bdmo_repartition_plans_alentours'),
         LayerInfo(display_name='Plans en vigueur du lot', layer_name='111_bdmo_repartition_plan_en_vigueur_du_lot')
     ),
-    "Verif-Nomenclature": (
+    "VerifNomenclature": (
         LayerInfo(
             display_name='point divergent entre les immeubles et la nomenclature',
             layer_name='103_VERIF_BF_NO_Point',
@@ -71,7 +71,7 @@ VERIF_LAYER_INFOS = {
         LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
         LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds')
     ),
-    "Verif-Adresses": (
+    "VerifAdresses": (
         LayerInfo(display_name='Numéro d\'entrée', layer_name='009_itf_bat_posentree_batiment'),
         LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart'),
         LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment'),
@@ -115,7 +115,7 @@ VERIF_LAYER_INFOS = {
         ),
         LayerInfo(display_name='Couverture du sol', layer_name='002_ITF_CS_Surface_CS', opacity=.5)
     ),
-    "Verif-Couverture_du_sol_et_objets_divers":	(
+    "VerifCouverture_du_sol_et_objets_divers":	(
         LayerInfo(
             display_name='OD - Element surfacique qui devrait être linéaire',
             layer_name='114_VERIF_OD_surfaciqueErreur',
@@ -187,7 +187,7 @@ VERIF_LAYER_INFOS = {
         LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
         LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS', opacity=.5)
     ),
-    "Verif-Repartition_des_plans_et_domaine_de_numerotation": (
+    "VerifRepartition_des_plans_et_domaine_de_numerotation": (
         LayerInfo(
             display_name='point divergent entre les immeubles et la répartition des plans',
             layer_name='103_VERIF_BF_RP_Point',
@@ -235,7 +235,7 @@ VERIF_LAYER_INFOS = {
         LayerInfo(display_name='Plans en vigueur à proximité du lot', layer_name='111_bdmo_repartition_plans_alentours'),
         LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
     ),
-    "Verif-Continuite_des_reseaux":	(
+    "VerifContinuite_des_reseaux":	(
         LayerInfo(
             display_name='CS Nom et numéro',
             layer_name='002_ITF_CS_Pos_Surface_CS',
@@ -271,7 +271,7 @@ VERIF_LAYER_INFOS = {
             sql_request='"number" LIKE "DP%"'),
         LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
     ),
-    "Verif-Points_fixes": (
+    "VerifPoints_fixes": (
 			LayerInfo(
 				display_name='Point fixes dont les attributs ITF vs BDMO ne sont pas identiques',
 				layer_name='115_itf_pfp_problemeattribut',
@@ -284,7 +284,7 @@ VERIF_LAYER_INFOS = {
 			LayerInfo(display_name='Précision planimétrique des points fixes', layer_name='115_itf_pfp'),
 			LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
 		),
-    "Verif-Limites_territoriales_et_administratives": (
+    "VerifLimites_territoriales_et_administratives": (
         LayerInfo(
             display_name='Géometrie de limite de canton incorrecte (OGC)',
             layer_name='116_LigneCANT_OGC_fail',
@@ -371,16 +371,16 @@ VERIF_LAYER_INFOS = {
 class VerifLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
         layers = (
-            VeriLayer("Verif-Points_fixes", "Vérification - Points fixes"),
-            VeriLayer("Verif-Couverture_du_sol_et_objets_divers", "Vérification - Couverture du sol et objets divers"),
-            VeriLayer("Verif-Continuite_des_reseaux", "Vérification - Continuite des reseaux"),
-            VeriLayer("Verif-Nomenclature", "Vérification - Nomenclature"),
-            VeriLayer("Verif-Biens_fonds", "Vérification - Biens fonds"),
-            VeriLayer("Verif-Repartition_des_plans_et_domaine_de_numerotation",
+            VeriMetaLayer("VerifPoints_fixes", "Vérification - Points fixes"),
+            VeriMetaLayer("VerifCouverture_du_sol_et_objets_divers", "Vérification - Couverture du sol et objets divers"),
+            VeriMetaLayer("VerifContinuite_des_reseaux", "Vérification - Continuite des reseaux"),
+            VeriMetaLayer("VerifNomenclature", "Vérification - Nomenclature"),
+            VeriMetaLayer("VerifBiens_fonds", "Vérification - Biens fonds"),
+            VeriMetaLayer("VerifRepartition_des_plans_et_domaine_de_numerotation",
                       "Vérification - Repartition des plans et domaine de numerotation"),
-            VeriLayer("Verif-Limites_territoriales_et_administratives",
+            VeriMetaLayer("VerifLimites_territoriales_et_administratives",
                       "Vérification - Limites territoriales et administratives"),
-            VeriLayer("Verif-Adresses", "Vérification - Adresses")
+            VeriMetaLayer("VerifAdresses", "Vérification - Adresses")
         )
         super(VerifLayerModel, self).__init__(iface, layers)
 
