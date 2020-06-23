@@ -31,6 +31,8 @@ class IliValidatorLayerModel(LayerListModel):
 
     def reload(self):
         self._veri_layers = []
+        if not self.spatialite_data:
+            return
         ili_validator_dict = self.spatialite_data.load_table_list('000_ilivalidator_decompte')
         for topic in DONNEES_TOPIC:
             ili_validator_topic = topic.replace(' ', '_')

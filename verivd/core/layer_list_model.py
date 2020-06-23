@@ -111,6 +111,8 @@ class LayerListModel(QAbstractListModel):
     def __load_layer(self, index: QModelIndex):
         if Debug:
             print("Load layer")
+        if not self.spatialite_data:
+            return
         veri_layer = self._veri_layers[index.row()]
         group_name = self.group_name(veri_layer.name)
         veri_layer.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
@@ -130,7 +132,6 @@ class LayerListModel(QAbstractListModel):
                     raise Exception("La couche n'a pas été chargée.")
             veri_layer.qgis_layers.append(added_qgis_layer)
         veri_layer.loaded = True
-        self.dataChanged.emit(index, index)
 
     def __unload_layer(self, index: QModelIndex):
         if Debug:
@@ -142,7 +143,13 @@ class LayerListModel(QAbstractListModel):
         veri_layer.layer_tree_group = None
         veri_layer.qgis_layers = []
         veri_layer.loaded = False
-        self.dataChanged.emit(index, index)
+
+    def unload_all(self):
+        self.beginResetModel()
+        for row in range(0, self.rowCount(QModelIndex())):
+            self.__unload_layer(self.index(row, 0))
+        self.endResetModel()
+
 
 
 

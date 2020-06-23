@@ -31,6 +31,8 @@ class CheckerLayerModel(LayerListModel):
 
     def reload(self):
         self._veri_layers = []
+        if not self.spatialite_data:
+            return
         checker_dict = self.spatialite_data.load_table_list('000_checker_decompte')
         for topic in DONNEES_TOPIC:
             if topic in checker_dict:

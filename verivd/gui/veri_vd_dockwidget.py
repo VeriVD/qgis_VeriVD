@@ -42,6 +42,8 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
     def __init__(self, layer_models, parent=None):
         super(VeriVDDockWidget, self).__init__(parent)
         self.setupUi(self)
+        self.tabWidget.setEnabled(False)
+
         self.layer_models = layer_models
 
         self.file_widget.setDialogTitle('Ouvrir un fichier spatialite')
@@ -59,12 +61,12 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.file_widget.fileChanged.connect(self.file_changed)
 
     def update_checker_tab(self):
-        if self.layer_models.checker_layer_model.rowCount(QModelIndex()) == 0:
-            self.tabWidget.setTabEnabled(3, False)
+        has_rows = self.layer_models.checker_layer_model.rowCount(QModelIndex()) > 0
+        self.tabWidget.setTabEnabled(3, has_rows)
 
     def update_ili_tab(self):
-        if self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) == 0:
-            self.tabWidget.setTabEnabled(2, False)
+        has_rows = self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) > 0
+        self.tabWidget.setTabEnabled(2, has_rows)
 
     def closeEvent(self, event):
         self.closingPlugin.emit()

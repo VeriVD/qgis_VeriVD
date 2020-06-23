@@ -58,6 +58,13 @@ class LayerModels:
         self.checker_layer_model.spatialite_data = spatialite_data
         self.base_layer_model.spatialite_data = spatialite_data
 
+    def unload_all_layers(self):
+        self.verif_layer_model.unload_all()
+        self.ili_validator_layer_model.unload_all()
+        self.checker_layer_model.unload_all()
+        self.base_layer_model.unload_all()
+        
+
 
 class VeriVD:
     """ QGIS Plugin Implementation. """
@@ -117,88 +124,18 @@ class VeriVD:
             self.iface.removeToolBarIcon(action)
         del self.toolbar
 
-    def aide_fichier(self):
-        QMessageBox.information(QDialog(), "Aide", Help().messageFichier)
-
-    def aide_base(self):
-        QMessageBox.information(QDialog(), "Aide", Help().messageBase)
-
-    def aide_ili_validator(self):
-        QMessageBox.information(QDialog(), "Aide", Help().messageIliValidator)
-
-    def aide_checker(self):
-        QMessageBox.information(QDialog(), "Aide", Help().messageChecker)
-
-    def aide_verif(self):
-        QMessageBox.information(QDialog(), "Aide", Help().messageVerif)
-
     def ouvrir_fichier(self, file):
+        self.layer_models.unload_all_layers()
         if file:
             self.strFile = file.encode("utf-8")
             self.uFile = self.strFile.decode("utf-8")
-            i = 1
-            while i <= int(self.dock_widget.tabWidget.count()):
-                self.dock_widget.tabWidget.setTabEnabled(i, True)
-                i += 1
-
             spatialite_data = SpatialiteData(self.iface, self.uFile)
             self.layer_models.set_spatialite_data(spatialite_data)
+            self.dock_widget.tabWidget.setEnabled(True)
 
-    def tout_effacer(self):
-        # Remove all Layers
-        QgsProject.instance().removeAllMapLayers()
-        # Remove all Groups
-        for child in QgsProject.instance().layerTreeRoot().children():
-            if isinstance(child, QgsLayerTreeGroup):
-                QgsProject.instance().layerTreeRoot().removeChildNode(child)
-        self.iface.mapCanvas().refresh()
-
-    def charger_base(self):
-        # get the checked items
-        checked_items = []
-        for row in range(model_base.rowCount()):
-            item = model_base.item(row)
-        
-            if item.checkState() == Qt.Checked:
-                # QMessageBox.warning(QDialog(), "Message", str(item.text()))
-                checked_items.append(str(item.text()).replace(" - ", "").replace(" ", "_"))
-                item.setCheckState(Qt.Unchecked) 
-        
-        for checked_item in checked_items:
-            # find the class matching the checked items
-            topic_class_name = getattr(sys.modules[__name__], checked_item)
-            topic = topic_class_name(self.iface, uFile)
-            topic.load_layer()
-            topic.infoText = ""
-            for layer in topic.layers:
-                topic.infoText = topic.infoText + str(layer.featureCount()) + ' ' + layer.name() + '\n'
-            if topic.infoText == "":
-                QMessageBox.warning(QDialog(),'Information', 'Aucun objet dans ce thème')
-    
-
-    def charger_verif(self):
-        # get the checked items
-        checked_items = []
-        for row in range(modelTest.rowCount()):
-            item = modelTest.item(row)
-        
-            if item.checkState() == Qt.Checked:
-                checked_items.append(str(item.text()).replace(" - ", "").replace(" ", "_"))
-                # QMessageBox.warning(QDialog(), "Message", checked_items[0])
-                item.setCheckState(Qt.Unchecked) 
-        
-        for checked_item in checked_items:
-                test_class_name = getattr(sys.modules[__name__], checked_item)
-                test = test_class_name(self.iface, uFile)
-                test.load_layer()
-                test.infoText = ""
-                for layer in test.layers:
-                    if layer.name() in test.check_layer:
-                        test.infoText = test.infoText + str(layer.featureCount()) + ' ' + layer.name() + '\n'
-                if test.infoText == "":
-                    QMessageBox.warning(QDialog(), "Information", "Les scripts de vérification n'ont pas détecté d'élément particulier sur ce thème.")
-                #else:
-                #    QMessageBox.warning(QDialog(), "Information", test.infoText)
+        else:
+            self.dock_widget.tabWidget.setEnabled(False)
+            self.layer_models.set_spatialite_data(None)
 
     def run(self):
         """Run method that loads and starts the plugin"""
@@ -206,25 +143,5 @@ class VeriVD:
 
         # Set the first tab to open
         self.dock_widget.tabWidget.setCurrentIndex(0)
-        for i in range(1, 1+self.dock_widget.tabWidget.count()):
-            self.dock_widget.tabWidget.setTabEnabled(i, False)
+        self.dock_widget.tabWidget.setEnabled(False)
 
-        # Connect the files Button and Label
-        self.dock_widget.labelFile.clear()
-        trace = "Pas de fichier ouvert"
-        self.dock_widget.labelFile.setText(trace)
-        self.dock_widget.pushButtonFichierOuvrir.clicked.connect(self.ouvrir_fichier)
-        self.dock_widget.pushButtonFichierQuitter.clicked.connect(self.dock_widget.close)
-        self.dock_widget.pushButtonFichierAide.clicked.connect(self.aide_fichier)
-        self.dock_widget.pushButtonBaseCharger.clicked.connect(self.charger_base)
-        self.dock_widget.pushButtonBaseEffacer.clicked.connect(self.tout_effacer)
-        self.dock_widget.pushButtonBaseAide.clicked.connect(self.aide_base)
-        self.dock_widget.pushButtonIliValidatorCharger.clicked.connect(self.charger_ili_validator)
-        self.dock_widget.pushButtonIliValidatorEffacer.clicked.connect(self.tout_effacer)
-        self.dock_widget.pushButtonIliValidatorAide.clicked.connect(self.aide_ili_validator)
-        self.dock_widget.pushButtonCheckerCharger.clicked.connect(self.charger_checker)
-        self.dock_widget.pushButtonCheckerEffacer.clicked.connect(self.tout_effacer)
-        self.dock_widget.pushButtonCheckerAide.clicked.connect(self.aide_checker)
-        self.dock_widget.pushButtonVerifCharger.clicked.connect(self.charger_verif)
-        self.dock_widget.pushButtonVerifEffacer.clicked.connect(self.tout_effacer)
-        self.dock_widget.pushButtonVerifAide.clicked.connect(self.aide_verif)
