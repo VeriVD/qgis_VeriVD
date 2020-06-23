@@ -95,7 +95,7 @@ class LayerListModel(QAbstractListModel):
             return self._veri_layers[index.row()].display_name
 
         if role == Qt.CheckStateRole:
-            return self._veri_layers[index.row()].loaded
+            return Qt.Checked if self._veri_layers[index.row()].loaded else Qt.Unchecked
 
         return None
 
@@ -140,9 +140,8 @@ class LayerListModel(QAbstractListModel):
             print("Unload")
         veri_layer = self._veri_layers[index.row()]
         for layer in veri_layer.qgis_layers:
-            print(layer.id())
             QgsProject.instance().removeMapLayer(layer)
-        QgsProject.instance().layerTreeRoot().removeChildren(veri_layer.layer_tree_group)
+        QgsProject.instance().layerTreeRoot().removeChildNode(veri_layer.layer_tree_group)
         veri_layer.layer_tree_group = None
         veri_layer.qgis_layers = []
         veri_layer.loaded = False
