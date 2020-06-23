@@ -134,8 +134,8 @@ class SpatialiteData(object):
 
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
 			if layer.isValid() and layer.featureCount() != 0:
-				qml_spec_file = os.path.join(self.plugin_path, 'qml', '{}_{}.qml'.format(self.__class__.__name__, layer_info.layer_name))
-				qml_gen_file = os.path.join(self.plugin_path, 'qml', '{}.qml'.format(layer_info.layer_name))
+				qml_spec_file = os.path.join(self.plugin_path, '../qml', '{}_{}.qml'.format(self.__class__.__name__, layer_info.layer_name))
+				qml_gen_file = os.path.join(self.plugin_path, '../qml', '{}.qml'.format(layer_info.layer_name))
 				# Check if a specific qml file exist for this layer
 				# if yes add it to layer
 				# if not, check if a generic qml file exist

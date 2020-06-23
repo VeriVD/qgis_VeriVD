@@ -37,7 +37,7 @@ from verivd.help import *
 
 from verivd.core.spatialite_data import SpatialiteData
 from verivd.core.models.base_model import BaseLayerModel
-from verivd.core.models.verif_model import TestLayerModel
+from verivd.core.models.verif_model import VerifLayerModel
 from verivd.core.models.checker_model import CheckerLayerModel
 from verivd.core.models.ili_validator_model import IliValidatorLayerModel
 
@@ -47,13 +47,13 @@ from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 class LayerModels:
     def __init__(self, iface: QgisInterface):
         self.spatialite_data = None
-        self.test_layer_model = TestLayerModel(iface)
+        self.verif_layer_model = VerifLayerModel(iface)
         self.ili_validator_layer_model = IliValidatorLayerModel(iface)
         self.checker_layer_model = CheckerLayerModel(iface)
         self.base_layer_model = BaseLayerModel(iface)
 
     def set_spatialite_data(self, spatialite_data):
-        self.test_layer_model.spatialite_data = spatialite_data
+        self.verif_layer_model.spatialite_data = spatialite_data
         self.ili_validator_layer_model.spatialite_data = spatialite_data
         self.checker_layer_model.spatialite_data = spatialite_data
         self.base_layer_model.spatialite_data = spatialite_data
