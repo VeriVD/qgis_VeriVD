@@ -33,7 +33,7 @@ MISSING_QML = (
 )
 
 
-class OfflineConverterTest(unittest.TestCase):
+class ModelTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.iface = get_iface()
