@@ -147,12 +147,7 @@ class SpatialiteData(object):
 					elif os.path.isfile(qml_gen_file):
 						layer.loadNamedStyle(qml_gen_file)
 					else:
-						QMessageBox.warning(
-							QDialog(), "Message",
-							"Il manque le fichier .qml pour la couche: {}"
-							"\n{}\nChargement d'un symbole par défault".format(
-								layer_info.display_name, layer_info.layer_name
-							))
+						self.iface.messageBar().pushWarning("VeriVD - fichier QML manquant", layer_info.display_name)
 				elif layer_info.symbology_type == SymbologyType.RANDOM_CATEGORIZED:
 					self.random_cat_symb(layer, layer_info.category_field, layer_info.symbology_data_defined_properties)
 				elif layer_info.symbology_type == SymbologyType.SIMPLE:
