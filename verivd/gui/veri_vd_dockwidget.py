@@ -64,6 +64,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         layer_models.checker_layer_model.dataChanged.connect(self.update_checker_tab)
 
         self.file_widget.fileChanged.connect(self.file_changed)
+        self.show_help_button.clicked.connect(self.show_help)
 
     def update_checker_tab(self):
         has_rows = self.layer_models.checker_layer_model.rowCount(QModelIndex()) > 0
@@ -77,3 +78,8 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.closingPlugin.emit()
         event.accept()
 
+    def show_help(self, show: bool):
+        self.base_help_label.setVisible(show)
+        self.checker_help_label.setVisible(show)
+        self.ili_help_label.setVisible(show)
+        self.verif_help_label.setVisible(show)
