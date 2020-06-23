@@ -30,7 +30,7 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.core import QgsProject, QgsLayerTreeGroup
 from qgis.gui import QgisInterface
 
-# Initialize Qt resources from file resources.py
+import verivd.resources_rc
 
 # Initialize layers
 from verivd.help import *
@@ -92,8 +92,6 @@ class VeriVD:
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-        ico = QIcon(":/plugins/verivd/icons/icon.png")
-        print(ico.pixmap(32,32))
         self.actions['main'] = QAction(
             QIcon(":/plugins/verivd/icons/icon.png"),
             self.tr('Vérification des mensurations vaudoises'),

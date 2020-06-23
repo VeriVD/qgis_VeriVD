@@ -17,7 +17,7 @@
 from qgis.gui import QgisInterface
 
 from verivd.core.layer_list_model import LayerListModel
-from verivd.core.layers import DONNEES_BASE
+from verivd.core.layer_names import DONNEES_BASE
 
 
 class BaseLayerModel(LayerListModel):

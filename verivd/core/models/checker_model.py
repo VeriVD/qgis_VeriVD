@@ -19,7 +19,7 @@ from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
-from verivd.core.layers import DONNEES_TOPIC
+from verivd.core.layer_names import DONNEES_TOPIC
 from verivd.core.spatialite_data import MARKER_SHAPE
 from verivd.core.symbolgy_type import SymbologyType
 from verivd.core.veri_layer import VeriLayer
