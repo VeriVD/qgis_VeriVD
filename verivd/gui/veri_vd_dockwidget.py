@@ -27,7 +27,7 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget
 from qgis.PyQt.QtCore import pyqtSignal, QModelIndex
 from qgis.gui import QgsFileWidget
-
+from verivd.gui.help import MESSAGE_BASE, MESSAGE_CHECKER, MESSAGE_ILIVALIDATOR, MESSAGE_VERIF
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), '../ui/veri_vd_dockwidget_base.ui'
@@ -50,8 +50,13 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.file_widget.setRelativeStorage(QgsFileWidget.Absolute)
         self.file_widget.setSelectedFilter('*.sqlite')
 
+        self.base_help_label.setText(MESSAGE_BASE)
+        self.checker_help_label.setText(MESSAGE_CHECKER)
+        self.ili_help_label.setText(MESSAGE_ILIVALIDATOR)
+        self.verif_help_label.setText(MESSAGE_VERIF)
+
         self.base_list_view.setModel(layer_models.base_layer_model)
-        self.test_list_view.setModel(layer_models.verif_layer_model)
+        self.verif_list_view.setModel(layer_models.verif_layer_model)
         self.ili_validator_list_view.setModel(layer_models.ili_validator_layer_model)
         self.checker_list_view.setModel(layer_models.checker_layer_model)
 

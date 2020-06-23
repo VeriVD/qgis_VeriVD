@@ -43,6 +43,19 @@
         <item>
          <widget class="QListView" name="base_list_view"/>
         </item>
+        <item>
+         <widget class="QLabel" name="base_help_label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="iliValidatorTab">
@@ -52,6 +65,19 @@
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QListView" name="ili_validator_list_view"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="ili_help_label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -63,15 +89,41 @@
         <item>
          <widget class="QListView" name="checker_list_view"/>
         </item>
+        <item>
+         <widget class="QLabel" name="checker_help_label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="testTab">
+      <widget class="QWidget" name="verifTab">
        <attribute name="title">
         <string>Tests sur les données</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QListView" name="test_list_view"/>
+         <widget class="QListView" name="verif_list_view"/>
+        </item>
+        <item>
+         <widget class="QLabel" name="verif_help_label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+          <property name="openExternalLinks">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

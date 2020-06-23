@@ -21,19 +21,14 @@
  ***************************************************************************/
 """
 import os.path
-import sys
 
 from qgis.PyQt.QtCore import Qt, QCoreApplication, QLocale, QSettings, QTranslator
-from qgis.PyQt.QtWidgets import QAction, QDialog, QMessageBox
+from qgis.PyQt.QtWidgets import QAction, QMessageBox
 from qgis.PyQt.QtGui import QIcon
 
-from qgis.core import QgsProject, QgsLayerTreeGroup
 from qgis.gui import QgisInterface
 
-import verivd.resources_rc
-
 # Initialize layers
-from verivd.help import *
 
 from verivd.core.spatialite_data import SpatialiteData
 from verivd.core.models.base_model import BaseLayerModel
@@ -120,7 +115,7 @@ class VeriVD:
         self.dock_widget = VeriVDDockWidget(self.layer_models)
         self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dock_widget)
 
-        self.dock_widget.file_changed.connect(self.ouvrir_fichier)
+        self.dock_widget.file_changed.connect(self.open_spatialite_file)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -134,7 +129,7 @@ class VeriVD:
             self.iface.removeToolBarIcon(action)
         del self.toolbar
 
-    def ouvrir_fichier(self, file):
+    def open_spatialite_file(self, file):
         if self.layer_models.has_loaded_layer():
             if QMessageBox.question(self.dock_widget, "Veri-VD", "Voulez-vous retirer les couches chargées ?") == QMessageBox.Yes:
                 self.layer_models.unload_all_layers()
