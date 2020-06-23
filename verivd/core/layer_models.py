@@ -36,7 +36,7 @@ class LayerModels:
         Returns if any of the models has a loaded layer
         """
         for model in self.models():
-            for layer in model._veri_layers:
+            for layer in model._veri_meta_layers:
                 if layer.loaded:
                     return True
         return False
