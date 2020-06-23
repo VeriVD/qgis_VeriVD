@@ -104,7 +104,6 @@ class SpatialiteData(object):
 
 	def create_layer(self, display_name, schema, layer_name, geom_column='', sql_request=''):
 		# set uri connection parameter
-		print('PPP', schema, layer_name, geom_column, sql_request)
 		self.uri.setDataSource(schema, layer_name, geom_column, sql_request)
 		# construct the layer
 		layer = QgsVectorLayer(self.uri.uri(), display_name, 'spatialite')
@@ -132,8 +131,6 @@ class SpatialiteData(object):
 			else:
 				geom_column = ""
 			layer = self.create_layer(layer_info.display_name, self.schema, layer_info.layer_name, geom_column, layer_info.sql_request)
-
-			print('WWWW', layer.isValid(), layer.featureCount())
 
 			# Set the path to the layer's qml file. The qml file must be name at least with the layer name
 			if layer.isValid() and layer.featureCount() != 0:

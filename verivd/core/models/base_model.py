@@ -14,11 +14,12 @@
  ***************************************************************************/
 """
 
+from qgis.gui import QgisInterface
 
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.layers import DONNEES_BASE
 
 
 class BaseLayerModel(LayerListModel):
-    def __init__(self):
-        super(BaseLayerModel, self).__init__(DONNEES_BASE)
+    def __init__(self, iface: QgisInterface):
+        super(BaseLayerModel, self).__init__(iface, DONNEES_BASE)

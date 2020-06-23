@@ -14,12 +14,16 @@
  ***************************************************************************/
 """
 
+from qgis.core import QgsVectorLayer, QgsLayerTreeGroup
+
 
 class VeriLayer:
     def __init__(self, name: str, display_name: str = None):
         self._name = name
         self._display_name = display_name or name
         self._loaded = False
+        self._layer_tree_group = None
+        self._qgis_layers: [QgsVectorLayer] = []
 
     @property
     def name(self):
@@ -36,4 +40,19 @@ class VeriLayer:
     @loaded.setter
     def loaded(self, value: bool):
         self._loaded = value
-        # TODO load/unload
+
+    @property
+    def layer_tree_group(self):
+        return self._layer_tree_group
+
+    @layer_tree_group.setter
+    def layer_tree_group(self, value: QgsLayerTreeGroup):
+        self._layer_tree_group = value
+
+    @property
+    def qgis_layers(self):
+        return self._qgis_layers
+
+    @qgis_layers.setter
+    def qgis_layers(self, value: [QgsVectorLayer]):
+        self._qgis_layers = value

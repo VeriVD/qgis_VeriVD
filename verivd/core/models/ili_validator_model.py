@@ -14,22 +14,23 @@
  ***************************************************************************/
 """
 
+from qgis.gui import QgisInterface
+from qgis.core import QgsSymbolLayer, QgsProperty, QgsWkbTypes, QgsVectorLayer
+
 from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.layers import DONNEES_TOPIC
-
-from qgis.core import QgsSymbolLayer, QgsProperty, QgsWkbTypes, QgsVectorLayer
 from verivd.core.spatialite_data import MARKER_SHAPE
 from verivd.core.symbolgy_type import SymbologyType
 from verivd.core.veri_layer import VeriLayer
 
 
 class IliValidatorLayerModel(LayerListModel):
-    def __init__(self):
-        super(IliValidatorLayerModel, self).__init__()
+    def __init__(self, iface: QgisInterface):
+        super(IliValidatorLayerModel, self).__init__(iface)
 
     def reload(self):
-        self.layers = []
+        self._veri_layers = []
         ili_validator_dict = self.spatialite_data.load_table_list('000_ilivalidator_decompte')
         for topic in DONNEES_TOPIC:
             ili_validator_topic = topic.replace(' ', '_')
@@ -38,7 +39,7 @@ class IliValidatorLayerModel(LayerListModel):
                     topic, str(ili_validator_dict[ili_validator_topic])
                 )
                 ili_validator_topic = topic.replace(' ', '_')
-                self.layers.append(VeriLayer(ili_validator_topic, display_name))
+                self._veri_layers.append(VeriLayer(ili_validator_topic, display_name))
 
     def group_name(self, layer):
         return "Résultat du iliValidator - {}".format(layer)

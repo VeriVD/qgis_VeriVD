@@ -17,24 +17,22 @@
 
 from qgis.PyQt.QtCore import Qt, QAbstractListModel, QModelIndex
 
-from qgis.core import QgsProject, QgsVectorLayer, QgsLayerTreeGroup
+from qgis.core import QgsProject, QgsVectorLayer
+from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
 from verivd.core.spatialite_data import SpatialiteData
 from verivd.core.veri_layer import VeriLayer
 
-
-class InsertedLayer:
-    def __init__(self, group: QgsLayerTreeGroup, layers: [QgsVectorLayer]):
-        self.group = group
-        self.layers = layers
+Debug = True
 
 
 class LayerListModel(QAbstractListModel):
-    def __init__(self, layers: [str] = []):
-        self.layers: [VeriLayer] = []
+    def __init__(self, iface: QgisInterface, layers: [str] = []):
+        self.iface = iface
+        self._veri_layers: [VeriLayer] = []
         for layer_name in layers:
-            self.layers.append(VeriLayer(layer_name))
+            self._veri_layers.append(VeriLayer(layer_name))
         self._spatialite_data: SpatialiteData = None
         super().__init__()
 
@@ -82,7 +80,7 @@ class LayerListModel(QAbstractListModel):
         pass
 
     def rowCount(self, parent: QModelIndex = ...) -> int:
-        return len(self.layers)
+        return len(self._veri_layers)
 
     def flags(self, index: QModelIndex) -> Qt.ItemFlags:
         # Qt QAbstractListModel virtual method
@@ -90,54 +88,65 @@ class LayerListModel(QAbstractListModel):
 
     def data(self, index: QModelIndex, role: int):
         # Qt QAbstractListModel virtual method
-        if index.row() < 0 or index.row() >= len(self.layers):
+        if index.row() < 0 or index.row() >= len(self._veri_layers):
             return None
 
         if role == Qt.DisplayRole:
-            return self.layers[index.row()].display_name
+            return self._veri_layers[index.row()].display_name
 
         if role == Qt.CheckStateRole:
-            return self.layers[index.row()].loaded
+            return self._veri_layers[index.row()].loaded
 
         return None
 
     def setData(self, index: QModelIndex, value, role: int) -> bool:
         # Qt QAbstractListModel virtual method
         if role == Qt.CheckStateRole:
-            layer = self.layers[index.row()].name
+            print(value)
             if value == Qt.Checked:
-                self.__load_layer(layer)
+                self.__load_layer(index)
             else:
-                self.__unload_layer(layer)
+                self.__unload_layer(index)
+            self.dataChanged.emit(index, index, [Qt.CheckStateRole])
             return True
-
         return False
 
-    def __load_layer(self, layer: str):
-        group_name = self.group_name(layer)
-        group_layer = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
-        group_layer.setExpanded(False)
-        layer_infos = self.layer_infos(layer)
-        layers = self.spatialite_data.create_layers(layer_infos)
-        print("YXYY", len(layer_infos), len(layers))
-        for i, layer in enumerate(layers):
-            self.post_process_layer(layer, i)
-            QgsProject.instance().addMapLayer(layer, False)
-            group_layer.insertLayer(len(self.layers), layer)
+    def __load_layer(self, index: QModelIndex):
+        if Debug:
+            print("Load layer")
+        veri_layer = self._veri_layers[index.row()]
+        group_name = self.group_name(veri_layer.name)
+        veri_layer.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
+        veri_layer.layer_tree_group.setExpanded(False)
+        layer_infos = self.layer_infos(veri_layer.name)
+        qgis_layers = self.spatialite_data.create_layers(layer_infos)
+        veri_layer.qgis_layers = []
+        for i, qgis_layer in enumerate(qgis_layers):
+            self.post_process_layer(qgis_layer, i)
+            added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
+            veri_layer.layer_tree_group.insertLayer(i, added_qgis_layer)
             if not layer_infos[i].visibility:
-                node = QgsProject.instance().layerTreeRoot().findLayer(layer.id())
+                node = QgsProject.instance().layerTreeRoot().findLayer(added_qgis_layer.id())
                 if node:
                     node.setItemVisibilityChecked(False)
                 else:
                     raise Exception("La couche n'a pas été chargée.")
-            self.loaded_layers[layer] = InsertedLayer(group_layer, layers)
+            veri_layer.qgis_layers.append(added_qgis_layer)
+        veri_layer.loaded = True
+        self.dataChanged.emit(index, index)
 
-    def __unload_layer(self, layer: str):
-        if layer not in self.loaded_layers:
-            raise Exception('Layer {} is not loaded'.format(layer))
-        for layer in self.loaded_layers[layer]:
+    def __unload_layer(self, index: QModelIndex):
+        if Debug:
+            print("Unload")
+        veri_layer = self._veri_layers[index.row()]
+        for layer in veri_layer.qgis_layers:
+            print(layer.id())
             QgsProject.instance().removeMapLayer(layer)
-        QgsProject.instance().layerTreeRoot().removeChildren(self.loaded_layers[layer].group)
+        QgsProject.instance().layerTreeRoot().removeChildren(veri_layer.layer_tree_group)
+        veri_layer.layer_tree_group = None
+        veri_layer.qgis_layers = []
+        veri_layer.loaded = False
+        self.dataChanged.emit(index, index)
 
 
 
