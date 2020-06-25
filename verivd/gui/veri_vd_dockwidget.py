@@ -60,7 +60,9 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.ili_validator_list_view.setModel(layer_models.ili_validator_layer_model)
         self.checker_list_view.setModel(layer_models.checker_layer_model)
 
+        layer_models.ili_validator_layer_model.modelReset.connect(self.update_ili_tab)
         layer_models.ili_validator_layer_model.dataChanged.connect(self.update_ili_tab)
+        layer_models.checker_layer_model.modelReset.connect(self.update_checker_tab)
         layer_models.checker_layer_model.dataChanged.connect(self.update_checker_tab)
 
         self.file_widget.fileChanged.connect(self.file_changed)
@@ -68,11 +70,11 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
 
     def update_checker_tab(self):
         has_rows = self.layer_models.checker_layer_model.rowCount(QModelIndex()) > 0
-        self.tabWidget.setTabEnabled(3, has_rows)
+        self.tabWidget.setTabEnabled(2, has_rows)
 
     def update_ili_tab(self):
         has_rows = self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) > 0
-        self.tabWidget.setTabEnabled(2, has_rows)
+        self.tabWidget.setTabEnabled(1, has_rows)
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
