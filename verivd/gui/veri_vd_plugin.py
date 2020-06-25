@@ -94,17 +94,21 @@ class VeriVD:
         del self.toolbar
 
     def open_spatialite_file(self, file):
-        if self.layer_models.has_loaded_layer():
-            if QMessageBox.question(self.dock_widget, "Veri-VD", "Voulez-vous conservers les couches chargées ?") == QMessageBox.No:
+        if self.spatialite_data is not None and self.layer_models.has_loaded_layer():
+            if QMessageBox.question(
+                    self.dock_widget, "Veri-VD",
+                    "Voulez-vous conserver les couches chargées par {}?".format(self.spatialite_data.uri.database())
+            ) == QMessageBox.No:
                 self.layer_models.unload_all_layers()
             self.layer_models.reset_models()
         if file:
             strFile = file.encode("utf-8")
             uFile = strFile.decode("utf-8")
-            spatialite_data = SpatialiteData(self.iface, uFile)
-            self.layer_models.set_spatialite_data(spatialite_data)
+            self.spatialite_data = SpatialiteData(self.iface, uFile)
+            self.layer_models.set_spatialite_data(self.spatialite_data)
             self.dock_widget.tabWidget.setEnabled(True)
         else:
+            self.spatialite_data = None
             self.dock_widget.tabWidget.setEnabled(False)
             self.layer_models.set_spatialite_data(None)
 
