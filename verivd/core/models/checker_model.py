@@ -30,6 +30,7 @@ class CheckerLayerModel(LayerListModel):
         super(CheckerLayerModel, self).__init__(iface)
 
     def reload(self):
+        self.beginResetModel()
         self._veri_meta_layers = []
         if not self.spatialite_data:
             return
@@ -38,6 +39,7 @@ class CheckerLayerModel(LayerListModel):
             if topic in checker_dict:
                 display_name = 'Checker - {}: {}'.format(topic, str(checker_dict[topic]))
                 self._veri_meta_layers.append(VeriMetaLayer(topic, display_name))
+        self.endResetModel()
 
     def layer_infos(self, layer: str) -> [LayerInfo]:
         sql_request = '"topic" = "{}"'.format(layer)

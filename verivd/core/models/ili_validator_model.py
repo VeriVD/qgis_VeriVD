@@ -30,6 +30,7 @@ class IliValidatorLayerModel(LayerListModel):
         super(IliValidatorLayerModel, self).__init__(iface)
 
     def reload(self):
+        self.beginResetModel()
         self._veri_meta_layers = []
         if not self.spatialite_data:
             return
@@ -42,6 +43,7 @@ class IliValidatorLayerModel(LayerListModel):
                 )
                 ili_validator_topic = topic.replace(' ', '_')
                 self._veri_meta_layers.append(VeriMetaLayer(ili_validator_topic, display_name))
+        self.endResetModel()
 
     def group_name(self, layer):
         return "Résultat du iliValidator - {}".format(layer)

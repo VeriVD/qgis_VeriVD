@@ -43,8 +43,16 @@ class LayerListModel(QAbstractListModel):
     @spatialite_data.setter
     def spatialite_data(self, data):
         self._spatialite_data = data
-        self.beginResetModel()
         self.reload()
+
+    @property
+    def veri_meta_layers(self) -> [VeriMetaLayer]:
+        return self._veri_meta_layers
+
+    @veri_meta_layers.setter
+    def veri_meta_layers(self, value: [VeriMetaLayer]):
+        self.beginResetModel()
+        self._veri_meta_layers = value
         self.endResetModel()
 
     def reload(self):

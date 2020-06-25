@@ -53,8 +53,12 @@ class LayerModels:
         Returns if any of the models has a loaded layer
         """
         for model in self.models():
-            for layer in model._veri_meta_layers:
+            for layer in model.veri_meta_layers:
                 if layer.loaded:
                     return True
         return False
+
+    def reset_models(self):
+        for model in self.models():
+            model.reload()
 

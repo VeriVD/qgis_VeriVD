@@ -118,23 +118,30 @@ BASE_LAYER_INFOS = {
 }
 
 
+def create_veri_meta_layers():
+    return (
+        VeriMetaLayer("Base-Tous_les_topics", "Base - Tous les topics"),
+        VeriMetaLayer("Base-Points_fixes", "Base - Points fixes"),
+        VeriMetaLayer("Base-Couverture_du_sol", "Base - Couverture du sol"),
+        VeriMetaLayer("Base-Objets_divers", "Base - Objets divers"),
+        VeriMetaLayer("Base-Altimetrie", "Base - Altimétrie"),
+        VeriMetaLayer("Base-Nomenclature", "Base - Nomenclature"),
+        VeriMetaLayer("Base-Biens_fonds", "Base - Biens fonds"),
+        VeriMetaLayer("Base-Conduite", "Base - Conduite"),
+        VeriMetaLayer("Base-Limites_territoriales", "Base - Limites territoriales"),
+        VeriMetaLayer("Base-Adresses_des_batiments", "Base - Adresses des bâtiments"),
+        VeriMetaLayer("Base-Repartition_des_plans", "Base - Répartition des plans"),
+    )
+
+
 class BaseLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
-        layers = (
-            VeriMetaLayer("Base-Tous_les_topics", "Base - Tous les topics"),
-            VeriMetaLayer("Base-Points_fixes", "Base - Points fixes"),
-            VeriMetaLayer("Base-Couverture_du_sol", "Base - Couverture du sol"),
-            VeriMetaLayer("Base-Objets_divers", "Base - Objets divers"),
-            VeriMetaLayer("Base-Altimetrie", "Base - Altimétrie"),
-            VeriMetaLayer("Base-Nomenclature", "Base - Nomenclature"),
-            VeriMetaLayer("Base-Biens_fonds", "Base - Biens fonds"),
-            VeriMetaLayer("Base-Conduite", "Base - Conduite"),
-            VeriMetaLayer("Base-Limites_territoriales", "Base - Limites territoriales"),
-            VeriMetaLayer("Base-Adresses_des_batiments", "Base - Adresses des bâtiments"),
-            VeriMetaLayer("Base-Repartition_des_plans", "Base - Répartition des plans"),
-        )
-        super(BaseLayerModel, self).__init__(iface, layers)
+        super(BaseLayerModel, self).__init__(iface, create_veri_meta_layers())
 
     def layer_infos(self, layer: str) -> [LayerInfo]:
         return BASE_LAYER_INFOS[layer]
+
+    def reload(self):
+        self.veri_meta_layers = create_veri_meta_layers()
+
 

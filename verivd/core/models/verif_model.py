@@ -368,21 +368,28 @@ VERIF_LAYER_INFOS = {
 }
 
 
+def create_veri_meta_layers():
+    return (
+        VeriMetaLayer("VerifPoints_fixes", "Vérification - Points fixes"),
+        VeriMetaLayer("VerifCouverture_du_sol_et_objets_divers", "Vérification - Couverture du sol et objets divers"),
+        VeriMetaLayer("VerifContinuite_des_reseaux", "Vérification - Continuite des reseaux"),
+        VeriMetaLayer("VerifNomenclature", "Vérification - Nomenclature"),
+        VeriMetaLayer("VerifBiens_fonds", "Vérification - Biens fonds"),
+        VeriMetaLayer("VerifRepartition_des_plans_et_domaine_de_numerotation",
+                      "Vérification - Repartition des plans et domaine de numerotation"),
+        VeriMetaLayer("VerifLimites_territoriales_et_administratives",
+                      "Vérification - Limites territoriales et administratives"),
+        VeriMetaLayer("VerifAdresses", "Vérification - Adresses")
+    )
+
+
 class VerifLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
-        layers = (
-            VeriMetaLayer("VerifPoints_fixes", "Vérification - Points fixes"),
-            VeriMetaLayer("VerifCouverture_du_sol_et_objets_divers", "Vérification - Couverture du sol et objets divers"),
-            VeriMetaLayer("VerifContinuite_des_reseaux", "Vérification - Continuite des reseaux"),
-            VeriMetaLayer("VerifNomenclature", "Vérification - Nomenclature"),
-            VeriMetaLayer("VerifBiens_fonds", "Vérification - Biens fonds"),
-            VeriMetaLayer("VerifRepartition_des_plans_et_domaine_de_numerotation",
-                      "Vérification - Repartition des plans et domaine de numerotation"),
-            VeriMetaLayer("VerifLimites_territoriales_et_administratives",
-                      "Vérification - Limites territoriales et administratives"),
-            VeriMetaLayer("VerifAdresses", "Vérification - Adresses")
-        )
-        super(VerifLayerModel, self).__init__(iface, layers)
+
+        super(VerifLayerModel, self).__init__(iface, create_veri_meta_layers())
+
+    def reload(self):
+        self.veri_meta_layers = create_veri_meta_layers()
 
     def layer_infos(self, layer: str) -> [LayerInfo]:
         return VERIF_LAYER_INFOS[layer]

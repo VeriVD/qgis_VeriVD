@@ -97,6 +97,7 @@ class VeriVD:
         if self.layer_models.has_loaded_layer():
             if QMessageBox.question(self.dock_widget, "Veri-VD", "Voulez-vous retirer les couches chargées ?") == QMessageBox.Yes:
                 self.layer_models.unload_all_layers()
+            self.layer_models.reset_models()
         if file:
             strFile = file.encode("utf-8")
             uFile = strFile.decode("utf-8")
