@@ -41,6 +41,9 @@ class CheckerLayerModel(LayerListModel):
                 self._veri_meta_layers.append(VeriMetaLayer(topic, display_name))
         self.endResetModel()
 
+    def group_name(self, layer):
+        return "Résultat du checker - {}".format(layer)
+
     def layer_infos(self, layer: str) -> [LayerInfo]:
         sql_request = '"topic" = "{}"'.format(layer)
         layer_infos = (
