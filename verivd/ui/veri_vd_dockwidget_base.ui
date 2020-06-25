@@ -82,7 +82,7 @@
            <enum>Qt::Horizontal</enum>
           </property>
           <widget class="QListView" name="base_list_view"/>
-          <widget class="QFrame" name="frame">
+          <widget class="QFrame" name="base_help_frame">
            <property name="frameShape">
             <enum>QFrame::Box</enum>
            </property>
@@ -104,11 +104,6 @@
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="base_help_label">
-              <property name="font">
-               <font>
-                <pointsize>15</pointsize>
-               </font>
-              </property>
               <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
@@ -143,7 +138,7 @@
            <enum>Qt::Horizontal</enum>
           </property>
           <widget class="QListView" name="ili_validator_list_view"/>
-          <widget class="QFrame" name="frame_2">
+          <widget class="QFrame" name="ili_help_frame">
            <property name="frameShape">
             <enum>QFrame::Box</enum>
            </property>
@@ -165,11 +160,6 @@
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="ili_help_label">
-              <property name="font">
-               <font>
-                <pointsize>15</pointsize>
-               </font>
-              </property>
               <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
@@ -204,7 +194,7 @@
            <enum>Qt::Horizontal</enum>
           </property>
           <widget class="QListView" name="checker_list_view"/>
-          <widget class="QFrame" name="frame_3">
+          <widget class="QFrame" name="checker_help_frame">
            <property name="frameShape">
             <enum>QFrame::Box</enum>
            </property>
@@ -226,11 +216,6 @@
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="checker_help_label">
-              <property name="font">
-               <font>
-                <pointsize>15</pointsize>
-               </font>
-              </property>
               <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
@@ -265,7 +250,7 @@
            <enum>Qt::Horizontal</enum>
           </property>
           <widget class="QListView" name="verif_list_view"/>
-          <widget class="QFrame" name="frame_4">
+          <widget class="QFrame" name="verif_help_frame">
            <property name="frameShape">
             <enum>QFrame::Box</enum>
            </property>
@@ -287,11 +272,6 @@
             </property>
             <item row="0" column="0">
              <widget class="QLabel" name="verif_help_label">
-              <property name="font">
-               <font>
-                <pointsize>15</pointsize>
-               </font>
-              </property>
               <property name="frameShape">
                <enum>QFrame::NoFrame</enum>
               </property>
