@@ -106,6 +106,7 @@ class LayerListModel(QAbstractListModel):
                 self.__load_layer(index)
             else:
                 self.__unload_layer(index)
+                self.iface.mapCanvas().refresh()
             self.dataChanged.emit(index, index, [Qt.CheckStateRole])
             return True
         return False
@@ -143,7 +144,7 @@ class LayerListModel(QAbstractListModel):
         for layer in veri_meta_layer.qgis_layers:
             QgsProject.instance().removeMapLayer(layer)
         self.__is_removing_layer = False
-        if len(veri_meta_layer.layer_tree_group.children()) == 0:
+        if veri_meta_layer.layer_tree_group is not None and len(veri_meta_layer.layer_tree_group.children()) == 0:
            QgsProject.instance().layerTreeRoot().removeChildNode(veri_meta_layer.layer_tree_group)
         veri_meta_layer.layer_tree_group = None
         veri_meta_layer.qgis_layers = []
@@ -154,6 +155,7 @@ class LayerListModel(QAbstractListModel):
         for row in range(0, self.rowCount(QModelIndex())):
             self.__unload_layer(self.index(row, 0))
         self.endResetModel()
+        self.iface.mapCanvas().refresh()
 
     def layers_will_be_removed(self, removed_layer_ids):
         if self.__is_removing_layer:
