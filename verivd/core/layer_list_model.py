@@ -160,7 +160,8 @@ class LayerListModel(QAbstractListModel):
         i = 0
         loaded_layers = []
         for layer_info, qgis_layer in layers.items():
-            if not qgis_layer:
+            if qgis_layer is None:
+                print("no layer loaded for {}".format(layer_info.display_name))
                 continue
             self.post_process_layer(qgis_layer, i)
             added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
@@ -170,12 +171,13 @@ class LayerListModel(QAbstractListModel):
                 if node:
                     node.setItemVisibilityChecked(False)
                 else:
-                    raise Exception("La couche n'a pas été chargée.")
+                    raise Exception('La couche "{}" n''a pas été chargée.'.format(layer_info.display_name))
             loaded_layers.append(layer_info)
+            veri_meta_layer.qgis_layers.append(added_qgis_layer)
             i += 1
+        veri_meta_layer.loaded = Qt.Checked
         if i > 0:
             self.layers_loaded.emit(group_name, loaded_layers)
-        veri_meta_layer.loaded = Qt.Checked
 
     def __unload_layer(self, index: QModelIndex):
         if Debug:
