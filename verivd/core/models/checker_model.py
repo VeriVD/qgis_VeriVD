@@ -74,8 +74,6 @@ class CheckerLayerModel(LayerListModel):
         return layer_infos
 
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
-        context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
-        context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(layer))
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
-            for symbol in layer.renderer().symbols(context):
+            for symbol in layer.renderer().symbols(self.layer_context(layer)):
                 symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])

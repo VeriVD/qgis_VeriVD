@@ -17,7 +17,7 @@
 
 from qgis.PyQt.QtCore import Qt, QAbstractListModel, QModelIndex
 
-from qgis.core import QgsProject, QgsVectorLayer
+from qgis.core import QgsProject, QgsVectorLayer, QgsRenderContext, QgsExpressionContextUtils
 from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
@@ -34,7 +34,7 @@ class LayerListModel(QAbstractListModel):
         self._spatialite_data: SpatialiteData = None
         super().__init__()
         self.__is_removing_layer = False
-        QgsProject.instance().layersWillBeRemoved.connect(self.layers_will_be_removed)
+        QgsProject.instance().layersWillBeRemoved.connect(self.__layers_will_be_removed)
 
     @property
     def spatialite_data(self):
@@ -119,6 +119,18 @@ class LayerListModel(QAbstractListModel):
             return True
         return False
 
+    def unload_all(self):
+        self.beginResetModel()
+        for row in range(0, self.rowCount(QModelIndex())):
+            self.__unload_layer(self.index(row, 0))
+        self.endResetModel()
+        self.iface.mapCanvas().refresh()
+
+    def layer_context(self, layer: QgsVectorLayer) -> QgsRenderContext:
+        context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
+        context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(layer))
+        return context
+
     def __load_layer(self, index: QModelIndex):
         if Debug:
             print("Load layer")
@@ -158,14 +170,7 @@ class LayerListModel(QAbstractListModel):
         veri_meta_layer.qgis_layers = []
         veri_meta_layer.loaded = Qt.Unchecked
 
-    def unload_all(self):
-        self.beginResetModel()
-        for row in range(0, self.rowCount(QModelIndex())):
-            self.__unload_layer(self.index(row, 0))
-        self.endResetModel()
-        self.iface.mapCanvas().refresh()
-
-    def layers_will_be_removed(self, removed_layer_ids):
+    def __layers_will_be_removed(self, removed_layer_ids):
         if self.__is_removing_layer:
             return
         self.beginResetModel()
@@ -183,10 +188,3 @@ class LayerListModel(QAbstractListModel):
                 else:
                     veri_layer.loaded = Qt.Unchecked
         self.endResetModel()
-
-
-
-
-
-
-

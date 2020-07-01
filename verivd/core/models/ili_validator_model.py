@@ -97,5 +97,5 @@ class IliValidatorLayerModel(LayerListModel):
 
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
-            for symbol in layer.renderer().symbols():
+            for symbol in layer.renderer().symbols(self.layer_context(layer)):
                 symbol.symbolLayer(0).setName(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])
