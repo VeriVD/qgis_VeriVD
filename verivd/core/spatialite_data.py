@@ -8,6 +8,7 @@
 from builtins import object
 import os.path
 from random import randrange
+from typing import Dict
 
 from qgis.core import QgsSimpleMarkerSymbolLayerBase, QgsWkbTypes, QgsDataSourceUri, QgsExpressionContextUtils,\
 	QgsVectorLayer, QgsPropertyCollection, QgsSymbol, QgsSimpleFillSymbolLayer, QgsRendererCategory, \
@@ -133,7 +134,7 @@ class SpatialiteData(object):
 			print(qml_spec_file, qml_gen_file)
 		return None
 
-	def create_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]) -> dict:
+	def create_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]) -> Dict[LayerInfo, QgsVectorLayer]:
 		# set the layers group in the tree
 		layers = {}
 		# loop through layer's parameters

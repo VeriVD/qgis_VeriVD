@@ -54,3 +54,4 @@ class LayerInfo(object):
 		self.category_field = category_field
 		self.opacity = opacity
 		self.visibility = visibility
+		self.control_layer = control_layer

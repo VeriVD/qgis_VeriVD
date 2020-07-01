@@ -30,6 +30,8 @@ from qgis.gui import QgisInterface
 
 # Initialize layers
 from verivd.core.layer_models import LayerModels
+from verivd.core.layer_list_model import LayerListModel
+from verivd.core.layer_info import LayerInfo
 from verivd.core.spatialite_data import SpatialiteData
 
 from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
@@ -81,6 +83,9 @@ class VeriVD:
 
         self.dock_widget.file_changed.connect(self.open_spatialite_file)
 
+        for model in self.layer_models.models():
+            model.layers_loaded.connect(lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(model, layer_name, layers_loaded))
+
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
 
@@ -120,3 +125,20 @@ class VeriVD:
         self.dock_widget.tabWidget.setCurrentIndex(0)
         self.dock_widget.tabWidget.setEnabled(False)
 
+    def __on_layers_loaded(self, model: LayerListModel, layer_name: str, layers_loaded: [LayerInfo]):
+        if model.has_control_layers:
+            control_layers_loaded = 0
+            layer_names = []
+            for layer_info in layers_loaded:
+                if layer_info.control_layer:
+                    control_layers_loaded += 1
+                    layer_names.append(layer_info.display_name)
+            if control_layers_loaded:
+                # self.iface.messageBar().pushWarning("VeriVD", 'Les scripts de vérification ont détecté des éléments problématiques pour le thème "{}:\n {}".'.format(layer_name, '\n'.join(layer_names)))
+                pass
+            else:
+                self.iface.messageBar().pushMessage(
+                    'VeriVD',
+                    'Les scripts de vérification n''ont pas détecté d''élément particulier pour le thème "{}".'
+                        .format(layer_name)
+                )

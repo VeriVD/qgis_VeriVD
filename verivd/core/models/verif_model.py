@@ -385,8 +385,7 @@ def create_veri_meta_layers():
 
 class VerifLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
-
-        super(VerifLayerModel, self).__init__(iface, create_veri_meta_layers())
+        super(VerifLayerModel, self).__init__(iface, create_veri_meta_layers(), has_control_layers=True)
 
     def reload(self):
         self.veri_meta_layers = create_veri_meta_layers()

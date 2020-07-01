@@ -15,7 +15,7 @@
 """
 
 
-from qgis.PyQt.QtCore import Qt, QAbstractListModel, QModelIndex
+from qgis.PyQt.QtCore import Qt, QAbstractListModel, QModelIndex, pyqtSignal
 
 from qgis.core import QgsProject, QgsVectorLayer, QgsRenderContext, QgsExpressionContextUtils
 from qgis.gui import QgisInterface
@@ -28,10 +28,20 @@ Debug = True
 
 
 class LayerListModel(QAbstractListModel):
-    def __init__(self, iface: QgisInterface, layers: [VeriMetaLayer] = []):
+
+    # signal emitted when layers are loaded (group_name, loaded_layers)
+    layers_loaded = pyqtSignal(str, list)
+
+    def __init__(self, iface: QgisInterface, layers: [VeriMetaLayer] = [], has_control_layers: bool = False):
+        """
+        :param iface: the QgisInterface
+        :param layers: pre-load the model with data
+        :param has_control_layers: if True, the plugin will report if no control_layers have been loaded
+        """
         self.iface = iface
         self._veri_meta_layers: [VeriMetaLayer] = layers
         self._spatialite_data: SpatialiteData = None
+        self._has_control_layers = has_control_layers
         super().__init__()
         self.__is_removing_layer = False
         QgsProject.instance().layersWillBeRemoved.connect(self.__layers_will_be_removed)
@@ -54,6 +64,10 @@ class LayerListModel(QAbstractListModel):
         self.beginResetModel()
         self._veri_meta_layers = value
         self.endResetModel()
+
+    @property
+    def has_control_layers(self) -> bool:
+        return self._has_control_layers
 
     def reload(self):
         """
@@ -144,6 +158,7 @@ class LayerListModel(QAbstractListModel):
         layers = self.spatialite_data.create_layers(veri_meta_layer.name, layer_infos)
         veri_meta_layer.qgis_layers = []
         i = 0
+        loaded_layers = []
         for layer_info, qgis_layer in layers.items():
             if not qgis_layer:
                 continue
@@ -156,8 +171,10 @@ class LayerListModel(QAbstractListModel):
                     node.setItemVisibilityChecked(False)
                 else:
                     raise Exception("La couche n'a pas été chargée.")
-            veri_meta_layer.qgis_layers.append(added_qgis_layer)
+            loaded_layers.append(layer_info)
             i += 1
+        if i > 0:
+            self.layers_loaded.emit(group_name, loaded_layers)
         veri_meta_layer.loaded = Qt.Checked
 
     def __unload_layer(self, index: QModelIndex):
