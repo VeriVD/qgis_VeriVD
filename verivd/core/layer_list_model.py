@@ -151,7 +151,7 @@ class LayerListModel(QAbstractListModel):
         if not self.spatialite_data:
             return
         veri_meta_layer = self._veri_meta_layers[index.row()]
-        group_name = self.group_name(veri_meta_layer.name)
+        group_name = self.group_name(veri_meta_layer.display_name)
         veri_meta_layer.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
         veri_meta_layer.layer_tree_group.setExpanded(False)
         layer_infos = self.layer_infos(veri_meta_layer.name)
