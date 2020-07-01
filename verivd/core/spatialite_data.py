@@ -133,9 +133,9 @@ class SpatialiteData(object):
 			print(qml_spec_file, qml_gen_file)
 		return None
 
-	def create_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]):
+	def create_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]) -> dict:
 		# set the layers group in the tree
-		layers = []
+		layers = {}
 		# loop through layer's parameters
 		for layer_info in layer_infos:
 			if layer_info.symbology_type != SymbologyType.NO_SYMBOL:
@@ -160,5 +160,7 @@ class SpatialiteData(object):
 				if layer_info.opacity != 1:
 					layer.setOpacity(layer_info.opacity)
 
-				layers.append(layer)
+				layers[layer_info] = layer
+			else:
+				layers[layer_info] = None
 		return layers

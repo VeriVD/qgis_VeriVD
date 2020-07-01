@@ -141,19 +141,23 @@ class LayerListModel(QAbstractListModel):
         veri_meta_layer.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
         veri_meta_layer.layer_tree_group.setExpanded(False)
         layer_infos = self.layer_infos(veri_meta_layer.name)
-        qgis_layers = self.spatialite_data.create_layers(veri_meta_layer.name, layer_infos)
+        layers = self.spatialite_data.create_layers(veri_meta_layer.name, layer_infos)
         veri_meta_layer.qgis_layers = []
-        for i, qgis_layer in enumerate(qgis_layers):
+        i = 0
+        for layer_info, qgis_layer in layers.items():
+            if not qgis_layer:
+                continue
             self.post_process_layer(qgis_layer, i)
             added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
             veri_meta_layer.layer_tree_group.insertLayer(i, added_qgis_layer)
-            if not layer_infos[i].visibility:
+            if not layer_info.visibility:
                 node = QgsProject.instance().layerTreeRoot().findLayer(added_qgis_layer.id())
                 if node:
                     node.setItemVisibilityChecked(False)
                 else:
                     raise Exception("La couche n'a pas été chargée.")
             veri_meta_layer.qgis_layers.append(added_qgis_layer)
+            i += 1
         veri_meta_layer.loaded = Qt.Checked
 
     def __unload_layer(self, index: QModelIndex):
