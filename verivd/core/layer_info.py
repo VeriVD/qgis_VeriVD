@@ -29,8 +29,22 @@ class LayerInfo(object):
 			category_field = None,
 			sql_request: str = '',
 			visibility: bool = True,
-			opacity: float = 1
+			opacity: float = 1,
+			control_layer: bool = False,
 	):
+		"""
+
+		:param display_name:
+		:param layer_name:
+		:param symbology_type:
+		:param symbology_properties:
+		:param symbology_data_defined_properties:
+		:param category_field:
+		:param sql_request:
+		:param visibility:
+		:param opacity:
+		:param control_layer: if True, the plugin will report if no control layer has been loaded (saying no errors have been encountered)
+		"""
 		self.display_name = display_name
 		self.layer_name = layer_name
 		self.sql_request = sql_request
