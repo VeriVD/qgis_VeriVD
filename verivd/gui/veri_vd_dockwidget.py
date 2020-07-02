@@ -48,7 +48,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
 
         self.file_widget.setDialogTitle('Ouvrir un fichier spatialite')
         self.file_widget.setRelativeStorage(QgsFileWidget.Absolute)
-        self.file_widget.setSelectedFilter('*.sqlite')
+        self.file_widget.setFilter("fichiers SQLite (*.sqlite *.SQLite *.SQLITE)")
 
         self.base_help_label.setText(MESSAGE_BASE)
         self.checker_help_label.setText(MESSAGE_CHECKER)
