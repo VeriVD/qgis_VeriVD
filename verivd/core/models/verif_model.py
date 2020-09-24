@@ -27,6 +27,7 @@ from verivd.core.veri_meta_layer import VeriMetaLayer
 
 VERIF_LAYER_INFOS = {
     "VerifBiens_fonds": (
+        LayerInfo(display_name='Point limite non-matérialisé verification', layer_name='122_verif_BF_PL_non_mat_def_exa', control_layer=True),
         LayerInfo(display_name='Sommet manquant sous un point limite', layer_name='100_verif_bf_sommet_manquant_sous_pl', control_layer=True),
         LayerInfo(display_name='Sommet proche d\'une limite', layer_name='100_verif_bf_sommet_proche_pl', control_layer=True),
         LayerInfo(display_name='Point limite manquant sur un sommet', layer_name='100_verif_bf_pl_manquant_sur_sommet', control_layer=True),
@@ -85,6 +86,7 @@ VERIF_LAYER_INFOS = {
             },
             control_layer=True
         ),
+        LayerInfo(display_name='Lieu denommé', layer_name='009_ITF_BAT_Troncon_rue', control_layer=True),
         LayerInfo(
             display_name='Habitation sans adresses',
             layer_name='108_VERIF_Habitation_sans_adresse',
@@ -108,9 +110,18 @@ VERIF_LAYER_INFOS = {
                 'width_border': '0.5'
             }
         ),
-        LayerInfo(display_name='Couverture du sol', layer_name='002_ITF_CS_Surface_CS', opacity=.5)
+        LayerInfo(display_name='Couverture du sol', layer_name='002_ITF_CS_Surface_CS', opacity=.5),
+        LayerInfo(display_name='Lieu dénommé', layer_name='009_ITF_BAT_Lieu_denomme')
     ),
     "VerifCouverture_du_sol_et_objets_divers":	(
+
+        LayerInfo(
+            display_name='OD - devrait être entouré par un objet surfacique',
+            layer_name='114_verif_od_surflineaire_sanssurf',
+            symbology_type=SymbologyType.SIMPLE,
+            symbology_properties={'color': '255, 100, 0', 'width': '2'},
+            control_layer=True
+        ),
         LayerInfo(
             display_name='OD - Element surfacique qui devrait être linéaire',
             layer_name='114_VERIF_OD_surfaciqueErreur',
@@ -173,6 +184,11 @@ VERIF_LAYER_INFOS = {
             opacity=.5,
             control_layer=True
         ),
+
+        LayerInfo(display_name='Point particulier pas sur sommet (vecteur de la couche correspondante)',layer_name='126_verif_point_cs_od'),
+        LayerInfo(display_name='CS - Point particulier de bâtiment proche limite BF (vecteur)',layer_name='120_verif_CS_Point_sit_proche_BF_Vecteur'),
+        LayerInfo(display_name='CS - Point particulier de bâtiment proche limite BF',layer_name='120_verif_CS_Point_sit_proche_BF'),
+        LayerInfo(display_name='OD - Incohérence entre le genre et la désignation',layer_name='121_verif_OD_test_designation'),
         LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
         LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
         LayerInfo(display_name='OD point particulier', layer_name='003_ITF_OD_Point_particulier'),
@@ -189,56 +205,6 @@ VERIF_LAYER_INFOS = {
         LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP'),
         LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds'),
         LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS', opacity=.5)
-    ),
-    "VerifRepartition_des_plans_et_domaine_de_numerotation": (
-        LayerInfo(
-            display_name='point divergent entre les immeubles et la répartition des plans',
-            layer_name='103_VERIF_BF_RP_Point',
-            symbology_type=SymbologyType.SIMPLE,
-            symbology_properties={'color': '255, 255, 0', 'size': '2'},
-            control_layer=True
-        ),
-        LayerInfo(
-            display_name='Sifflet entre les immeubles et la répartition des plans',
-            layer_name='103_VERIF_BF_RP_Surface',
-            symbology_type=SymbologyType.SIMPLE,
-            symbology_properties={'color': '255, 0, 0'},
-            control_layer=True
-        ),
-        LayerInfo(display_name='Point sur mauvais plan', layer_name='105_verif_point_sur_mauvais_plan', control_layer=True),
-        LayerInfo(display_name='Répartition des plans du lot', layer_name='105_itf_rp'),
-        LayerInfo(
-            display_name='Objet ponctuel hors du périmètre du lot',
-            layer_name='112_itf_objet_hors_perimetrelot_point',
-            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-            category_field='nomtable',
-            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
-            opacity=.5,
-            visibility=False,
-            control_layer=True
-        ),
-        LayerInfo(
-            display_name='Objet linéaire hors du périmètre du lot',
-            layer_name='112_itf_objet_hors_perimetrelot_ligne',
-            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-            category_field='nomtable',
-            symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)},
-            opacity=.5,
-            visibility=False,
-            control_layer=True
-        ),
-        LayerInfo(
-            display_name='Objet surfacique hors du périmètre du lot',
-            layer_name='112_itf_objet_hors_perimetre_surface',
-            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-            category_field='nomtable',
-            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
-            opacity=.5,
-            visibility=False,
-            control_layer=True
-        ),
-        LayerInfo(display_name='Plans en vigueur à proximité du lot', layer_name='111_bdmo_repartition_plans_alentours'),
-        LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
     ),
     "VerifContinuite_des_reseaux":	(
         LayerInfo(
@@ -280,7 +246,7 @@ VERIF_LAYER_INFOS = {
             sql_request='"number" LIKE "DP%"',
             control_layer=True
         ),
-        LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
+        LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
     ),
     "VerifPoints_fixes": (
         LayerInfo(
@@ -318,7 +284,7 @@ VERIF_LAYER_INFOS = {
             control_layer=True
         ),
         LayerInfo(
-            display_name='point de limtes térritoriales manquant sous sommet de limite de commune',
+            display_name='point de limtes territoriales manquant sous sommet de limite de commune',
             layer_name='116_PL_terr_manquant_sous_sommet_COM',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 255, 0', 'size': '2'},
@@ -364,22 +330,94 @@ VERIF_LAYER_INFOS = {
         LayerInfo(display_name='Autre limite', layer_name='008_itf_lt_autre_limite'),
         LayerInfo(display_name='DDP', layer_name='006_ITF_BF_DDP', opacity=.5),
         LayerInfo(display_name='Biens fonds', layer_name='006_ITF_BF_Bien_fonds', opacity=.5)
-    )
+    ),
+    "VerifNumerotation": (
+        LayerInfo(display_name='Fléche du doublon de numéro', layer_name='123_verif_numdoublonfleche', control_layer=True),
+        LayerInfo(display_name='Doublon de numéro', layer_name='123_verif_numdoublon', control_layer=True),
+        LayerInfo(display_name="Numéro d'immeuble différents entre la BDMO et ITF", layer_name='123_verif_num_imm_diff_dwh_itf', control_layer=True),
+        LayerInfo(display_name='IdentDN incorrect - ITF', layer_name='105_verif_point_sur_mauvais_plan', control_layer=True),
+        LayerInfo(display_name='Bâtiment hors lot, sur la commune - BDMO', layer_name='123_verif_num_baths_dwh'),
+        LayerInfo(display_name='Bâtment soutterrain hors lot, sur la commune - BDMO', layer_name='123_verif_num_batss_dwh'),
+        LayerInfo(display_name='Bâtiment dans le lot - ITF', layer_name='002_ITF_CS_Surface_CS', sql_request='"type" = "batiment"'),
+        LayerInfo(display_name='Bâtiment soutterrain dans le lot - ITF', layer_name='003_ITF_OD_Element_surfacique', sql_request='"vd_genre" = "batiment_souterrain"'),
+        LayerInfo(display_name='DDP dans le lot - ITF', layer_name='006_ITF_BF_DDP', control_layer=True),
+        LayerInfo(display_name='Parcelles dans le lot - ITF', layer_name='006_ITF_BF_Bien_fonds', control_layer=True),
+        LayerInfo(display_name='Parcelles hors lot, sur la commune - BDMO', layer_name='123_verif_num_bf_dwh', control_layer=True),
+        LayerInfo(display_name='Répartition des plans du lot', layer_name='105_itf_rp', control_layer=True),
+        LayerInfo(display_name='Plans alentours', layer_name='111_bdmo_repartition_plans_alentours', control_layer=True),
+        LayerInfo(display_name='Limite commune - BDMO', layer_name='123_verif_num_com_dwh'),
+        LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
+    ),
+    "VerifGeometrie": (
+        LayerInfo(
+            display_name='Test OGC',
+            layer_name='119_verif_geomogc',
+            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+            category_field='topic',
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
+            opacity=.5,
+            visibility=True,
+            control_layer=True
+        ),
+
+        LayerInfo(display_name='Arc dont la flèche est inférieure à 3.5cm', layer_name='106_verif_segmentarc', sql_request='"fleche" < 0.035',visibility=True),
+        LayerInfo(display_name="Position de label à vérifier", layer_name='125_verif_poscroisementvecteur',visibility=True),
+        LayerInfo(display_name="Traits de rappel", layer_name='125_verif_pos',visibility=False),
+        LayerInfo(display_name="Géométrie superposée dans l'ITF", layer_name='119_verif_geomsuperpose'),
+        LayerInfo(display_name='Coordonnée identique entre BDMO et ITF', layer_name='124_verif_coord_coordidentiqueitf_dwh'),
+        LayerInfo(display_name='Vecteurs BDMO', layer_name='124_verif_coord_vecteur_dwh'),
+
+        LayerInfo(
+            display_name='Objet ponctuel hors du périmètre du lot',
+            layer_name='112_itf_objet_hors_perimetrelot_point',
+            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+            category_field='nomtable',
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
+            opacity=.5,
+            visibility=False,
+            control_layer=True
+        ),
+        LayerInfo(
+            display_name='Objet linéaire hors du périmètre du lot',
+            layer_name='112_itf_objet_hors_perimetrelot_ligne',
+            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+            category_field='nomtable',
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)},
+            opacity=.5,
+            visibility=False,
+            control_layer=True
+        ),
+        LayerInfo(
+            display_name='Objet surfacique hors du périmètre du lot',
+            layer_name='112_itf_objet_hors_perimetre_surface',
+            symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+            category_field='nomtable',
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+            opacity=.5,
+            visibility=False,
+            control_layer=True
+        ),
+        LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
+        LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
+        LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS'),
+        LayerInfo(display_name='DDP dans le lot - ITF', layer_name='006_ITF_BF_DDP'),
+        LayerInfo(display_name='Bien fonds', layer_name='006_ITF_BF_Bien_fonds', control_layer=True),
+        LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
+    ),
 }
 
 
 def create_veri_meta_layers():
     return (
-        VeriMetaLayer("VerifPoints_fixes", "Vérification - Points fixes"),
+        VeriMetaLayer("VerifAdresses", "Vérification - Adresses"),
+        VeriMetaLayer("VerifBiens_fonds", "Vérification - Biens fonds"),
         VeriMetaLayer("VerifCouverture_du_sol_et_objets_divers", "Vérification - Couverture du sol et objets divers"),
         VeriMetaLayer("VerifContinuite_des_reseaux", "Vérification - Continuite des reseaux"),
+        VeriMetaLayer("VerifGeometrie", "Vérification - Géométries"),
         VeriMetaLayer("VerifNomenclature", "Vérification - Nomenclature"),
-        VeriMetaLayer("VerifBiens_fonds", "Vérification - Biens fonds"),
-        VeriMetaLayer("VerifRepartition_des_plans_et_domaine_de_numerotation",
-                      "Vérification - Repartition des plans et domaine de numerotation"),
-        VeriMetaLayer("VerifLimites_territoriales_et_administratives",
-                      "Vérification - Limites territoriales et administratives"),
-        VeriMetaLayer("VerifAdresses", "Vérification - Adresses")
+        VeriMetaLayer("VerifNumerotation", "Vérification - Numérotation"),
+        VeriMetaLayer("VerifLimites_territoriales_et_administratives", "Vérification - Limites territoriales et administratives"),
+        VeriMetaLayer("VerifPoints_fixes", "Vérification - Points fixes")
     )
 
 
