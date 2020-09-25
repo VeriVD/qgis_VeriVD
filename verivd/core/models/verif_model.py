@@ -361,6 +361,7 @@ VERIF_LAYER_INFOS = {
         ),
 
         LayerInfo(display_name='Arc dont la flèche est inférieure à 3.5cm', layer_name='106_verif_segmentarc', sql_request='"fleche" < 0.035',visibility=True),
+        LayerInfo(display_name='Arc de cercle', layer_name='106_verif_segmentarc', visibility=False),
         LayerInfo(display_name="Position de label à vérifier", layer_name='125_verif_poscroisementvecteur',visibility=True),
         LayerInfo(display_name="Traits de rappel", layer_name='125_verif_pos',visibility=False),
         LayerInfo(display_name="Géométrie superposée dans l'ITF", layer_name='119_verif_geomsuperpose'),
