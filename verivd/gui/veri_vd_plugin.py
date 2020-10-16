@@ -71,7 +71,7 @@ class VeriVD:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
         self.actions['main'] = QAction(
-            QIcon(":/plugins/verivd/icons/icon.png"),
+            QIcon(os.path.join(os.path.dirname(__file__), "..", "icons", "icon.png")),
             self.tr('Vérification des mensurations vaudoises'),
             self.iface.mainWindow())
         self.actions['main'].triggered.connect(self.run)
