@@ -1,30 +1,30 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis styleCategories="AllStyleCategories" readOnly="0" version="3.8.2-Zanzibar" minScale="1e+08" simplifyDrawingHints="1" hasScaleBasedVisibilityFlag="0" maxScale="0" labelsEnabled="1" simplifyDrawingTol="1" simplifyAlgorithm="0" simplifyLocal="1" simplifyMaxScale="1">
+<qgis minScale="1e+08" simplifyMaxScale="1" readOnly="0" maxScale="0" labelsEnabled="1" simplifyDrawingHints="1" simplifyDrawingTol="1" version="3.8.2-Zanzibar" simplifyLocal="1" simplifyAlgorithm="0" styleCategories="AllStyleCategories" hasScaleBasedVisibilityFlag="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 forceraster="0" type="singleSymbol" symbollevels="0" enableorderby="0">
+  <renderer-v2 forceraster="0" enableorderby="0" type="singleSymbol" symbollevels="0">
     <symbols>
-      <symbol type="fill" force_rhr="0" clip_to_extent="1" alpha="1" name="0">
-        <layer locked="0" enabled="1" pass="0" class="SimpleFill">
-          <prop v="3x:0,0,0,0,0,0" k="border_width_map_unit_scale"/>
-          <prop v="165,165,248,255" k="color"/>
-          <prop v="bevel" k="joinstyle"/>
-          <prop v="0,0" k="offset"/>
-          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
-          <prop v="MM" k="offset_unit"/>
-          <prop v="50,50,100,255" k="outline_color"/>
-          <prop v="dash" k="outline_style"/>
-          <prop v="0.26" k="outline_width"/>
-          <prop v="MM" k="outline_width_unit"/>
-          <prop v="solid" k="style"/>
+      <symbol name="0" force_rhr="0" alpha="1" clip_to_extent="1" type="fill">
+        <layer pass="0" class="SimpleFill" locked="0" enabled="1">
+          <prop k="border_width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="color" v="165,165,248,255"/>
+          <prop k="joinstyle" v="bevel"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="3x:0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="50,50,100,255"/>
+          <prop k="outline_style" v="dash"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" value="" name="name"/>
+              <Option value="" name="name" type="QString"/>
               <Option name="properties"/>
-              <Option type="QString" value="collection" name="type"/>
+              <Option value="collection" name="type" type="QString"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -35,20 +35,20 @@
   </renderer-v2>
   <labeling type="simple">
     <settings>
-      <text-style fontUnderline="0" fontWordSpacing="0" fontSizeUnit="Point" fieldName="texte" multilineHeight="1" fontLetterSpacing="0" isExpression="0" blendMode="0" textColor="0,0,0,255" fontSizeMapUnitScale="3x:0,0,0,0,0,0" previewBkgrdColor="#ffffff" fontStrikeout="0" textOpacity="1" namedStyle="Regular" fontFamily="Cadastra Cn" fontItalic="0" fontWeight="50" useSubstitutions="0" fontCapitals="0" fontSize="10">
-        <text-buffer bufferColor="255,255,255,255" bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferDraw="1" bufferNoFill="1" bufferSizeUnits="MM" bufferBlendMode="0" bufferJoinStyle="128" bufferSize="1" bufferOpacity="1"/>
-        <background shapeBorderColor="128,128,128,255" shapeBorderWidthUnit="MM" shapeRadiiY="0" shapeSizeY="0" shapeType="0" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeSVGFile="" shapeOffsetX="0" shapeRadiiX="0" shapeOpacity="1" shapeSizeType="0" shapeOffsetY="0" shapeSizeUnit="MM" shapeFillColor="255,255,255,255" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeBlendMode="0" shapeRotation="0" shapeDraw="0" shapeSizeMapUnitScale="3x:0,0,0,0,0,0" shapeBorderWidth="0" shapeSizeX="0" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeRotationType="0" shapeRadiiUnit="MM" shapeJoinStyle="64" shapeOffsetUnit="MM"/>
-        <shadow shadowUnder="0" shadowRadius="1.5" shadowOffsetDist="1" shadowOffsetAngle="135" shadowDraw="0" shadowOffsetUnit="MM" shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowRadiusAlphaOnly="0" shadowOffsetGlobal="1" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0" shadowScale="100" shadowOpacity="0.7" shadowColor="0,0,0,255" shadowRadiusUnit="MM" shadowBlendMode="6"/>
+      <text-style fontStrikeout="0" fontLetterSpacing="0" fontWordSpacing="0" multilineHeight="1" fontItalic="0" textColor="0,0,0,255" isExpression="0" blendMode="0" namedStyle="Regular" fontCapitals="0" fontSize="10" fontSizeUnit="Point" fieldName="texte" fontWeight="50" textOpacity="1" previewBkgrdColor="#ffffff" fontFamily="Cadastra Cn" fontUnderline="0" fontSizeMapUnitScale="3x:0,0,0,0,0,0" useSubstitutions="0">
+        <text-buffer bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferSizeUnits="MM" bufferBlendMode="0" bufferOpacity="1" bufferDraw="1" bufferNoFill="1" bufferSize="1" bufferColor="255,255,255,255" bufferJoinStyle="128"/>
+        <background shapeBlendMode="0" shapeRotationType="0" shapeJoinStyle="64" shapeSizeMapUnitScale="3x:0,0,0,0,0,0" shapeOffsetY="0" shapeFillColor="255,255,255,255" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeOffsetUnit="MM" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeSVGFile="" shapeBorderColor="128,128,128,255" shapeSizeType="0" shapeRotation="0" shapeDraw="0" shapeSizeY="0" shapeRadiiUnit="MM" shapeOffsetX="0" shapeSizeUnit="MM" shapeRadiiX="0" shapeBorderWidth="0" shapeOpacity="1" shapeType="0" shapeRadiiY="0" shapeSizeX="0" shapeBorderWidthUnit="MM"/>
+        <shadow shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowBlendMode="6" shadowOffsetDist="1" shadowOffsetUnit="MM" shadowDraw="0" shadowRadius="1.5" shadowUnder="0" shadowOffsetGlobal="1" shadowRadiusUnit="MM" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0" shadowScale="100" shadowRadiusAlphaOnly="0" shadowColor="0,0,0,255" shadowOffsetAngle="135" shadowOpacity="0.7"/>
         <substitutions/>
       </text-style>
-      <text-format multilineAlign="0" placeDirectionSymbol="0" reverseDirectionSymbol="0" useMaxLineLengthForAutoWrap="1" wrapChar="" formatNumbers="0" autoWrapLength="0" leftDirectionSymbol="&lt;" addDirectionSymbol="0" plussign="0" decimals="3" rightDirectionSymbol=">"/>
-      <placement offsetType="0" repeatDistanceUnits="MM" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" centroidWhole="0" priority="5" fitInPolygonOnly="0" placement="0" geometryGeneratorType="PointGeometry" rotationAngle="0" dist="0" placementFlags="10" yOffset="0" maxCurvedCharAngleOut="-25" repeatDistance="0" geometryGeneratorEnabled="0" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" preserveRotation="1" geometryGenerator="" centroidInside="0" maxCurvedCharAngleIn="25" quadOffset="4" distMapUnitScale="3x:0,0,0,0,0,0" xOffset="0" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" distUnits="MM" offsetUnits="MM"/>
-      <rendering mergeLines="0" obstacleFactor="1" minFeatureSize="0" maxNumLabels="2000" upsidedownLabels="0" fontMinPixelSize="3" limitNumLabels="0" zIndex="0" fontMaxPixelSize="10000" fontLimitPixelSize="0" scaleMax="2000" obstacleType="0" scaleVisibility="1" drawLabels="1" displayAll="0" obstacle="1" scaleMin="0" labelPerPart="0"/>
+      <text-format placeDirectionSymbol="0" formatNumbers="0" useMaxLineLengthForAutoWrap="1" wrapChar="" multilineAlign="0" addDirectionSymbol="0" autoWrapLength="0" reverseDirectionSymbol="0" plussign="0" leftDirectionSymbol="&lt;" decimals="3" rightDirectionSymbol=">"/>
+      <placement offsetType="0" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" geometryGeneratorType="PointGeometry" geometryGeneratorEnabled="0" preserveRotation="1" placementFlags="10" priority="5" distMapUnitScale="3x:0,0,0,0,0,0" rotationAngle="0" repeatDistance="0" dist="0" repeatDistanceUnits="MM" centroidWhole="0" yOffset="0" maxCurvedCharAngleOut="-25" quadOffset="4" placement="0" maxCurvedCharAngleIn="25" centroidInside="0" xOffset="0" fitInPolygonOnly="0" distUnits="MM" offsetUnits="MM" geometryGenerator=""/>
+      <rendering scaleMin="0" scaleMax="2000" limitNumLabels="0" scaleVisibility="1" labelPerPart="0" fontLimitPixelSize="0" maxNumLabels="2000" displayAll="0" minFeatureSize="0" zIndex="0" obstacleType="0" fontMaxPixelSize="10000" drawLabels="1" obstacle="1" upsidedownLabels="0" fontMinPixelSize="3" obstacleFactor="1" mergeLines="0"/>
       <dd_properties>
         <Option type="Map">
-          <Option type="QString" value="" name="name"/>
+          <Option value="" name="name" type="QString"/>
           <Option name="properties"/>
-          <Option type="QString" value="collection" name="type"/>
+          <Option value="collection" name="type" type="QString"/>
         </Option>
       </dd_properties>
     </settings>
@@ -60,18 +60,19 @@
   </customproperties>
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
-  <layerOpacity>1</layerOpacity>
+  <layerOpacity>0.3</layerOpacity>
   <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
-    <DiagramCategory sizeScale="3x:0,0,0,0,0,0" scaleBasedVisibility="0" minimumSize="0" scaleDependency="Area" minScaleDenominator="0" penAlpha="255" labelPlacementMethod="XHeight" diagramOrientation="Up" penColor="#000000" backgroundAlpha="255" lineSizeType="MM" barWidth="5" penWidth="0" height="15" sizeType="MM" opacity="1" lineSizeScale="3x:0,0,0,0,0,0" width="15" enabled="0" maxScaleDenominator="1e+08" rotationOffset="270" backgroundColor="#ffffff">
+    <DiagramCategory sizeScale="3x:0,0,0,0,0,0" maxScaleDenominator="1e+08" backgroundColor="#ffffff" sizeType="MM" minimumSize="0" penWidth="0" height="15" lineSizeType="MM" penAlpha="255" rotationOffset="270" width="15" scaleDependency="Area" minScaleDenominator="0" lineSizeScale="3x:0,0,0,0,0,0" scaleBasedVisibility="0" backgroundAlpha="255" enabled="0" diagramOrientation="Up" labelPlacementMethod="XHeight" penColor="#000000" barWidth="5" opacity="1">
       <fontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
+      <attribute label="" color="#000000" field=""/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings placement="1" zIndex="0" obstacle="0" dist="0" linePlacementFlags="18" showAll="1" priority="0">
+  <DiagramLayerSettings zIndex="0" placement="1" showAll="1" obstacle="0" priority="0" linePlacementFlags="18" dist="0">
     <properties>
       <Option type="Map">
-        <Option type="QString" value="" name="name"/>
+        <Option value="" name="name" type="QString"/>
         <Option name="properties"/>
-        <Option type="QString" value="collection" name="type"/>
+        <Option value="collection" name="type" type="QString"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
@@ -187,97 +188,97 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias index="0" field="OGC_FID" name=""/>
-    <alias index="1" field="xtf_id" name=""/>
-    <alias index="2" field="lieu_denomme_de" name=""/>
-    <alias index="3" field="ufid" name=""/>
-    <alias index="4" field="origine" name=""/>
-    <alias index="5" field="principe_numerotation" name=""/>
-    <alias index="6" field="numero_localisation" name=""/>
-    <alias index="7" field="attributs_provisoires" name=""/>
-    <alias index="8" field="est_designation_officielle" name=""/>
-    <alias index="9" field="validite" name=""/>
-    <alias index="10" field="en_cours_modification" name=""/>
-    <alias index="11" field="genre" name=""/>
-    <alias index="12" field="nom_localisation_de" name=""/>
-    <alias index="13" field="texte" name=""/>
-    <alias index="14" field="observation" name=""/>
+    <alias name="" index="0" field="OGC_FID"/>
+    <alias name="" index="1" field="xtf_id"/>
+    <alias name="" index="2" field="lieu_denomme_de"/>
+    <alias name="" index="3" field="ufid"/>
+    <alias name="" index="4" field="origine"/>
+    <alias name="" index="5" field="principe_numerotation"/>
+    <alias name="" index="6" field="numero_localisation"/>
+    <alias name="" index="7" field="attributs_provisoires"/>
+    <alias name="" index="8" field="est_designation_officielle"/>
+    <alias name="" index="9" field="validite"/>
+    <alias name="" index="10" field="en_cours_modification"/>
+    <alias name="" index="11" field="genre"/>
+    <alias name="" index="12" field="nom_localisation_de"/>
+    <alias name="" index="13" field="texte"/>
+    <alias name="" index="14" field="observation"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" expression="" field="OGC_FID"/>
-    <default applyOnUpdate="0" expression="" field="xtf_id"/>
-    <default applyOnUpdate="0" expression="" field="lieu_denomme_de"/>
-    <default applyOnUpdate="0" expression="" field="ufid"/>
-    <default applyOnUpdate="0" expression="" field="origine"/>
-    <default applyOnUpdate="0" expression="" field="principe_numerotation"/>
-    <default applyOnUpdate="0" expression="" field="numero_localisation"/>
-    <default applyOnUpdate="0" expression="" field="attributs_provisoires"/>
-    <default applyOnUpdate="0" expression="" field="est_designation_officielle"/>
-    <default applyOnUpdate="0" expression="" field="validite"/>
-    <default applyOnUpdate="0" expression="" field="en_cours_modification"/>
-    <default applyOnUpdate="0" expression="" field="genre"/>
-    <default applyOnUpdate="0" expression="" field="nom_localisation_de"/>
-    <default applyOnUpdate="0" expression="" field="texte"/>
-    <default applyOnUpdate="0" expression="" field="observation"/>
+    <default expression="" applyOnUpdate="0" field="OGC_FID"/>
+    <default expression="" applyOnUpdate="0" field="xtf_id"/>
+    <default expression="" applyOnUpdate="0" field="lieu_denomme_de"/>
+    <default expression="" applyOnUpdate="0" field="ufid"/>
+    <default expression="" applyOnUpdate="0" field="origine"/>
+    <default expression="" applyOnUpdate="0" field="principe_numerotation"/>
+    <default expression="" applyOnUpdate="0" field="numero_localisation"/>
+    <default expression="" applyOnUpdate="0" field="attributs_provisoires"/>
+    <default expression="" applyOnUpdate="0" field="est_designation_officielle"/>
+    <default expression="" applyOnUpdate="0" field="validite"/>
+    <default expression="" applyOnUpdate="0" field="en_cours_modification"/>
+    <default expression="" applyOnUpdate="0" field="genre"/>
+    <default expression="" applyOnUpdate="0" field="nom_localisation_de"/>
+    <default expression="" applyOnUpdate="0" field="texte"/>
+    <default expression="" applyOnUpdate="0" field="observation"/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="1" constraints="3" unique_strength="1" field="OGC_FID" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="xtf_id" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="lieu_denomme_de" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="ufid" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="origine" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="principe_numerotation" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="numero_localisation" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="attributs_provisoires" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="est_designation_officielle" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="validite" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="en_cours_modification" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="genre" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="nom_localisation_de" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="texte" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="observation" exp_strength="0"/>
+    <constraint notnull_strength="1" constraints="3" unique_strength="1" exp_strength="0" field="OGC_FID"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="xtf_id"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="lieu_denomme_de"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="ufid"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="origine"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="principe_numerotation"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="numero_localisation"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="attributs_provisoires"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="est_designation_officielle"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="validite"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="en_cours_modification"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="genre"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="nom_localisation_de"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="texte"/>
+    <constraint notnull_strength="0" constraints="0" unique_strength="0" exp_strength="0" field="observation"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" field="OGC_FID" desc=""/>
-    <constraint exp="" field="xtf_id" desc=""/>
-    <constraint exp="" field="lieu_denomme_de" desc=""/>
-    <constraint exp="" field="ufid" desc=""/>
-    <constraint exp="" field="origine" desc=""/>
-    <constraint exp="" field="principe_numerotation" desc=""/>
-    <constraint exp="" field="numero_localisation" desc=""/>
-    <constraint exp="" field="attributs_provisoires" desc=""/>
-    <constraint exp="" field="est_designation_officielle" desc=""/>
-    <constraint exp="" field="validite" desc=""/>
-    <constraint exp="" field="en_cours_modification" desc=""/>
-    <constraint exp="" field="genre" desc=""/>
-    <constraint exp="" field="nom_localisation_de" desc=""/>
-    <constraint exp="" field="texte" desc=""/>
-    <constraint exp="" field="observation" desc=""/>
+    <constraint exp="" desc="" field="OGC_FID"/>
+    <constraint exp="" desc="" field="xtf_id"/>
+    <constraint exp="" desc="" field="lieu_denomme_de"/>
+    <constraint exp="" desc="" field="ufid"/>
+    <constraint exp="" desc="" field="origine"/>
+    <constraint exp="" desc="" field="principe_numerotation"/>
+    <constraint exp="" desc="" field="numero_localisation"/>
+    <constraint exp="" desc="" field="attributs_provisoires"/>
+    <constraint exp="" desc="" field="est_designation_officielle"/>
+    <constraint exp="" desc="" field="validite"/>
+    <constraint exp="" desc="" field="en_cours_modification"/>
+    <constraint exp="" desc="" field="genre"/>
+    <constraint exp="" desc="" field="nom_localisation_de"/>
+    <constraint exp="" desc="" field="texte"/>
+    <constraint exp="" desc="" field="observation"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
     <columns>
-      <column type="field" hidden="0" width="-1" name="OGC_FID"/>
-      <column type="field" hidden="0" width="-1" name="xtf_id"/>
-      <column type="field" hidden="0" width="-1" name="lieu_denomme_de"/>
-      <column type="field" hidden="0" width="-1" name="ufid"/>
-      <column type="field" hidden="0" width="-1" name="origine"/>
-      <column type="field" hidden="0" width="-1" name="principe_numerotation"/>
-      <column type="field" hidden="0" width="-1" name="numero_localisation"/>
-      <column type="field" hidden="0" width="-1" name="attributs_provisoires"/>
-      <column type="field" hidden="0" width="-1" name="est_designation_officielle"/>
-      <column type="field" hidden="0" width="-1" name="validite"/>
-      <column type="field" hidden="0" width="-1" name="en_cours_modification"/>
-      <column type="field" hidden="0" width="-1" name="genre"/>
-      <column type="field" hidden="0" width="-1" name="nom_localisation_de"/>
-      <column type="field" hidden="0" width="-1" name="texte"/>
-      <column type="field" hidden="0" width="-1" name="observation"/>
-      <column type="actions" hidden="1" width="-1"/>
+      <column width="-1" name="OGC_FID" hidden="0" type="field"/>
+      <column width="-1" name="xtf_id" hidden="0" type="field"/>
+      <column width="-1" name="lieu_denomme_de" hidden="0" type="field"/>
+      <column width="-1" name="ufid" hidden="0" type="field"/>
+      <column width="-1" name="origine" hidden="0" type="field"/>
+      <column width="-1" name="principe_numerotation" hidden="0" type="field"/>
+      <column width="-1" name="numero_localisation" hidden="0" type="field"/>
+      <column width="-1" name="attributs_provisoires" hidden="0" type="field"/>
+      <column width="-1" name="est_designation_officielle" hidden="0" type="field"/>
+      <column width="-1" name="validite" hidden="0" type="field"/>
+      <column width="-1" name="en_cours_modification" hidden="0" type="field"/>
+      <column width="-1" name="genre" hidden="0" type="field"/>
+      <column width="-1" name="nom_localisation_de" hidden="0" type="field"/>
+      <column width="-1" name="texte" hidden="0" type="field"/>
+      <column width="-1" name="observation" hidden="0" type="field"/>
+      <column width="-1" hidden="1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -324,21 +325,21 @@ def my_form_open(dialog, layer, feature):
     <field name="xtf_id" editable="1"/>
   </editable>
   <labelOnTop>
-    <field labelOnTop="0" name="OGC_FID"/>
-    <field labelOnTop="0" name="attributs_provisoires"/>
-    <field labelOnTop="0" name="en_cours_modification"/>
-    <field labelOnTop="0" name="est_designation_officielle"/>
-    <field labelOnTop="0" name="genre"/>
-    <field labelOnTop="0" name="lieu_denomme_de"/>
-    <field labelOnTop="0" name="nom_localisation_de"/>
-    <field labelOnTop="0" name="numero_localisation"/>
-    <field labelOnTop="0" name="observation"/>
-    <field labelOnTop="0" name="origine"/>
-    <field labelOnTop="0" name="principe_numerotation"/>
-    <field labelOnTop="0" name="texte"/>
-    <field labelOnTop="0" name="ufid"/>
-    <field labelOnTop="0" name="validite"/>
-    <field labelOnTop="0" name="xtf_id"/>
+    <field name="OGC_FID" labelOnTop="0"/>
+    <field name="attributs_provisoires" labelOnTop="0"/>
+    <field name="en_cours_modification" labelOnTop="0"/>
+    <field name="est_designation_officielle" labelOnTop="0"/>
+    <field name="genre" labelOnTop="0"/>
+    <field name="lieu_denomme_de" labelOnTop="0"/>
+    <field name="nom_localisation_de" labelOnTop="0"/>
+    <field name="numero_localisation" labelOnTop="0"/>
+    <field name="observation" labelOnTop="0"/>
+    <field name="origine" labelOnTop="0"/>
+    <field name="principe_numerotation" labelOnTop="0"/>
+    <field name="texte" labelOnTop="0"/>
+    <field name="ufid" labelOnTop="0"/>
+    <field name="validite" labelOnTop="0"/>
+    <field name="xtf_id" labelOnTop="0"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>OGC_FID</previewExpression>

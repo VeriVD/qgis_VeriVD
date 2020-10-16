@@ -27,7 +27,7 @@ from verivd.core.veri_meta_layer import VeriMetaLayer
 
 VERIF_LAYER_INFOS = {
     "VerifBiens_fonds": (
-        LayerInfo(display_name='Point limite non-matérialisé verification', layer_name='122_verif_BF_PL_non_mat_def_exa', control_layer=True),
+        LayerInfo(display_name="Point limite non-matérialisé, vérification de l\'attribut \"defini_exactement\"", layer_name='122_verif_BF_PL_non_mat_def_exa', control_layer=True),
         LayerInfo(display_name='Sommet manquant sous un point limite', layer_name='100_verif_bf_sommet_manquant_sous_pl', control_layer=True),
         LayerInfo(display_name='Sommet proche d\'une limite', layer_name='100_verif_bf_sommet_proche_pl', control_layer=True),
         LayerInfo(display_name='Point limite manquant sur un sommet', layer_name='100_verif_bf_pl_manquant_sur_sommet', control_layer=True),
@@ -61,6 +61,9 @@ VERIF_LAYER_INFOS = {
             symbology_type=SymbologyType.SIMPLE, symbology_properties={'color': '255, 0, 0'},
             control_layer=True
         ),
+        LayerInfo(display_name='Lieux dits texte', layer_name='005_itf_no_pos_lieudit'),
+        LayerInfo(display_name='Nom local texte', layer_name='005_itf_no_posnom_local'),
+        LayerInfo(display_name='Plan', layer_name='105_itf_rp'),
         LayerInfo(
             display_name='Nom local', layer_name='005_ITF_NO_Nom_local',
             symbology_type=SymbologyType.RANDOM_CATEGORIZED, category_field='name', opacity=0.5
@@ -73,11 +76,11 @@ VERIF_LAYER_INFOS = {
         LayerInfo(display_name='Point de départ des tronçons', layer_name='009_itf_bat_point_depart', control_layer=True),
         LayerInfo(display_name='Entrée des bâtiments', layer_name='009_itf_bat_entree_batiment', control_layer=True),
         LayerInfo(display_name='Entrée du RCB', layer_name='104_dwh_adresse_rcb', visibility=False, control_layer=True),
-        LayerInfo(display_name='Différence entre les entrées de la MO et celles du RCB', layer_name='104_verif_entreemo_diff_rcb', visibility=False, control_layer=True),
-        LayerInfo(display_name='Raccord des entrées vers localisation', layer_name='109_VERIF_Entree_Vers_Localisation', control_layer=True),
+        LayerInfo(display_name='Différence avec les entrées du RCB', layer_name='104_verif_entreemo_diff_rcb', visibility=False, control_layer=True),
+        LayerInfo(display_name='Lien entre les entrées et les localisations', layer_name='109_VERIF_Entree_Vers_Localisation', control_layer=True),
         LayerInfo(display_name='Sens du tronçon', layer_name='009_ITF_BAT_Troncon_rue', control_layer=True),
         LayerInfo(
-            display_name='Nom rue', layer_name='009_ITF_BAT_Troncon_rue',
+            display_name='Nom des rues', layer_name='009_ITF_BAT_Troncon_rue',
             symbology_type=SymbologyType.RANDOM_CATEGORIZED, category_field='texte',
             symbology_data_defined_properties={
                 QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3),
@@ -86,9 +89,9 @@ VERIF_LAYER_INFOS = {
             },
             control_layer=True
         ),
-        LayerInfo(display_name='Lieu denommé', layer_name='009_ITF_BAT_Troncon_rue', control_layer=True),
+        LayerInfo(display_name='Lieu dénommé', layer_name='009_ITF_BAT_Lieu_denomme'),
         LayerInfo(
-            display_name='Habitation sans adresses',
+            display_name='Habitation sans adresse',
             layer_name='108_VERIF_Habitation_sans_adresse',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 0, 0, 180','border_color': '255, 255, 0'},
@@ -110,8 +113,7 @@ VERIF_LAYER_INFOS = {
                 'width_border': '0.5'
             }
         ),
-        LayerInfo(display_name='Couverture du sol', layer_name='002_ITF_CS_Surface_CS', opacity=.5),
-        LayerInfo(display_name='Lieu dénommé', layer_name='009_ITF_BAT_Lieu_denomme')
+        LayerInfo(display_name='Couverture du sol', layer_name='002_ITF_CS_Surface_CS', opacity=.5)
     ),
     "VerifCouverture_du_sol_et_objets_divers":	(
 
@@ -123,14 +125,14 @@ VERIF_LAYER_INFOS = {
             control_layer=True
         ),
         LayerInfo(
-            display_name='OD - Element surfacique qui devrait être linéaire',
+            display_name='OD - Elément  surfacique qui devrait être linéaire',
             layer_name='114_VERIF_OD_surfaciqueErreur',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 0, 0', 'width': '2'},
             control_layer=True
         ),
         LayerInfo(
-            display_name='OD - Element linéaire qui devrait être surfacique',
+            display_name='OD - Elément linéaire qui devrait être surfacique',
             layer_name='114_VERIF_OD_lineaireErreur',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 0, 0', 'width': '2'},
@@ -165,10 +167,10 @@ VERIF_LAYER_INFOS = {
             symbology_properties={'color': '255, 0, 0'},
             control_layer=True
         ),
-        LayerInfo(display_name='Nombre de géomètrie par objet divers linéaires', layer_name='102_verif_od_lineaire_fid', control_layer=True),
-        LayerInfo(display_name='Nombre de géomètrie par objet divers surfacique', layer_name='102_verif_od_surfacique_fid', control_layer=True),
+        LayerInfo(display_name='Nombre de géométrie par objet divers linéaires', layer_name='102_verif_od_lineaire_fid', control_layer=True),
+        LayerInfo(display_name='Nombre de géométrie par objet divers surfacique', layer_name='102_verif_od_surfacique_fid', control_layer=True),
         LayerInfo(
-            display_name='Objets divers linéaires (relation vers les géomètries)',
+            display_name='Objets divers linéaires (relation vers les géométries)',
             layer_name='102_verif_od_lineaire_fid', symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field='fid_od',
             symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
@@ -176,7 +178,7 @@ VERIF_LAYER_INFOS = {
             control_layer=True
         ),
         LayerInfo(
-            display_name='Objets divers surfaciques (relation vers les géomètries)',
+            display_name='Objets divers surfaciques (relation vers les géométries)',
             layer_name='102_verif_od_surfacique_fid',
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field='fid_od',
@@ -185,10 +187,10 @@ VERIF_LAYER_INFOS = {
             control_layer=True
         ),
 
-        LayerInfo(display_name='Point particulier pas sur sommet (vecteur de la couche correspondante)',layer_name='126_verif_point_cs_od'),
-        LayerInfo(display_name='CS - Point particulier de bâtiment proche limite BF (vecteur)',layer_name='120_verif_CS_Point_sit_proche_BF_Vecteur'),
-        LayerInfo(display_name='CS - Point particulier de bâtiment proche limite BF',layer_name='120_verif_CS_Point_sit_proche_BF'),
-        LayerInfo(display_name='OD - Incohérence entre le genre et la désignation',layer_name='121_verif_OD_test_designation'),
+        LayerInfo(display_name='Point particulier pas sur sommet (vecteur de la couche correspondante)',layer_name='126_verif_point_cs_od',control_layer=True),
+        LayerInfo(display_name='CS - Point particulier de bâtiment proche limite BF (vecteur)',layer_name='120_verif_CS_Point_sit_proche_BF_Vecteur',control_layer=True),
+        LayerInfo(display_name='CS - Point particulier de bâtiment proche limite BF',layer_name='120_verif_CS_Point_sit_proche_BF',control_layer=True),
+        LayerInfo(display_name='OD - Incohérence entre le genre et la désignation',layer_name='121_verif_OD_test_designation',control_layer=True),
         LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
         LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
         LayerInfo(display_name='OD point particulier', layer_name='003_ITF_OD_Point_particulier'),
@@ -257,9 +259,10 @@ VERIF_LAYER_INFOS = {
         ),
         LayerInfo(display_name='Points fixes en BDMO mais pas dans le fichier ITF', layer_name='115_bdmo_pfp_en_plus', control_layer=True),
         LayerInfo(display_name='Points fixes dans le fichier ITF mais pas en BDMO', layer_name='115_itf_pfp_en_plus', visibility=False, control_layer=True),
+        LayerInfo(display_name='Points fixes dans le fichier ITF mais en dehors du lot', layer_name='115_itf_pfp_horslot', control_layer=True),
         LayerInfo(display_name='PFP-PFA3', layer_name='001_itf_pf_points_fixes'),
         LayerInfo(display_name='Précision planimétrique des points fixes', layer_name='115_itf_pfp'),
-        LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp'),
+        LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
     ),
     "VerifLimites_territoriales_et_administratives": (
         LayerInfo(
@@ -284,28 +287,28 @@ VERIF_LAYER_INFOS = {
             control_layer=True
         ),
         LayerInfo(
-            display_name='point de limtes territoriales manquant sous sommet de limite de commune',
+            display_name='point de limite territoriale manquant sur sommet de limite de commune',
             layer_name='116_PL_terr_manquant_sous_sommet_COM',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 255, 0', 'size': '2'},
             control_layer=True
         ),
         LayerInfo(
-            display_name='sommet de limte de commune manquant sous point de limtes térritoriales',
+            display_name='sommet de limite de commune manquant sous point de limite térritoriale',
             layer_name='116_Sommet_COM_manquant_sous_PL_terr',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 255, 0', 'size': '2'},
             control_layer=True
         ),
         LayerInfo(
-            display_name='sommet de limte de commune manquant sous sommet de limite de canton',
+            display_name='sommet de limite de commune manquant sous sommet de limite de canton',
             layer_name='116_sommetCOM_manquant_sous_sommet_CANT',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 255, 0', 'size': '2'},
             control_layer=True
         ),
         LayerInfo(
-            display_name='sommet de limte decommune manquant sous sommet de limite de district',
+            display_name='sommet de limite decommune manquant sous sommet de limite de district',
             layer_name='116_sommetCOM_manquant_sous_sommet_Dist',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 255, 0', 'size': '2'},
@@ -334,17 +337,17 @@ VERIF_LAYER_INFOS = {
     "VerifNumerotation": (
         LayerInfo(display_name='Fléche du doublon de numéro', layer_name='123_verif_numdoublonfleche', control_layer=True),
         LayerInfo(display_name='Doublon de numéro', layer_name='123_verif_numdoublon', control_layer=True),
-        LayerInfo(display_name="Numéro d'immeuble différents entre la BDMO et ITF", layer_name='123_verif_num_imm_diff_dwh_itf', control_layer=True),
+        LayerInfo(display_name="Numéros d'immeuble différents entre la BDMO et ITF", layer_name='123_verif_num_imm_diff_dwh_itf', control_layer=True),
         LayerInfo(display_name='IdentDN incorrect - ITF', layer_name='105_verif_point_sur_mauvais_plan', control_layer=True),
         LayerInfo(display_name='Bâtiment hors lot, sur la commune - BDMO', layer_name='123_verif_num_baths_dwh'),
         LayerInfo(display_name='Bâtment soutterrain hors lot, sur la commune - BDMO', layer_name='123_verif_num_batss_dwh'),
         LayerInfo(display_name='Bâtiment dans le lot - ITF', layer_name='002_ITF_CS_Surface_CS', sql_request='"type" = "batiment"'),
         LayerInfo(display_name='Bâtiment soutterrain dans le lot - ITF', layer_name='003_ITF_OD_Element_surfacique', sql_request='"vd_genre" = "batiment_souterrain"'),
-        LayerInfo(display_name='DDP dans le lot - ITF', layer_name='006_ITF_BF_DDP', control_layer=True),
-        LayerInfo(display_name='Parcelles dans le lot - ITF', layer_name='006_ITF_BF_Bien_fonds', control_layer=True),
-        LayerInfo(display_name='Parcelles hors lot, sur la commune - BDMO', layer_name='123_verif_num_bf_dwh', control_layer=True),
-        LayerInfo(display_name='Répartition des plans du lot', layer_name='105_itf_rp', control_layer=True),
-        LayerInfo(display_name='Plans alentours', layer_name='111_bdmo_repartition_plans_alentours', control_layer=True),
+        LayerInfo(display_name='DDP dans le lot - ITF', layer_name='006_ITF_BF_DDP'),
+        LayerInfo(display_name='Parcelles dans le lot - ITF', layer_name='006_ITF_BF_Bien_fonds'),
+        LayerInfo(display_name='Parcelles hors lot, sur la commune - BDMO', layer_name='123_verif_num_bf_dwh'),
+        LayerInfo(display_name='Répartition des plans du lot', layer_name='105_itf_rp'),
+        LayerInfo(display_name='Plans alentours', layer_name='111_bdmo_repartition_plans_alentours'),
         LayerInfo(display_name='Limite commune - BDMO', layer_name='123_verif_num_com_dwh'),
         LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
     ),
@@ -360,13 +363,13 @@ VERIF_LAYER_INFOS = {
             control_layer=True
         ),
 
-        LayerInfo(display_name='Arc dont la flèche est inférieure à 3.5cm', layer_name='106_verif_segmentarc', sql_request='"fleche" < 0.035',visibility=True),
+        LayerInfo(display_name='Arc dont la flèche est inférieure à 3.5cm', layer_name='106_verif_segmentarc', sql_request='"fleche" < 0.035',visibility=True,control_layer=True),
         LayerInfo(display_name='Arc de cercle', layer_name='106_verif_segmentarc', visibility=False),
-        LayerInfo(display_name="Position de label à vérifier", layer_name='125_verif_poscroisementvecteur',visibility=True),
+        LayerInfo(display_name="Position de label à vérifier", layer_name='125_verif_poscroisementvecteur',visibility=True,control_layer=True),
         LayerInfo(display_name="Traits de rappel", layer_name='125_verif_pos',visibility=False),
-        LayerInfo(display_name="Géométrie superposée dans l'ITF", layer_name='119_verif_geomsuperpose'),
-        LayerInfo(display_name='Coordonnée identique entre BDMO et ITF', layer_name='124_verif_coord_coordidentiqueitf_dwh'),
-        LayerInfo(display_name='Vecteurs BDMO', layer_name='124_verif_coord_vecteur_dwh'),
+        LayerInfo(display_name="Géométrie superposée dans l'ITF", layer_name='119_verif_geomsuperpose',control_layer=True),
+        LayerInfo(display_name='Coordonnée identique entre BDMO et ITF', layer_name='124_verif_coord_coordidentiqueitf_dwh',control_layer=True),
+        LayerInfo(display_name='Vecteurs BDMO', layer_name='124_verif_coord_vecteur_dwh',control_layer=True),
 
         LayerInfo(
             display_name='Objet ponctuel hors du périmètre du lot',
@@ -400,9 +403,9 @@ VERIF_LAYER_INFOS = {
         ),
         LayerInfo(display_name='OD linéaire', layer_name='003_ITF_OD_Element_lineaire'),
         LayerInfo(display_name='OD surfacique', layer_name='003_ITF_OD_Element_surfacique'),
-        LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS'),
         LayerInfo(display_name='DDP dans le lot - ITF', layer_name='006_ITF_BF_DDP'),
         LayerInfo(display_name='Bien fonds', layer_name='006_ITF_BF_Bien_fonds', control_layer=True),
+        LayerInfo(display_name='Surface CS', layer_name='002_ITF_CS_Surface_CS'),
         LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
     ),
 }
