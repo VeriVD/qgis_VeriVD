@@ -27,7 +27,7 @@ from verivd.core.veri_meta_layer import VeriMetaLayer
 
 VERIF_LAYER_INFOS = {
     "VerifBiens_fonds": (
-        LayerInfo(display_name="Point limite non-matérialisé, vérification de l\'attribut \"defini_exactement\"", layer_name='122_verif_BF_PL_non_mat_def_exa', control_layer=True),
+        LayerInfo(display_name="Point limite non-matérialisé, vérification de l'attribut \"defini_exactement\"", layer_name='122_verif_BF_PL_non_mat_def_exa', control_layer=True),
         LayerInfo(display_name='Sommet manquant sous un point limite', layer_name='100_verif_bf_sommet_manquant_sous_pl', control_layer=True),
         LayerInfo(display_name='Sommet proche d\'une limite', layer_name='100_verif_bf_sommet_proche_pl', control_layer=True),
         LayerInfo(display_name='Point limite manquant sur un sommet', layer_name='100_verif_bf_pl_manquant_sur_sommet', control_layer=True),
@@ -294,7 +294,7 @@ VERIF_LAYER_INFOS = {
             control_layer=True
         ),
         LayerInfo(
-            display_name='sommet de limite de commune manquant sous point de limite térritoriale',
+            display_name='sommet de limite de commune manquant sous point de limite territoriale',
             layer_name='116_Sommet_COM_manquant_sous_PL_terr',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '255, 255, 0', 'size': '2'},
