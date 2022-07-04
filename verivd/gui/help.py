@@ -6,6 +6,7 @@ WEB_MOPUBLIC = 'https://www.cadastre.ch/fr/services/service/mopublic.html'
 WEB_NORMEVD = 'https://dwa.vd.ch/PROD/DINF/publicationdinf1_p.nsf/normesformulaires?SearchView&Query='
 REQUETE = '(FIELD%20TitreNorme%20CONTAINS%20{})'
 WEB_CHECKER = 'https://www.vd.ch/themes/territoire-et-construction/informations-sur-le-territoire/mensuration-officielle/informations-aux-bureaux-de-geometres/checker-interlis/'
+WEB_6052 = "https://www.vd.ch/fileadmin/user_upload/organisation/dinf/sit/fichiers_pdf/VeriVD/6052_VeriVD_infoV2_projet_20210423.pdf"
 
 MESSAGE_FICHIER = """Le fichier .sqlite qui alimente ce plugin, contient une base de données spatiale au format <a href='{}'>spatialite</a>. 
 Ce fichier est generée à l'OIT sur la base d'un fichier interlis décrit selon le modèle MD01MOVDMN95.""".format(WEB_SPATIALITE)
@@ -19,4 +20,4 @@ MESSAGE_ILIVALIDATOR = """A défnir"""
 MESSAGE_CHECKER = """Cet onglet permet le chargement des données issues du <a href='{}'>checker interlis vaudois</a>. 
 Pour plus d'informations, veuiller consulter la page web s'y référant.""".format(WEB_CHECKER)
 
-MESSAGE_VERIF = """Cet onglet permet le chargement des données des tests de vérification dévelopés en interne à l'OIT (office de l'information sur le territoire). Des explications relatives à chacun de ces tests sont disponnible dans la norme <a href='{}'>vérification des mensurations</a>.""".format(WEB_CHECKER)
+MESSAGE_VERIF = """Cet onglet permet le chargement des données des tests de vérification dévelopés en interne à l'OIT (office de l'information sur le territoire). Des explications relatives à chacun de ces tests sont disponnible dans la fiche <a href='{}'>6052</a>.""".format(WEB_6052)
