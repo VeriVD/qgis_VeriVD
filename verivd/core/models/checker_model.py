@@ -69,7 +69,8 @@ class CheckerLayerModel(LayerListModel):
                 layer_name='000_Checker_sans_geometrie',
                 sql_request=sql_request,
                 symbology_type=SymbologyType.NO_SYMBOL
-            )
+            ),
+			LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
         )
         return layer_infos
 
@@ -77,3 +78,5 @@ class CheckerLayerModel(LayerListModel):
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
             for symbol in layer.renderer().symbols(self.layer_context(layer)):
                 symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])
+				
+

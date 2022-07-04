@@ -91,7 +91,8 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name='000_ilivalidator_sans_geometrie',
                 symbology_type=SymbologyType.NO_SYMBOL,
                 sql_request=sql_request
-            )
+            ),
+			LayerInfo(display_name='Périmetre du lot', layer_name='112_itf_mise_a_jourrp')
         )
         return layer_infos
 
