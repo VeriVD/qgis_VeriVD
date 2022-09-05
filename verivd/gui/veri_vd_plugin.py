@@ -38,7 +38,7 @@ from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 
 
 class VeriVD:
-    """ QGIS Plugin Implementation. """
+    """QGIS Plugin Implementation."""
 
     def __init__(self, iface: QgisInterface):
         self.iface = iface
@@ -50,33 +50,34 @@ class VeriVD:
         self.layer_models = LayerModels(self.iface)
 
         # initialize translation
-        qgis_locale = QLocale(QSettings().value('locale/userLocale'))
-        locale_path = os.path.join(os.path.dirname(__file__), 'i18n')
+        qgis_locale = QLocale(QSettings().value("locale/userLocale"))
+        locale_path = os.path.join(os.path.dirname(__file__), "i18n")
         self.translator = QTranslator()
-        self.translator.load(qgis_locale, 'veri_vd', '_', locale_path)
+        self.translator.load(qgis_locale, "veri_vd", "_", locale_path)
         QCoreApplication.installTranslator(self.translator)
 
         # Declare instance attributes
         self.actions = {}
-        self.menu_entry = self.tr('&Véri-Vaud')
+        self.menu_entry = self.tr("&Véri-Vaud")
         # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar('VeriVD')
-        self.toolbar.setObjectName('VeriVD')
+        self.toolbar = self.iface.addToolBar("VeriVD")
+        self.toolbar.setObjectName("VeriVD")
 
         self.dock_widget = None
 
     def tr(self, source_text):
-        return QCoreApplication.translate('veri_vd', source_text)
+        return QCoreApplication.translate("veri_vd", source_text)
 
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
-        self.actions['main'] = QAction(
+        self.actions["main"] = QAction(
             QIcon(os.path.join(os.path.dirname(__file__), "..", "icons", "icon.png")),
-            self.tr('Vérification des mensurations vaudoises'),
-            self.iface.mainWindow())
-        self.actions['main'].triggered.connect(self.run)
-        self.iface.addPluginToMenu(self.menu_entry, self.actions['main'])
-        self.iface.addToolBarIcon(self.actions['main'])
+            self.tr("Vérification des mensurations vaudoises"),
+            self.iface.mainWindow(),
+        )
+        self.actions["main"].triggered.connect(self.run)
+        self.iface.addPluginToMenu(self.menu_entry, self.actions["main"])
+        self.iface.addToolBarIcon(self.actions["main"])
 
         self.dock_widget = VeriVDDockWidget(self.layer_models)
         self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dock_widget)
@@ -84,7 +85,11 @@ class VeriVD:
         self.dock_widget.file_changed.connect(self.open_spatialite_file)
 
         for model in self.layer_models.models():
-            model.layers_loaded.connect(lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(model, layer_name, layers_loaded))
+            model.layers_loaded.connect(
+                lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(
+                    model, layer_name, layers_loaded
+                )
+            )
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -100,10 +105,16 @@ class VeriVD:
 
     def open_spatialite_file(self, file):
         if self.spatialite_data is not None and self.layer_models.has_loaded_layer():
-            if QMessageBox.question(
-                    self.dock_widget, "Veri-VD",
-                    "Voulez-vous conserver les couches chargées par {}?".format(self.spatialite_data.uri.database())
-            ) == QMessageBox.No:
+            if (
+                QMessageBox.question(
+                    self.dock_widget,
+                    "Veri-VD",
+                    "Voulez-vous conserver les couches chargées par {}?".format(
+                        self.spatialite_data.uri.database()
+                    ),
+                )
+                == QMessageBox.No
+            ):
                 self.layer_models.unload_all_layers()
             self.layer_models.reset_models()
         if file:
@@ -125,7 +136,9 @@ class VeriVD:
         self.dock_widget.tabWidget.setCurrentIndex(0)
         self.dock_widget.tabWidget.setEnabled(False)
 
-    def __on_layers_loaded(self, model: LayerListModel, layer_name: str, layers_loaded: [LayerInfo]):
+    def __on_layers_loaded(
+        self, model: LayerListModel, layer_name: str, layers_loaded: [LayerInfo]
+    ):
         if model.has_control_layers:
             control_layers_loaded = 0
             layer_names = []
@@ -138,7 +151,8 @@ class VeriVD:
                 pass
             else:
                 self.iface.messageBar().pushMessage(
-                    'VeriVD',
-                    'Les scripts de vérification n''ont pas détecté d''élément particulier pour le thème "{}".'
-                        .format(layer_name)
+                    "VeriVD",
+                    "Les scripts de vérification n"
+                    "ont pas détecté d"
+                    'élément particulier pour le thème "{}".'.format(layer_name),
                 )

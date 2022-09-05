@@ -15,17 +15,12 @@
 """
 
 
-
-
-
-
 # REMEMBER TO SORT WHEN EDITING
 TOPIC_LAYERS = (
     "Adresses des batiments",
     "Altimetrie",
     "Biens fonds",
-    "Bords de plan"
-    "Conduites",
+    "Bords de plan" "Conduites",
     "Couverture du sol",
     "Domaines numerotation",
     "Limites canton",

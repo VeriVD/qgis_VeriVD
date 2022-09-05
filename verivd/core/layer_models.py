@@ -14,7 +14,6 @@
  ***************************************************************************/
 """
 
-from qgis.core import QgsProject
 from qgis.gui import QgisInterface
 
 from verivd.core.layer_list_model import LayerListModel
@@ -45,8 +44,12 @@ class LayerModels:
         self.base_layer_model.unload_all()
 
     def models(self) -> [LayerListModel]:
-        return (self.verif_layer_model, self.ili_validator_layer_model,
-                self.checker_layer_model, self.base_layer_model)
+        return (
+            self.verif_layer_model,
+            self.ili_validator_layer_model,
+            self.checker_layer_model,
+            self.base_layer_model,
+        )
 
     def has_loaded_layer(self) -> bool:
         """
@@ -61,4 +64,3 @@ class LayerModels:
     def reset_models(self):
         for model in self.models():
             model.reload()
-

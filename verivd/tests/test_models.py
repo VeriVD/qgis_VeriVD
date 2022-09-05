@@ -26,11 +26,9 @@ from verivd.core.symbolgy_type import SymbologyType
 
 start_app()
 
-DATA_PATH = '133_AF2_2440_NUM.sqlite'
+DATA_PATH = "133_AF2_2440_NUM.sqlite"
 
-MISSING_QML = (
-    '101_verif_ddp_segment_bf_modifie',
-)
+MISSING_QML = ("101_verif_ddp_segment_bf_modifie",)
 
 
 class OfflineConverterTest(unittest.TestCase):
@@ -62,4 +60,7 @@ class OfflineConverterTest(unittest.TestCase):
                     if layer_info.symbology_type == SymbologyType.QML:
                         if layer_info.layer_name in MISSING_QML:
                             continue
-                        self.assertIsNotNone(spatialite_data.qml_definition(veri_layer.name, layer_info), 'Layer {} has no QML file'.format(layer_info.layer_name))
+                        self.assertIsNotNone(
+                            spatialite_data.qml_definition(veri_layer.name, layer_info),
+                            "Layer {} has no QML file".format(layer_info.layer_name),
+                        )

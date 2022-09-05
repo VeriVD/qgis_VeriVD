@@ -18,7 +18,7 @@ from enum import Enum
 
 
 class SymbologyType(Enum):
-	NO_SYMBOL = 1
-	QML = 2
-	SIMPLE = 3
-	RANDOM_CATEGORIZED = 4
+    NO_SYMBOL = 1
+    QML = 2
+    SIMPLE = 3
+    RANDOM_CATEGORIZED = 4

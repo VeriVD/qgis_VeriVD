@@ -17,7 +17,12 @@
 
 from qgis.PyQt.QtCore import Qt, QAbstractListModel, QModelIndex, pyqtSignal
 
-from qgis.core import QgsProject, QgsVectorLayer, QgsRenderContext, QgsExpressionContextUtils
+from qgis.core import (
+    QgsProject,
+    QgsVectorLayer,
+    QgsRenderContext,
+    QgsExpressionContextUtils,
+)
 from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
@@ -32,7 +37,12 @@ class LayerListModel(QAbstractListModel):
     # signal emitted when layers are loaded (group_name, loaded_layers)
     layers_loaded = pyqtSignal(str, list)
 
-    def __init__(self, iface: QgisInterface, layers: [VeriMetaLayer] = [], has_control_layers: bool = False):
+    def __init__(
+        self,
+        iface: QgisInterface,
+        layers: [VeriMetaLayer] = [],
+        has_control_layers: bool = False,
+    ):
         """
         :param iface: the QgisInterface
         :param layers: pre-load the model with data
@@ -142,7 +152,9 @@ class LayerListModel(QAbstractListModel):
 
     def layer_context(self, layer: QgsVectorLayer) -> QgsRenderContext:
         context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
-        context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(layer))
+        context.expressionContext().appendScope(
+            QgsExpressionContextUtils.layerScope(layer)
+        )
         return context
 
     def __load_layer(self, index: QModelIndex):
@@ -152,7 +164,9 @@ class LayerListModel(QAbstractListModel):
             return
         veri_meta_layer = self._veri_meta_layers[index.row()]
         group_name = self.group_name(veri_meta_layer.display_name)
-        veri_meta_layer.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
+        veri_meta_layer.layer_tree_group = (
+            QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
+        )
         veri_meta_layer.layer_tree_group.setExpanded(False)
         layer_infos = self.layer_infos(veri_meta_layer.name)
         layers = self.spatialite_data.create_layers(veri_meta_layer.name, layer_infos)
@@ -167,11 +181,18 @@ class LayerListModel(QAbstractListModel):
             added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
             veri_meta_layer.layer_tree_group.insertLayer(i, added_qgis_layer)
             if not layer_info.visibility:
-                node = QgsProject.instance().layerTreeRoot().findLayer(added_qgis_layer.id())
+                node = (
+                    QgsProject.instance()
+                    .layerTreeRoot()
+                    .findLayer(added_qgis_layer.id())
+                )
                 if node:
                     node.setItemVisibilityChecked(False)
                 else:
-                    raise Exception('La couche "{}" n''a pas été chargée.'.format(layer_info.display_name))
+                    raise Exception(
+                        'La couche "{}" n'
+                        "a pas été chargée.".format(layer_info.display_name)
+                    )
             loaded_layers.append(layer_info)
             veri_meta_layer.qgis_layers.append(added_qgis_layer)
             i += 1
@@ -187,8 +208,13 @@ class LayerListModel(QAbstractListModel):
         for layer in veri_meta_layer.qgis_layers:
             QgsProject.instance().removeMapLayer(layer)
         self.__is_removing_layer = False
-        if veri_meta_layer.layer_tree_group is not None and len(veri_meta_layer.layer_tree_group.children()) == 0:
-           QgsProject.instance().layerTreeRoot().removeChildNode(veri_meta_layer.layer_tree_group)
+        if (
+            veri_meta_layer.layer_tree_group is not None
+            and len(veri_meta_layer.layer_tree_group.children()) == 0
+        ):
+            QgsProject.instance().layerTreeRoot().removeChildNode(
+                veri_meta_layer.layer_tree_group
+            )
         veri_meta_layer.layer_tree_group = None
         veri_meta_layer.qgis_layers = []
         veri_meta_layer.loaded = Qt.Unchecked

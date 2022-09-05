@@ -34,15 +34,19 @@ class IliValidatorLayerModel(LayerListModel):
         self._veri_meta_layers = []
         if not self.spatialite_data:
             return
-        ili_validator_dict = self.spatialite_data.load_table_list('000_ilivalidator_decompte')
+        ili_validator_dict = self.spatialite_data.load_table_list(
+            "000_ilivalidator_decompte"
+        )
         for topic in TOPIC_LAYERS:
-            ili_validator_topic = topic.replace(' ', '_')
+            ili_validator_topic = topic.replace(" ", "_")
             if ili_validator_topic in list(ili_validator_dict.keys()):
-                display_name = 'IliValidator - {}: {}'.format(
+                display_name = "IliValidator - {}: {}".format(
                     topic, str(ili_validator_dict[ili_validator_topic])
                 )
-                ili_validator_topic = topic.replace(' ', '_')
-                self._veri_meta_layers.append(VeriMetaLayer(ili_validator_topic, display_name))
+                ili_validator_topic = topic.replace(" ", "_")
+                self._veri_meta_layers.append(
+                    VeriMetaLayer(ili_validator_topic, display_name)
+                )
         self.endResetModel()
 
     def group_name(self, layer):
@@ -52,50 +56,60 @@ class IliValidatorLayerModel(LayerListModel):
         sql_request = '"topic" = "{}"'.format(layer)
         layer_infos = (
             LayerInfo(
-                display_name='iliValidator - {} point'.format(layer),
-                layer_name='000_ilivalidator_point',
+                display_name="iliValidator - {} point".format(layer),
+                layer_name="000_ilivalidator_point",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-                category_field='observation',
-                symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)},
-                sql_request=sql_request
-            ),
-            LayerInfo(
-                display_name='iliValidator - {} ligne'.format(layer),
-                layer_name='000_ilivalidator_ligne',
-                symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-                category_field='observation',
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+                category_field="observation",
+                symbology_data_defined_properties={
+                    QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)
+                },
                 sql_request=sql_request,
-                opacity=.5
             ),
             LayerInfo(
-                display_name='iliValidator - {} Arc'.format(layer),
-                layer_name='000_iliValidator_point_Arc',
+                display_name="iliValidator - {} ligne".format(layer),
+                layer_name="000_ilivalidator_ligne",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-                category_field='observation',
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+                category_field="observation",
+                symbology_data_defined_properties={
+                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
+                },
                 sql_request=sql_request,
-                opacity=.5
+                opacity=0.5,
             ),
             LayerInfo(
-                display_name='iliValidator - {} surface'.format(layer),
-                layer_name='000_ilivalidator_surface',
+                display_name="iliValidator - {} Arc".format(layer),
+                layer_name="000_iliValidator_point_Arc",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-                category_field='observation',
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+                category_field="observation",
+                symbology_data_defined_properties={
+                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
+                },
                 sql_request=sql_request,
-                opacity=.5,
+                opacity=0.5,
             ),
             LayerInfo(
-                display_name='iliValidator - {} sans géométrie'.format(layer),
-                layer_name='000_ilivalidator_sans_geometrie',
+                display_name="iliValidator - {} surface".format(layer),
+                layer_name="000_ilivalidator_surface",
+                symbology_type=SymbologyType.RANDOM_CATEGORIZED,
+                category_field="observation",
+                symbology_data_defined_properties={
+                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
+                },
+                sql_request=sql_request,
+                opacity=0.5,
+            ),
+            LayerInfo(
+                display_name="iliValidator - {} sans géométrie".format(layer),
+                layer_name="000_ilivalidator_sans_geometrie",
                 symbology_type=SymbologyType.NO_SYMBOL,
-                sql_request=sql_request
-            )
+                sql_request=sql_request,
+            ),
         )
         return layer_infos
 
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
             for symbol in layer.renderer().symbols(self.layer_context(layer)):
-                symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])
+                symbol.symbolLayer(0).setShape(
+                    MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)]
+                )

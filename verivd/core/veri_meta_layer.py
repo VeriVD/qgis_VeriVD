@@ -23,6 +23,7 @@ class VeriMetaLayer:
     This is the base class for the data in layer list models.
     This holds information about loaded QGIS layers and layer tree information (1 VeriMetaLayer loads several QGIS layers)
     """
+
     def __init__(self, name: str, display_name: str = None):
         self._name = name
         self._display_name = display_name or name

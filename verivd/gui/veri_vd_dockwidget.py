@@ -27,11 +27,16 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget
 from qgis.PyQt.QtCore import pyqtSignal, QModelIndex
 from qgis.gui import QgsFileWidget
-from verivd.gui.help import MESSAGE_BASE, MESSAGE_CHECKER, MESSAGE_ILIVALIDATOR, MESSAGE_VERIF
+from verivd.gui.help import (
+    MESSAGE_BASE,
+    MESSAGE_CHECKER,
+    MESSAGE_ILIVALIDATOR,
+    MESSAGE_VERIF,
+)
 
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), '../ui/veri_vd_dockwidget_base.ui'
-))
+FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(os.path.dirname(__file__), "../ui/veri_vd_dockwidget_base.ui")
+)
 
 
 class VeriVDDockWidget(QDockWidget, FORM_CLASS):
@@ -46,7 +51,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
 
         self.layer_models = layer_models
 
-        self.file_widget.setDialogTitle('Ouvrir un fichier spatialite')
+        self.file_widget.setDialogTitle("Ouvrir un fichier spatialite")
         self.file_widget.setRelativeStorage(QgsFileWidget.Absolute)
         self.file_widget.setFilter("fichiers SQLite (*.sqlite *.SQLite *.SQLITE)")
 
@@ -74,7 +79,9 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.tabWidget.setTabEnabled(2, has_rows)
 
     def update_ili_tab(self):
-        has_rows = self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) > 0
+        has_rows = (
+            self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) > 0
+        )
         self.tabWidget.setTabEnabled(1, has_rows)
 
     def closeEvent(self, event):

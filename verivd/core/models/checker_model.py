@@ -14,7 +14,12 @@
  ***************************************************************************/
 """
 
-from qgis.core import QgsSymbolLayer, QgsProperty, QgsVectorLayer, QgsWkbTypes, QgsRenderContext, QgsExpressionContextUtils
+from qgis.core import (
+    QgsSymbolLayer,
+    QgsProperty,
+    QgsVectorLayer,
+    QgsWkbTypes,
+)
 from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
@@ -34,10 +39,12 @@ class CheckerLayerModel(LayerListModel):
         self._veri_meta_layers = []
         if not self.spatialite_data:
             return
-        checker_dict = self.spatialite_data.load_table_list('000_checker_decompte')
+        checker_dict = self.spatialite_data.load_table_list("000_checker_decompte")
         for topic in TOPIC_LAYERS:
             if topic in checker_dict:
-                display_name = 'Checker - {}: {}'.format(topic, str(checker_dict[topic]))
+                display_name = "Checker - {}: {}".format(
+                    topic, str(checker_dict[topic])
+                )
                 self._veri_meta_layers.append(VeriMetaLayer(topic, display_name))
         self.endResetModel()
 
@@ -48,32 +55,38 @@ class CheckerLayerModel(LayerListModel):
         sql_request = '"topic" = "{}"'.format(layer)
         layer_infos = (
             LayerInfo(
-                display_name='Checker - {} point'.format(layer),
-                layer_name='000_Checker_point',
+                display_name="Checker - {} point".format(layer),
+                layer_name="000_Checker_point",
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-                category_field='description',
-                symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)}
+                category_field="description",
+                symbology_data_defined_properties={
+                    QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)
+                },
             ),
             LayerInfo(
-                display_name='Checker - {} surface'.format(layer),
-                layer_name='000_Checker_surface',
+                display_name="Checker - {} surface".format(layer),
+                layer_name="000_Checker_surface",
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
-                category_field='description',
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
-                opacity=.5
+                category_field="description",
+                symbology_data_defined_properties={
+                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
+                },
+                opacity=0.5,
             ),
             LayerInfo(
-                display_name='Checker - {} sans géométrie'.format(layer),
-                layer_name='000_Checker_sans_geometrie',
+                display_name="Checker - {} sans géométrie".format(layer),
+                layer_name="000_Checker_sans_geometrie",
                 sql_request=sql_request,
-                symbology_type=SymbologyType.NO_SYMBOL
-            )
+                symbology_type=SymbologyType.NO_SYMBOL,
+            ),
         )
         return layer_infos
 
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
             for symbol in layer.renderer().symbols(self.layer_context(layer)):
-                symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])
+                symbol.symbolLayer(0).setShape(
+                    MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)]
+                )
