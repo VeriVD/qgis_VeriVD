@@ -20,7 +20,7 @@ from qgis.core import QgsSymbolLayer, QgsProperty, QgsWkbTypes, QgsVectorLayer
 from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.topic_layers import TOPIC_LAYERS
-from verivd.core.spatialite_data import MARKER_SHAPE
+from verivd.core.gpkg_data import MARKER_SHAPE
 from verivd.core.symbolgy_type import SymbologyType
 from verivd.core.veri_meta_layer import VeriMetaLayer
 
@@ -32,11 +32,9 @@ class IliValidatorLayerModel(LayerListModel):
     def reload(self):
         self.beginResetModel()
         self._veri_meta_layers = []
-        if not self.spatialite_data:
+        if not self.gpkg_data:
             return
-        ili_validator_dict = self.spatialite_data.load_table_list(
-            "000_ilivalidator_decompte"
-        )
+        ili_validator_dict = self.gpkg_data.load_table_list("000_ilivalidator_decompte")
         for topic in TOPIC_LAYERS:
             ili_validator_topic = topic.replace(" ", "_")
             if ili_validator_topic in list(ili_validator_dict.keys()):

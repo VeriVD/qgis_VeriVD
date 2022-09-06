@@ -25,7 +25,7 @@ from qgis.gui import QgisInterface
 from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.topic_layers import TOPIC_LAYERS
-from verivd.core.spatialite_data import MARKER_SHAPE
+from verivd.core.gpkg_data import MARKER_SHAPE
 from verivd.core.symbolgy_type import SymbologyType
 from verivd.core.veri_meta_layer import VeriMetaLayer
 
@@ -37,9 +37,9 @@ class CheckerLayerModel(LayerListModel):
     def reload(self):
         self.beginResetModel()
         self._veri_meta_layers = []
-        if not self.spatialite_data:
+        if not self.gpkg_data:
             return
-        checker_dict = self.spatialite_data.load_table_list("000_checker_decompte")
+        checker_dict = self.gpkg_data.load_table_list("000_checker_decompte")
         for topic in TOPIC_LAYERS:
             if topic in checker_dict:
                 display_name = "Checker - {}: {}".format(

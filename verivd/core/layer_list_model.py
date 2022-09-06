@@ -26,7 +26,7 @@ from qgis.core import (
 from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
-from verivd.core.spatialite_data import SpatialiteData
+from verivd.core.gpkg_data import GpkgData
 from verivd.core.veri_meta_layer import VeriMetaLayer
 
 Debug = True
@@ -50,19 +50,19 @@ class LayerListModel(QAbstractListModel):
         """
         self.iface = iface
         self._veri_meta_layers: [VeriMetaLayer] = layers
-        self._spatialite_data: SpatialiteData = None
+        self._gpkg_data: GpkgData = None
         self._has_control_layers = has_control_layers
         super().__init__()
         self.__is_removing_layer = False
         QgsProject.instance().layersWillBeRemoved.connect(self.__layers_will_be_removed)
 
     @property
-    def spatialite_data(self):
-        return self._spatialite_data
+    def gpkg_data(self):
+        return self._gpkg_data
 
-    @spatialite_data.setter
-    def spatialite_data(self, data):
-        self._spatialite_data = data
+    @gpkg_data.setter
+    def gpkg_data(self, data):
+        self._gpkg_data = data
         self.reload()
 
     @property
@@ -81,7 +81,7 @@ class LayerListModel(QAbstractListModel):
 
     def reload(self):
         """
-        Reloads the data when the SQLite has changed
+        Reloads the data when the data has changed
         might be re-implemented
         """
         pass
@@ -160,7 +160,7 @@ class LayerListModel(QAbstractListModel):
     def __load_layer(self, index: QModelIndex):
         if Debug:
             print("Load layer")
-        if not self.spatialite_data:
+        if not self.gpkg_data:
             return
         veri_meta_layer = self._veri_meta_layers[index.row()]
         group_name = self.group_name(veri_meta_layer.display_name)
@@ -169,7 +169,7 @@ class LayerListModel(QAbstractListModel):
         )
         veri_meta_layer.layer_tree_group.setExpanded(False)
         layer_infos = self.layer_infos(veri_meta_layer.name)
-        layers = self.spatialite_data.create_layers(veri_meta_layer.name, layer_infos)
+        layers = self.gpkg_data.create_layers(veri_meta_layer.name, layer_infos)
         veri_meta_layer.qgis_layers = []
         i = 0
         loaded_layers = []

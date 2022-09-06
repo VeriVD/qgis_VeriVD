@@ -32,7 +32,7 @@ from qgis.gui import QgisInterface
 from verivd.core.layer_models import LayerModels
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.layer_info import LayerInfo
-from verivd.core.spatialite_data import SpatialiteData
+from verivd.core.gpkg_data import GpkgData
 
 from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 
@@ -46,7 +46,7 @@ class VeriVD:
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
 
-        self.spatialite_data = None
+        self.gpkg_data = None
         self.layer_models = LayerModels(self.iface)
 
         # initialize translation
@@ -82,7 +82,7 @@ class VeriVD:
         self.dock_widget = VeriVDDockWidget(self.layer_models)
         self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dock_widget)
 
-        self.dock_widget.file_changed.connect(self.open_spatialite_file)
+        self.dock_widget.file_changed.connect(self.open_gpkg_file)
 
         for model in self.layer_models.models():
             model.layers_loaded.connect(
@@ -103,14 +103,14 @@ class VeriVD:
             self.iface.removeToolBarIcon(action)
         del self.toolbar
 
-    def open_spatialite_file(self, file):
-        if self.spatialite_data is not None and self.layer_models.has_loaded_layer():
+    def open_gpkg_file(self, file):
+        if self.gpkg_data is not None and self.layer_models.has_loaded_layer():
             if (
                 QMessageBox.question(
                     self.dock_widget,
                     "Veri-VD",
                     "Voulez-vous conserver les couches chargées par {}?".format(
-                        self.spatialite_data.uri.database()
+                        self.gpkg_data.uri.database()
                     ),
                 )
                 == QMessageBox.No
@@ -118,15 +118,14 @@ class VeriVD:
                 self.layer_models.unload_all_layers()
             self.layer_models.reset_models()
         if file:
-            strFile = file.encode("utf-8")
-            uFile = strFile.decode("utf-8")
-            self.spatialite_data = SpatialiteData(self.iface, uFile)
-            self.layer_models.set_spatialite_data(self.spatialite_data)
+            uFile = file.encode("utf-8").decode("utf-8")
+            self.gpkg_data = GpkgData(self.iface, uFile)
+            self.layer_models.set_gpkg_data(self.gpkg_data)
             self.dock_widget.tabWidget.setEnabled(True)
         else:
-            self.spatialite_data = None
+            self.gpkg_data = None
             self.dock_widget.tabWidget.setEnabled(False)
-            self.layer_models.set_spatialite_data(None)
+            self.layer_models.set_gpkg_data(None)
 
     def run(self):
         """Run method that loads and starts the plugin"""
