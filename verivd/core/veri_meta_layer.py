@@ -28,7 +28,7 @@ class VeriMetaLayer:
         self._name = name
         self._display_name = display_name or name
         self._loaded = Qt.Unchecked
-        self._layer_tree_group = None
+        self._layer_group_id = None
         self._qgis_layers: [QgsVectorLayer] = []
 
     @property
@@ -48,12 +48,12 @@ class VeriMetaLayer:
         self._loaded = value
 
     @property
-    def layer_tree_group(self):
-        return self._layer_tree_group
+    def layer_group_id(self):
+        return self._layer_group_id
 
-    @layer_tree_group.setter
-    def layer_tree_group(self, value: QgsLayerTreeGroup):
-        self._layer_tree_group = value
+    @layer_group_id.setter
+    def layer_group_id(self, value: QgsLayerTreeGroup):
+        self._layer_group_id = value
 
     @property
     def qgis_layers(self):

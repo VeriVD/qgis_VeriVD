@@ -22,6 +22,8 @@ from qgis.core import (
     QgsVectorLayer,
     QgsRenderContext,
     QgsExpressionContextUtils,
+    QgsLayerTree,
+    QgsLayerTreeGroup,
 )
 from qgis.gui import QgisInterface
 
@@ -30,6 +32,8 @@ from verivd.core.gpkg_data import GpkgData
 from verivd.core.veri_meta_layer import VeriMetaLayer
 
 Debug = True
+
+VERIVD_GROUP_LAYER_ID = "verivd-layergropup-id"
 
 
 class LayerListModel(QAbstractListModel):
@@ -164,10 +168,14 @@ class LayerListModel(QAbstractListModel):
             return
         veri_meta_layer = self._veri_meta_layers[index.row()]
         group_name = self.group_name(veri_meta_layer.display_name)
-        veri_meta_layer.layer_tree_group = (
+        layer_tree_group = (
             QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
         )
-        veri_meta_layer.layer_tree_group.setExpanded(False)
+        veri_meta_layer.layer_group_id = veri_meta_layer.name
+        layer_tree_group.setCustomProperty(
+            VERIVD_GROUP_LAYER_ID, veri_meta_layer.layer_group_id
+        )
+        layer_tree_group.setExpanded(False)
         layer_infos = self.layer_infos(veri_meta_layer.name)
         layers = self.gpkg_data.create_layers(veri_meta_layer.name, layer_infos)
         veri_meta_layer.qgis_layers = []
@@ -179,7 +187,7 @@ class LayerListModel(QAbstractListModel):
                 continue
             self.post_process_layer(qgis_layer, i)
             added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
-            veri_meta_layer.layer_tree_group.insertLayer(i, added_qgis_layer)
+            layer_tree_group.insertLayer(i, added_qgis_layer)
             if not layer_info.visibility:
                 node = (
                     QgsProject.instance()
@@ -208,16 +216,26 @@ class LayerListModel(QAbstractListModel):
         for layer in veri_meta_layer.qgis_layers:
             QgsProject.instance().removeMapLayer(layer)
         self.__is_removing_layer = False
-        if (
-            veri_meta_layer.layer_tree_group is not None
-            and len(veri_meta_layer.layer_tree_group.children()) == 0
-        ):
-            QgsProject.instance().layerTreeRoot().removeChildNode(
-                veri_meta_layer.layer_tree_group
-            )
-        veri_meta_layer.layer_tree_group = None
+        group = self.find_layer_group(
+            QgsProject.instance().layerTreeRoot(), veri_meta_layer.layer_group_id
+        )
+        QgsProject.instance().layerTreeRoot().removeChildNode(group)
+        veri_meta_layer.layer_group_id = None
         veri_meta_layer.qgis_layers = []
         veri_meta_layer.loaded = Qt.Unchecked
+
+    @staticmethod
+    def find_layer_group(node: QgsLayerTreeGroup, group_id: str) -> QgsLayerTreeGroup:
+        for child in node.children():
+            if QgsLayerTree.isGroup(child):
+                child_gid = child.customProperty(VERIVD_GROUP_LAYER_ID)
+                if child_gid == group_id:
+                    return child
+                else:
+                    group = LayerListModel.find_layer_group(child, group_id)
+                    if group:
+                        return group
+        return None
 
     def __layers_will_be_removed(self, removed_layer_ids):
         if self.__is_removing_layer:
