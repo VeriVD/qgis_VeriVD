@@ -51,9 +51,9 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
 
         self.layer_models = layer_models
 
-        self.file_widget.setDialogTitle("Ouvrir un fichier spatialite")
+        self.file_widget.setDialogTitle("Ouvrir un fichier Geopackage")
         self.file_widget.setRelativeStorage(QgsFileWidget.Absolute)
-        self.file_widget.setFilter("fichiers SQLite (*.sqlite *.SQLite *.SQLITE)")
+        self.file_widget.setFilter("fichiers Geopackage (*.gpkg *.GPKG)")
 
         self.base_help_label.setText(MESSAGE_BASE)
         self.checker_help_label.setText(MESSAGE_CHECKER)

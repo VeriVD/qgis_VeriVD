@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-WEB_SPATIALITE = "https://www.gaia-gis.it/fossil/libspatialite/index"
+WEB_GEOPACKAGE = "https://www.geopackage.org/"
 WEB_MOPUBLIC = "https://www.cadastre.ch/fr/services/service/mopublic.html"
 WEB_NORMEVD = "https://dwa.vd.ch/PROD/DINF/publicationdinf1_p.nsf/normesformulaires?SearchView&Query="
 REQUETE = "(FIELD%20TitreNorme%20CONTAINS%20{})"
 WEB_CHECKER = "https://www.vd.ch/themes/territoire-et-construction/informations-sur-le-territoire/mensuration-officielle/informations-aux-bureaux-de-geometres/checker-interlis/"
 
-MESSAGE_FICHIER = f"""Le fichier .sqlite qui alimente ce plugin, contient une base de données spatiale au format <a href='{WEB_SPATIALITE}'>spatialite</a>.
+MESSAGE_FICHIER = f"""Le fichier .gpkg qui alimente ce plugin, contient une base de données spatiale au format <a href='{WEB_GEOPACKAGE}'>geopackage</a>.
  Ce fichier est generée à l'OIT sur la base d'un fichier interlis décrit selon le modèle MD01MOVDMN95."""
 
 MESSAGE_BASE = """Cet onglet permet le chargement des couches de bases. Celles-ci sont inspirées du modèle simplifé 

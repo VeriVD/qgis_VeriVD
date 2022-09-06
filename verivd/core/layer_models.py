@@ -25,17 +25,17 @@ from verivd.core.models.verif_model import VerifLayerModel
 
 class LayerModels:
     def __init__(self, iface: QgisInterface):
-        self.spatialite_data = None
+        self.gpkg_data = None
         self.verif_layer_model = VerifLayerModel(iface)
         self.ili_validator_layer_model = IliValidatorLayerModel(iface)
         self.checker_layer_model = CheckerLayerModel(iface)
         self.base_layer_model = BaseLayerModel(iface)
 
-    def set_spatialite_data(self, spatialite_data):
-        self.verif_layer_model.spatialite_data = spatialite_data
-        self.ili_validator_layer_model.spatialite_data = spatialite_data
-        self.checker_layer_model.spatialite_data = spatialite_data
-        self.base_layer_model.spatialite_data = spatialite_data
+    def set_gpkg_data(self, gpkg_data):
+        self.verif_layer_model.gpkg_data = gpkg_data
+        self.ili_validator_layer_model.gpkg_data = gpkg_data
+        self.checker_layer_model.gpkg_data = gpkg_data
+        self.base_layer_model.gpkg_data = gpkg_data
 
     def unload_all_layers(self):
         self.verif_layer_model.unload_all()
