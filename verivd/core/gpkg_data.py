@@ -65,7 +65,6 @@ class GpkgData(object):
         return layer.dataProvider().uniqueValues(fni)
 
     def create_simple_symbol(self, layer: QgsVectorLayer, properties: dict):
-        renderer = layer.renderer()
         simple_symbol = None
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
             simple_symbol = QgsMarkerSymbol.createSimple(properties)
@@ -74,7 +73,7 @@ class GpkgData(object):
         elif layer.geometryType() == QgsWkbTypes.PolygonGeometry:
             simple_symbol = QgsFillSymbol.createSimple(properties)
 
-        renderer.setSymbol(simple_symbol)
+        layer.renderer().setSymbol(simple_symbol)
 
     def change_properties(
         self, layer: QgsVectorLayer, properties: QgsPropertyCollection
@@ -133,7 +132,7 @@ class GpkgData(object):
         print(schema, layer_name)
         uri = f"{self.gpkg_path}|layername={layer_name}"
         if sql_request:
-            uri += f'|subset=f"{sql_request}"'
+            uri += f"|subset={sql_request}"
         # construct the layer
         layer = QgsVectorLayer(uri, display_name, "ogr")
         if layer.isSpatial():
