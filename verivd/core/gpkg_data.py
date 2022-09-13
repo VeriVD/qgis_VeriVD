@@ -29,6 +29,7 @@ from qgis.core import (
 from qgis.gui import QgisInterface
 from qgis.PyQt.QtGui import QColor
 
+from verivd.core.plugin_info import dbg_info
 from verivd.core.layer_info import LayerInfo
 from verivd.core.symbolgy_type import SymbologyType
 
@@ -43,8 +44,6 @@ MARKER_SHAPE = (
     QgsSimpleMarkerSymbolLayerBase.Circle,
     QgsSimpleMarkerSymbolLayerBase.ArrowHeadFilled,
 )
-
-Debug = True
 
 
 class GpkgData(object):
@@ -103,22 +102,17 @@ class GpkgData(object):
         return symbol
 
     def random_cat_symb(self, layer: QgsVectorLayer, field: str, properties: dict):
+        dbg_info(f'create categorized symbol for field "{field}"')
         categories = []
         for unique_value in self.unique_field_finder(layer, field):
-            symbol = self.create_simple_fill_symbol_layer(
-                layer,
-                fill_color=QColor(
-                    randrange(0, 256), randrange(0, 256), randrange(0, 256)
-                ),
-            )
-            category = QgsRendererCategory(
-                unique_value, symbol, unique_value
-            )  # TODO: removed encode('Latin-1'), is this causing troubles?
-            # entry for the list of category items
+            dbg_info(f"   value: {unique_value}")
+            rand_color = QColor(randrange(0, 256), randrange(0, 256), randrange(0, 256))
+            symbol = self.create_simple_fill_symbol_layer(layer, fill_color=rand_color)
+            category = QgsRendererCategory(unique_value, symbol, unique_value)
+            # TODO: removed encode('Latin-1'), is this causing troubles?
             categories.append(category)
-        # create renderer object
+
         renderer = QgsCategorizedSymbolRenderer(field, categories)
-        # assign the created renderer to the layer
         if renderer is not None:
             layer.setRenderer(renderer)
             property_collection = QgsPropertyCollection()
@@ -164,17 +158,15 @@ class GpkgData(object):
             return qml_spec_file
         elif os.path.isfile(qml_gen_file):
             return qml_gen_file
-        if Debug:
-            print(qml_spec_file, qml_gen_file)
+        dbg_info(f"{qml_spec_file} {qml_gen_file}")
         return None
 
     def create_layers(
         self, meta_layer_name: str, layer_infos: [LayerInfo]
     ) -> Dict[LayerInfo, QgsVectorLayer]:
-        # set the layers group in the tree
         layers = {}
-        # loop through layer's parameters
         for layer_info in layer_infos:
+            dbg_info(f"Loading layer {layer_info.layer_name}")
             if layer_info.symbology_type != SymbologyType.NO_SYMBOL:
                 geom_column = "GEOMETRY"
             else:
