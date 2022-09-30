@@ -1,223 +1,375 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.4.0-Chugiak" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
-  <renderer-v2 symbollevels="0" type="singleSymbol">
+<qgis maxScale="0" minScale="2000" simplifyLocal="1" styleCategories="AllStyleCategories" labelsEnabled="0" readOnly="0" hasScaleBasedVisibilityFlag="0" simplifyAlgorithm="0" simplifyDrawingTol="1" version="3.4.4-Madeira" simplifyDrawingHints="1" simplifyMaxScale="1">
+  <flags>
+    <Identifiable>1</Identifiable>
+    <Removable>1</Removable>
+    <Searchable>1</Searchable>
+  </flags>
+  <renderer-v2 symbollevels="0" enableorderby="0" type="singleSymbol" forceraster="0">
     <symbols>
-      <symbol alpha="1" type="line" name="0">
-        <layer pass="0" class="SimpleLine" locked="0">
-          <prop k="capstyle" v="square"/>
-          <prop k="color" v="50,50,150,255"/>
-          <prop k="customdash" v="5;2"/>
-          <prop k="customdash_map_unit_scale" v="0,0"/>
-          <prop k="customdash_unit" v="MM"/>
-          <prop k="draw_inside_polygon" v="0"/>
-          <prop k="joinstyle" v="bevel"/>
-          <prop k="offset" v="0"/>
-          <prop k="offset_map_unit_scale" v="0,0"/>
-          <prop k="offset_unit" v="MM"/>
-          <prop k="penstyle" v="solid"/>
-          <prop k="use_custom_dash" v="0"/>
-          <prop k="width" v="1"/>
-          <prop k="width_map_unit_scale" v="0,0"/>
-          <prop k="width_unit" v="MM"/>
+      <symbol alpha="1" name="0" type="line" clip_to_extent="1" force_rhr="0">
+        <layer class="SimpleLine" enabled="1" locked="0" pass="0">
+          <prop v="square" k="capstyle"/>
+          <prop v="5;2" k="customdash"/>
+          <prop v="3x:0,0,0,0,0,0" k="customdash_map_unit_scale"/>
+          <prop v="MM" k="customdash_unit"/>
+          <prop v="0" k="draw_inside_polygon"/>
+          <prop v="bevel" k="joinstyle"/>
+          <prop v="50,50,150,255" k="line_color"/>
+          <prop v="solid" k="line_style"/>
+          <prop v="1" k="line_width"/>
+          <prop v="MM" k="line_width_unit"/>
+          <prop v="0" k="offset"/>
+          <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
+          <prop v="MM" k="offset_unit"/>
+          <prop v="0" k="ring_filter"/>
+          <prop v="0" k="use_custom_dash"/>
+          <prop v="3x:0,0,0,0,0,0" k="width_map_unit_scale"/>
+          <data_defined_properties>
+            <Option type="Map">
+              <Option name="name" type="QString" value=""/>
+              <Option name="properties"/>
+              <Option name="type" type="QString" value="collection"/>
+            </Option>
+          </data_defined_properties>
         </layer>
       </symbol>
     </symbols>
     <rotation/>
-    <sizescale scalemethod="area"/>
+    <sizescale/>
   </renderer-v2>
   <customproperties>
-    <property key="labeling" value="pal"/>
-    <property key="labeling/addDirectionSymbol" value="false"/>
-    <property key="labeling/angleOffset" value="0"/>
-    <property key="labeling/blendMode" value="0"/>
-    <property key="labeling/bufferBlendMode" value="0"/>
-    <property key="labeling/bufferColorA" value="255"/>
-    <property key="labeling/bufferColorB" value="255"/>
-    <property key="labeling/bufferColorG" value="255"/>
-    <property key="labeling/bufferColorR" value="255"/>
-    <property key="labeling/bufferDraw" value="false"/>
-    <property key="labeling/bufferJoinStyle" value="64"/>
-    <property key="labeling/bufferNoFill" value="false"/>
-    <property key="labeling/bufferSize" value="1"/>
-    <property key="labeling/bufferSizeInMapUnits" value="false"/>
-    <property key="labeling/bufferSizeMapUnitMaxScale" value="0"/>
-    <property key="labeling/bufferSizeMapUnitMinScale" value="0"/>
-    <property key="labeling/bufferTransp" value="0"/>
-    <property key="labeling/centroidInside" value="false"/>
-    <property key="labeling/centroidWhole" value="false"/>
-    <property key="labeling/decimals" value="3"/>
-    <property key="labeling/displayAll" value="false"/>
-    <property key="labeling/dist" value="0"/>
-    <property key="labeling/distInMapUnits" value="false"/>
-    <property key="labeling/distMapUnitMaxScale" value="0"/>
-    <property key="labeling/distMapUnitMinScale" value="0"/>
-    <property key="labeling/enabled" value="false"/>
-    <property key="labeling/fieldName" value=""/>
-    <property key="labeling/fontBold" value="false"/>
-    <property key="labeling/fontCapitals" value="0"/>
-    <property key="labeling/fontFamily" value="MS Shell Dlg 2"/>
-    <property key="labeling/fontItalic" value="false"/>
-    <property key="labeling/fontLetterSpacing" value="0"/>
-    <property key="labeling/fontLimitPixelSize" value="false"/>
-    <property key="labeling/fontMaxPixelSize" value="10000"/>
-    <property key="labeling/fontMinPixelSize" value="3"/>
-    <property key="labeling/fontSize" value="8.25"/>
-    <property key="labeling/fontSizeInMapUnits" value="false"/>
-    <property key="labeling/fontSizeMapUnitMaxScale" value="0"/>
-    <property key="labeling/fontSizeMapUnitMinScale" value="0"/>
-    <property key="labeling/fontStrikeout" value="false"/>
-    <property key="labeling/fontUnderline" value="false"/>
-    <property key="labeling/fontWeight" value="50"/>
-    <property key="labeling/fontWordSpacing" value="0"/>
-    <property key="labeling/formatNumbers" value="false"/>
-    <property key="labeling/isExpression" value="true"/>
-    <property key="labeling/labelOffsetInMapUnits" value="true"/>
-    <property key="labeling/labelOffsetMapUnitMaxScale" value="0"/>
-    <property key="labeling/labelOffsetMapUnitMinScale" value="0"/>
-    <property key="labeling/labelPerPart" value="false"/>
-    <property key="labeling/leftDirectionSymbol" value="&lt;"/>
-    <property key="labeling/limitNumLabels" value="false"/>
-    <property key="labeling/maxCurvedCharAngleIn" value="20"/>
-    <property key="labeling/maxCurvedCharAngleOut" value="-20"/>
-    <property key="labeling/maxNumLabels" value="2000"/>
-    <property key="labeling/mergeLines" value="false"/>
-    <property key="labeling/minFeatureSize" value="0"/>
-    <property key="labeling/multilineAlign" value="0"/>
-    <property key="labeling/multilineHeight" value="1"/>
-    <property key="labeling/namedStyle" value="Normal"/>
-    <property key="labeling/obstacle" value="true"/>
-    <property key="labeling/placeDirectionSymbol" value="0"/>
-    <property key="labeling/placement" value="2"/>
-    <property key="labeling/placementFlags" value="10"/>
-    <property key="labeling/plussign" value="false"/>
-    <property key="labeling/preserveRotation" value="true"/>
-    <property key="labeling/previewBkgrdColor" value="#ffffff"/>
-    <property key="labeling/priority" value="5"/>
-    <property key="labeling/quadOffset" value="4"/>
-    <property key="labeling/repeatDistance" value="0"/>
-    <property key="labeling/repeatDistanceMapUnitMaxScale" value="0"/>
-    <property key="labeling/repeatDistanceMapUnitMinScale" value="0"/>
-    <property key="labeling/repeatDistanceUnit" value="1"/>
-    <property key="labeling/reverseDirectionSymbol" value="false"/>
-    <property key="labeling/rightDirectionSymbol" value=">"/>
-    <property key="labeling/scaleMax" value="10000000"/>
-    <property key="labeling/scaleMin" value="1"/>
-    <property key="labeling/scaleVisibility" value="false"/>
-    <property key="labeling/shadowBlendMode" value="6"/>
-    <property key="labeling/shadowColorB" value="0"/>
-    <property key="labeling/shadowColorG" value="0"/>
-    <property key="labeling/shadowColorR" value="0"/>
-    <property key="labeling/shadowDraw" value="false"/>
-    <property key="labeling/shadowOffsetAngle" value="135"/>
-    <property key="labeling/shadowOffsetDist" value="1"/>
-    <property key="labeling/shadowOffsetGlobal" value="true"/>
-    <property key="labeling/shadowOffsetMapUnitMaxScale" value="0"/>
-    <property key="labeling/shadowOffsetMapUnitMinScale" value="0"/>
-    <property key="labeling/shadowOffsetUnits" value="1"/>
-    <property key="labeling/shadowRadius" value="1.5"/>
-    <property key="labeling/shadowRadiusAlphaOnly" value="false"/>
-    <property key="labeling/shadowRadiusMapUnitMaxScale" value="0"/>
-    <property key="labeling/shadowRadiusMapUnitMinScale" value="0"/>
-    <property key="labeling/shadowRadiusUnits" value="1"/>
-    <property key="labeling/shadowScale" value="100"/>
-    <property key="labeling/shadowTransparency" value="30"/>
-    <property key="labeling/shadowUnder" value="0"/>
-    <property key="labeling/shapeBlendMode" value="0"/>
-    <property key="labeling/shapeBorderColorA" value="255"/>
-    <property key="labeling/shapeBorderColorB" value="128"/>
-    <property key="labeling/shapeBorderColorG" value="128"/>
-    <property key="labeling/shapeBorderColorR" value="128"/>
-    <property key="labeling/shapeBorderWidth" value="0"/>
-    <property key="labeling/shapeBorderWidthMapUnitMaxScale" value="0"/>
-    <property key="labeling/shapeBorderWidthMapUnitMinScale" value="0"/>
-    <property key="labeling/shapeBorderWidthUnits" value="1"/>
-    <property key="labeling/shapeDraw" value="false"/>
-    <property key="labeling/shapeFillColorA" value="255"/>
-    <property key="labeling/shapeFillColorB" value="255"/>
-    <property key="labeling/shapeFillColorG" value="255"/>
-    <property key="labeling/shapeFillColorR" value="255"/>
-    <property key="labeling/shapeJoinStyle" value="64"/>
-    <property key="labeling/shapeOffsetMapUnitMaxScale" value="0"/>
-    <property key="labeling/shapeOffsetMapUnitMinScale" value="0"/>
-    <property key="labeling/shapeOffsetUnits" value="1"/>
-    <property key="labeling/shapeOffsetX" value="0"/>
-    <property key="labeling/shapeOffsetY" value="0"/>
-    <property key="labeling/shapeRadiiMapUnitMaxScale" value="0"/>
-    <property key="labeling/shapeRadiiMapUnitMinScale" value="0"/>
-    <property key="labeling/shapeRadiiUnits" value="1"/>
-    <property key="labeling/shapeRadiiX" value="0"/>
-    <property key="labeling/shapeRadiiY" value="0"/>
-    <property key="labeling/shapeRotation" value="0"/>
-    <property key="labeling/shapeRotationType" value="0"/>
-    <property key="labeling/shapeSVGFile" value=""/>
-    <property key="labeling/shapeSizeMapUnitMaxScale" value="0"/>
-    <property key="labeling/shapeSizeMapUnitMinScale" value="0"/>
-    <property key="labeling/shapeSizeType" value="0"/>
-    <property key="labeling/shapeSizeUnits" value="1"/>
-    <property key="labeling/shapeSizeX" value="0"/>
-    <property key="labeling/shapeSizeY" value="0"/>
-    <property key="labeling/shapeTransparency" value="0"/>
-    <property key="labeling/shapeType" value="0"/>
-    <property key="labeling/textColorA" value="255"/>
-    <property key="labeling/textColorB" value="0"/>
-    <property key="labeling/textColorG" value="0"/>
-    <property key="labeling/textColorR" value="0"/>
-    <property key="labeling/textTransp" value="0"/>
-    <property key="labeling/upsidedownLabels" value="0"/>
-    <property key="labeling/wrapChar" value=""/>
-    <property key="labeling/xOffset" value="0"/>
-    <property key="labeling/yOffset" value="0"/>
+    <property value="0" key="embeddedWidgets/count"/>
+    <property key="variableNames"/>
+    <property key="variableValues"/>
   </customproperties>
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
-  <layerTransparency>0</layerTransparency>
-  <displayfield>OGC_FID</displayfield>
-  <label>0</label>
-  <labelattributes>
-    <label fieldname="" text="Étiquette"/>
-    <family fieldname="" name="MS Shell Dlg 2"/>
-    <size fieldname="" units="pt" value="12"/>
-    <bold fieldname="" on="0"/>
-    <italic fieldname="" on="0"/>
-    <underline fieldname="" on="0"/>
-    <strikeout fieldname="" on="0"/>
-    <color fieldname="" red="0" blue="0" green="0"/>
-    <x fieldname=""/>
-    <y fieldname=""/>
-    <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
-    <angle fieldname="" value="0" auto="0"/>
-    <alignment fieldname="" value="center"/>
-    <buffercolor fieldname="" red="255" blue="255" green="255"/>
-    <buffersize fieldname="" units="pt" value="1"/>
-    <bufferenabled fieldname="" on=""/>
-    <multilineenabled fieldname="" on=""/>
-    <selectedonly on=""/>
-  </labelattributes>
-  <edittypes>
-    <edittype labelontop="0" editable="1" name="OGC_FID"/>
-    <edittype labelontop="0" editable="1" name="xtf_id"/>
-    <edittype labelontop="0" editable="1" name="troncon_rue_de"/>
-    <edittype labelontop="0" editable="1" name="point_depart"/>
-    <edittype labelontop="0" editable="1" name="ordre"/>
-    <edittype labelontop="0" editable="1" name="est_axe"/>
-    <edittype labelontop="0" editable="1" name="ufid"/>
-    <edittype labelontop="0" editable="1" name="origine"/>
-    <edittype labelontop="0" editable="1" name="principe_numerotation"/>
-    <edittype labelontop="0" editable="1" name="numero_localisation"/>
-    <edittype labelontop="0" editable="1" name="attributs_provisoires"/>
-    <edittype labelontop="0" editable="1" name="est_designation_officielle"/>
-    <edittype labelontop="0" editable="1" name="validite"/>
-    <edittype labelontop="0" editable="1" name="en_cours_modification"/>
-    <edittype labelontop="0" editable="1" name="genre"/>
-    <edittype labelontop="0" editable="1" name="nom_localisation_de"/>
-    <edittype labelontop="0" editable="1" name="texte"/>
-  </edittypes>
-  <editform></editform>
-  <editforminit></editforminit>
-  <featformsuppress>0</featformsuppress>
-  <annotationform></annotationform>
-  <editorlayout>generatedlayout</editorlayout>
+  <layerOpacity>1</layerOpacity>
+  <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+    <DiagramCategory scaleBasedVisibility="0" opacity="1" sizeScale="3x:0,0,0,0,0,0" enabled="0" height="15" minScaleDenominator="0" lineSizeType="MM" maxScaleDenominator="1e+08" rotationOffset="270" penColor="#000000" lineSizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255" penWidth="0" diagramOrientation="Up" scaleDependency="Area" width="15" backgroundColor="#ffffff" sizeType="MM" minimumSize="0" penAlpha="255" barWidth="5" labelPlacementMethod="XHeight">
+      <fontProperties style="" description="MS Shell Dlg 2,7.8,-1,5,50,0,0,0,0,0"/>
+      <attribute label="" field="" color="#000000"/>
+    </DiagramCategory>
+  </SingleCategoryDiagramRenderer>
+  <DiagramLayerSettings priority="0" placement="2" obstacle="0" linePlacementFlags="18" zIndex="0" dist="0" showAll="1">
+    <properties>
+      <Option type="Map">
+        <Option name="name" type="QString" value=""/>
+        <Option name="properties"/>
+        <Option name="type" type="QString" value="collection"/>
+      </Option>
+    </properties>
+  </DiagramLayerSettings>
+  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+    <activeChecks/>
+    <checkConfiguration/>
+  </geometryOptions>
+  <fieldConfiguration>
+    <field name="OGC_FID">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="xtf_id">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="troncon_rue_de">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="point_depart">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="ordre">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="est_axe">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="ufid">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="origine">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="principe_numerotation">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="numero_localisation">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="attributs_provisoires">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="est_designation_officielle">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="validite">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="en_cours_modification">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="genre">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="nom_localisation_de">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="texte">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+    <field name="observation">
+      <editWidget type="TextEdit">
+        <config>
+          <Option/>
+        </config>
+      </editWidget>
+    </field>
+  </fieldConfiguration>
+  <aliases>
+    <alias name="" field="OGC_FID" index="0"/>
+    <alias name="" field="xtf_id" index="1"/>
+    <alias name="" field="troncon_rue_de" index="2"/>
+    <alias name="" field="point_depart" index="3"/>
+    <alias name="" field="ordre" index="4"/>
+    <alias name="" field="est_axe" index="5"/>
+    <alias name="" field="ufid" index="6"/>
+    <alias name="" field="origine" index="7"/>
+    <alias name="" field="principe_numerotation" index="8"/>
+    <alias name="" field="numero_localisation" index="9"/>
+    <alias name="" field="attributs_provisoires" index="10"/>
+    <alias name="" field="est_designation_officielle" index="11"/>
+    <alias name="" field="validite" index="12"/>
+    <alias name="" field="en_cours_modification" index="13"/>
+    <alias name="" field="genre" index="14"/>
+    <alias name="" field="nom_localisation_de" index="15"/>
+    <alias name="" field="texte" index="16"/>
+    <alias name="" field="observation" index="17"/>
+  </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
-  <attributeactions/>
+  <defaults>
+    <default applyOnUpdate="0" field="OGC_FID" expression=""/>
+    <default applyOnUpdate="0" field="xtf_id" expression=""/>
+    <default applyOnUpdate="0" field="troncon_rue_de" expression=""/>
+    <default applyOnUpdate="0" field="point_depart" expression=""/>
+    <default applyOnUpdate="0" field="ordre" expression=""/>
+    <default applyOnUpdate="0" field="est_axe" expression=""/>
+    <default applyOnUpdate="0" field="ufid" expression=""/>
+    <default applyOnUpdate="0" field="origine" expression=""/>
+    <default applyOnUpdate="0" field="principe_numerotation" expression=""/>
+    <default applyOnUpdate="0" field="numero_localisation" expression=""/>
+    <default applyOnUpdate="0" field="attributs_provisoires" expression=""/>
+    <default applyOnUpdate="0" field="est_designation_officielle" expression=""/>
+    <default applyOnUpdate="0" field="validite" expression=""/>
+    <default applyOnUpdate="0" field="en_cours_modification" expression=""/>
+    <default applyOnUpdate="0" field="genre" expression=""/>
+    <default applyOnUpdate="0" field="nom_localisation_de" expression=""/>
+    <default applyOnUpdate="0" field="texte" expression=""/>
+    <default applyOnUpdate="0" field="observation" expression=""/>
+  </defaults>
+  <constraints>
+    <constraint unique_strength="1" field="OGC_FID" constraints="3" notnull_strength="1" exp_strength="0"/>
+    <constraint unique_strength="0" field="xtf_id" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="troncon_rue_de" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="point_depart" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="ordre" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="est_axe" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="ufid" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="origine" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="principe_numerotation" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="numero_localisation" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="attributs_provisoires" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="est_designation_officielle" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="validite" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="en_cours_modification" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="genre" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="nom_localisation_de" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="texte" constraints="0" notnull_strength="0" exp_strength="0"/>
+    <constraint unique_strength="0" field="observation" constraints="0" notnull_strength="0" exp_strength="0"/>
+  </constraints>
+  <constraintExpressions>
+    <constraint exp="" field="OGC_FID" desc=""/>
+    <constraint exp="" field="xtf_id" desc=""/>
+    <constraint exp="" field="troncon_rue_de" desc=""/>
+    <constraint exp="" field="point_depart" desc=""/>
+    <constraint exp="" field="ordre" desc=""/>
+    <constraint exp="" field="est_axe" desc=""/>
+    <constraint exp="" field="ufid" desc=""/>
+    <constraint exp="" field="origine" desc=""/>
+    <constraint exp="" field="principe_numerotation" desc=""/>
+    <constraint exp="" field="numero_localisation" desc=""/>
+    <constraint exp="" field="attributs_provisoires" desc=""/>
+    <constraint exp="" field="est_designation_officielle" desc=""/>
+    <constraint exp="" field="validite" desc=""/>
+    <constraint exp="" field="en_cours_modification" desc=""/>
+    <constraint exp="" field="genre" desc=""/>
+    <constraint exp="" field="nom_localisation_de" desc=""/>
+    <constraint exp="" field="texte" desc=""/>
+    <constraint exp="" field="observation" desc=""/>
+  </constraintExpressions>
+  <expressionfields/>
+  <attributeactions>
+    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+  </attributeactions>
+  <attributetableconfig sortOrder="0" sortExpression="" actionWidgetStyle="dropDown">
+    <columns>
+      <column name="OGC_FID" hidden="0" type="field" width="-1"/>
+      <column name="xtf_id" hidden="0" type="field" width="-1"/>
+      <column name="troncon_rue_de" hidden="0" type="field" width="-1"/>
+      <column name="point_depart" hidden="0" type="field" width="-1"/>
+      <column name="ordre" hidden="0" type="field" width="-1"/>
+      <column name="est_axe" hidden="0" type="field" width="-1"/>
+      <column name="ufid" hidden="0" type="field" width="-1"/>
+      <column name="origine" hidden="0" type="field" width="-1"/>
+      <column name="principe_numerotation" hidden="0" type="field" width="-1"/>
+      <column name="numero_localisation" hidden="0" type="field" width="-1"/>
+      <column name="attributs_provisoires" hidden="0" type="field" width="-1"/>
+      <column name="est_designation_officielle" hidden="0" type="field" width="-1"/>
+      <column name="validite" hidden="0" type="field" width="-1"/>
+      <column name="en_cours_modification" hidden="0" type="field" width="-1"/>
+      <column name="genre" hidden="0" type="field" width="-1"/>
+      <column name="nom_localisation_de" hidden="0" type="field" width="-1"/>
+      <column name="texte" hidden="0" type="field" width="-1"/>
+      <column name="observation" hidden="0" type="field" width="-1"/>
+      <column hidden="1" type="actions" width="-1"/>
+    </columns>
+  </attributetableconfig>
+  <conditionalstyles>
+    <rowstyles/>
+    <fieldstyles/>
+  </conditionalstyles>
+  <editform tolerant="1"></editform>
+  <editforminit/>
+  <editforminitcodesource>0</editforminitcodesource>
+  <editforminitfilepath></editforminitfilepath>
+  <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+Les formulaires QGIS peuvent avoir une fonction Python qui sera appelée à l'ouverture du formulaire.
+
+Utilisez cette fonction pour ajouter plus de fonctionnalités à vos formulaires.
+
+Entrez le nom de la fonction dans le champ "Fonction d'initialisation Python".
+Voici un exemple à suivre:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+    geom = feature.geometry()
+    control = dialog.findChild(QWidget, "MyLineEdit")
+
+]]></editforminitcode>
+  <featformsuppress>0</featformsuppress>
+  <editorlayout>generatedlayout</editorlayout>
+  <editable>
+    <field name="OGC_FID" editable="1"/>
+    <field name="attributs_provisoires" editable="1"/>
+    <field name="en_cours_modification" editable="1"/>
+    <field name="est_axe" editable="1"/>
+    <field name="est_designation_officielle" editable="1"/>
+    <field name="genre" editable="1"/>
+    <field name="nom_localisation_de" editable="1"/>
+    <field name="numero_localisation" editable="1"/>
+    <field name="observation" editable="1"/>
+    <field name="ordre" editable="1"/>
+    <field name="origine" editable="1"/>
+    <field name="point_depart" editable="1"/>
+    <field name="principe_numerotation" editable="1"/>
+    <field name="texte" editable="1"/>
+    <field name="troncon_rue_de" editable="1"/>
+    <field name="ufid" editable="1"/>
+    <field name="validite" editable="1"/>
+    <field name="xtf_id" editable="1"/>
+  </editable>
+  <labelOnTop>
+    <field name="OGC_FID" labelOnTop="0"/>
+    <field name="attributs_provisoires" labelOnTop="0"/>
+    <field name="en_cours_modification" labelOnTop="0"/>
+    <field name="est_axe" labelOnTop="0"/>
+    <field name="est_designation_officielle" labelOnTop="0"/>
+    <field name="genre" labelOnTop="0"/>
+    <field name="nom_localisation_de" labelOnTop="0"/>
+    <field name="numero_localisation" labelOnTop="0"/>
+    <field name="observation" labelOnTop="0"/>
+    <field name="ordre" labelOnTop="0"/>
+    <field name="origine" labelOnTop="0"/>
+    <field name="point_depart" labelOnTop="0"/>
+    <field name="principe_numerotation" labelOnTop="0"/>
+    <field name="texte" labelOnTop="0"/>
+    <field name="troncon_rue_de" labelOnTop="0"/>
+    <field name="ufid" labelOnTop="0"/>
+    <field name="validite" labelOnTop="0"/>
+    <field name="xtf_id" labelOnTop="0"/>
+  </labelOnTop>
+  <widgets/>
+  <previewExpression>OGC_FID</previewExpression>
+  <mapTip></mapTip>
+  <layerGeometryType>1</layerGeometryType>
 </qgis>
