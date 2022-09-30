@@ -120,9 +120,7 @@ class GpkgData(object):
                 property_collection.setProperty(key, value)
             self.change_properties(layer, property_collection)
 
-    def create_layer(
-        self, display_name, schema, layer_name, geom_column=None, sql_request=None
-    ):
+    def create_layer(self, display_name, schema, layer_name, sql_request=None):
         print(schema, layer_name)
         uri = f"{self.gpkg_path}|layername={layer_name}"
         if sql_request:
@@ -134,7 +132,7 @@ class GpkgData(object):
         return layer
 
     def load_table_list(self, data_source, field_name=1, count_field=2):
-        layer = self.create_layer("", self.schema, data_source, "", "")
+        layer = self.create_layer("", self.schema, data_source)
         list_feat_dict = {}
         if layer.isValid():
             features = layer.getFeatures()
@@ -167,16 +165,10 @@ class GpkgData(object):
         layers = {}
         for layer_info in layer_infos:
             dbg_info(f"Loading layer {layer_info.layer_name}")
-            if layer_info.symbology_type != SymbologyType.NO_SYMBOL:
-                geom_column = "GEOMETRY"
-            else:
-                geom_column = ""
+
+            # do not set subset string now, so geometry can be correctly determined
             layer = self.create_layer(
-                layer_info.display_name,
-                self.schema,
-                layer_info.layer_name,
-                geom_column,
-                layer_info.sql_request,
+                layer_info.display_name, self.schema, layer_info.layer_name
             )
 
             # Set the path to the layer's qml file. The qml file must be name at least with the layer name
@@ -203,6 +195,8 @@ class GpkgData(object):
                     self.create_simple_symbol(layer, layer_info.symbology_properties)
                 if layer_info.opacity != 1:
                     layer.setOpacity(layer_info.opacity)
+
+                layer.setSubsetString(layer_info.sql_request)
 
                 layers[layer_info] = layer
             else:
