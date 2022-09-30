@@ -1,21 +1,21 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis labelsEnabled="1" simplifyMaxScale="1" readOnly="0" simplifyDrawingHints="0" styleCategories="AllStyleCategories" version="3.10.5-A Coruña" maxScale="1" simplifyLocal="1" simplifyDrawingTol="1" hasScaleBasedVisibilityFlag="1" minScale="5000" simplifyAlgorithm="0">
+<qgis simplifyDrawingTol="1" readOnly="0" simplifyLocal="1" hasScaleBasedVisibilityFlag="1" simplifyDrawingHints="0" styleCategories="AllStyleCategories" maxScale="0" version="3.4.4-Madeira" labelsEnabled="1" minScale="2000" simplifyMaxScale="1" simplifyAlgorithm="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 forceraster="0" enableorderby="0" type="categorizedSymbol" symbollevels="0" attr="mark">
+  <renderer-v2 forceraster="0" type="categorizedSymbol" attr="mark" enableorderby="0" symbollevels="0">
     <categories>
-      <category label="borne" render="true" value="borne" symbol="0"/>
-      <category label="cheville" render="true" value="cheville" symbol="1"/>
-      <category label="pieu" render="true" value="pieu" symbol="2"/>
-      <category label="croix" render="true" value="croix" symbol="3"/>
-      <category label="non_materialise" render="true" value="non_materialise" symbol="4"/>
+      <category value="borne" label="borne" symbol="0" render="true"/>
+      <category value="cheville" label="cheville" symbol="1" render="true"/>
+      <category value="pieu" label="pieu" symbol="2" render="true"/>
+      <category value="croix" label="croix" symbol="3" render="true"/>
+      <category value="non_materialise" label="non_materialise" symbol="4" render="true"/>
     </categories>
     <symbols>
-      <symbol type="marker" force_rhr="0" clip_to_extent="1" name="0" alpha="1">
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+      <symbol force_rhr="0" alpha="1" clip_to_extent="1" type="marker" name="0">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="255,255,255,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -36,15 +36,15 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol type="marker" force_rhr="0" clip_to_extent="1" name="1" alpha="1">
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+      <symbol force_rhr="0" alpha="1" clip_to_extent="1" type="marker" name="1">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="255,255,255,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -65,15 +65,15 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol type="marker" force_rhr="0" clip_to_extent="1" name="2" alpha="1">
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+      <symbol force_rhr="0" alpha="1" clip_to_extent="1" type="marker" name="2">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="0,0,0,0" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -94,13 +94,13 @@
           <prop v="2" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="255,255,255,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -121,15 +121,15 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol type="marker" force_rhr="0" clip_to_extent="1" name="3" alpha="1">
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+      <symbol force_rhr="0" alpha="1" clip_to_extent="1" type="marker" name="3">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="0,0,0,0" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -150,13 +150,13 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="1">
+        <layer pass="1" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="255,255,255,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -177,15 +177,15 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol type="marker" force_rhr="0" clip_to_extent="1" name="4" alpha="1">
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+      <symbol force_rhr="0" alpha="1" clip_to_extent="1" type="marker" name="4">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="255,255,255,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -206,13 +206,13 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="0,0,0,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -233,17 +233,17 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
     </symbols>
     <source-symbol>
-      <symbol type="marker" force_rhr="0" clip_to_extent="1" name="0" alpha="1">
-        <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
+      <symbol force_rhr="0" alpha="1" clip_to_extent="1" type="marker" name="0">
+        <layer pass="0" locked="0" class="SimpleMarker" enabled="1">
           <prop v="0" k="angle"/>
           <prop v="99,184,248,255" k="color"/>
           <prop v="1" k="horizontal_anchor_point"/>
@@ -264,9 +264,9 @@
           <prop v="1" k="vertical_anchor_point"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option type="QString" name="name" value=""/>
+              <Option value="" type="QString" name="name"/>
               <Option name="properties"/>
-              <Option type="QString" name="type" value="collection"/>
+              <Option value="collection" type="QString" name="type"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -283,82 +283,23 @@
     <sizescale/>
   </renderer-v2>
   <labeling type="simple">
-    <settings calloutType="simple">
-      <text-style fieldName="vd_identification" textColor="0,0,0,255" fontStrikeout="0" fontKerning="1" multilineHeight="1" fontWordSpacing="0" blendMode="0" fontCapitals="0" useSubstitutions="0" fontSizeUnit="Point" fontSize="8.25" fontFamily="Cadastra" textOpacity="1" isExpression="0" previewBkgrdColor="255,255,255,255" fontSizeMapUnitScale="3x:0,0,0,0,0,0" fontUnderline="0" fontWeight="50" textOrientation="horizontal" fontLetterSpacing="0" namedStyle="Italic" fontItalic="1">
-        <text-buffer bufferOpacity="1" bufferBlendMode="0" bufferJoinStyle="64" bufferDraw="0" bufferSize="1" bufferSizeUnits="MM" bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferNoFill="0" bufferColor="255,255,255,255"/>
-        <background shapeRadiiUnit="MM" shapeOffsetX="0" shapeSVGFile="" shapeDraw="0" shapeBlendMode="0" shapeOpacity="1" shapeOffsetUnit="MM" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeSizeX="0" shapeBorderWidthUnit="MM" shapeRotation="0" shapeRotationType="0" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeType="0" shapeRadiiX="0" shapeSizeType="0" shapeBorderColor="128,128,128,255" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeSizeUnit="MM" shapeFillColor="255,255,255,255" shapeSizeY="0" shapeRadiiY="0" shapeJoinStyle="64" shapeOffsetY="0" shapeBorderWidth="0" shapeSizeMapUnitScale="3x:0,0,0,0,0,0">
-          <symbol type="marker" force_rhr="0" clip_to_extent="1" name="markerSymbol" alpha="1">
-            <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
-              <prop v="0" k="angle"/>
-              <prop v="213,180,60,255" k="color"/>
-              <prop v="1" k="horizontal_anchor_point"/>
-              <prop v="bevel" k="joinstyle"/>
-              <prop v="circle" k="name"/>
-              <prop v="0,0" k="offset"/>
-              <prop v="3x:0,0,0,0,0,0" k="offset_map_unit_scale"/>
-              <prop v="MM" k="offset_unit"/>
-              <prop v="35,35,35,255" k="outline_color"/>
-              <prop v="solid" k="outline_style"/>
-              <prop v="0" k="outline_width"/>
-              <prop v="3x:0,0,0,0,0,0" k="outline_width_map_unit_scale"/>
-              <prop v="MM" k="outline_width_unit"/>
-              <prop v="diameter" k="scale_method"/>
-              <prop v="2" k="size"/>
-              <prop v="3x:0,0,0,0,0,0" k="size_map_unit_scale"/>
-              <prop v="MM" k="size_unit"/>
-              <prop v="1" k="vertical_anchor_point"/>
-              <data_defined_properties>
-                <Option type="Map">
-                  <Option type="QString" name="name" value=""/>
-                  <Option name="properties"/>
-                  <Option type="QString" name="type" value="collection"/>
-                </Option>
-              </data_defined_properties>
-            </layer>
-          </symbol>
-        </background>
-        <shadow shadowOffsetDist="1" shadowOffsetUnit="MM" shadowRadius="1.5" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0" shadowOffsetAngle="135" shadowOffsetGlobal="1" shadowOpacity="0.7" shadowColor="0,0,0,255" shadowRadiusUnit="MM" shadowRadiusAlphaOnly="0" shadowDraw="0" shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowBlendMode="6" shadowUnder="0" shadowScale="100"/>
-        <dd_properties>
-          <Option type="Map">
-            <Option type="QString" name="name" value=""/>
-            <Option name="properties"/>
-            <Option type="QString" name="type" value="collection"/>
-          </Option>
-        </dd_properties>
+    <settings>
+      <text-style fontFamily="Cadastra" fontSizeMapUnitScale="3x:0,0,0,0,0,0" fieldName="vd_identification" blendMode="0" fontWordSpacing="0" previewBkgrdColor="#000000" textOpacity="1" fontSize="8.25" fontWeight="50" fontCapitals="0" textColor="0,0,0,255" fontLetterSpacing="0" fontUnderline="0" fontSizeUnit="Point" useSubstitutions="0" fontItalic="0" namedStyle="Regular Condensed" multilineHeight="1" fontStrikeout="0" isExpression="0">
+        <text-buffer bufferOpacity="1" bufferSize="1" bufferColor="255,255,255,255" bufferSizeUnits="MM" bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferJoinStyle="64" bufferBlendMode="0" bufferDraw="0" bufferNoFill="0"/>
+        <background shapeJoinStyle="64" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeBorderColor="128,128,128,255" shapeRadiiX="0" shapeRotationType="0" shapeRadiiY="0" shapeSizeMapUnitScale="3x:0,0,0,0,0,0" shapeRotation="0" shapeDraw="0" shapeBorderWidth="0" shapeSizeX="0" shapeType="0" shapeOffsetX="0" shapeSizeType="0" shapeSizeY="0" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeBorderWidthUnit="MM" shapeOpacity="1" shapeBlendMode="0" shapeRadiiUnit="MM" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeOffsetY="0" shapeSVGFile="" shapeSizeUnit="MM" shapeOffsetUnit="MM" shapeFillColor="255,255,255,255"/>
+        <shadow shadowUnder="0" shadowRadiusAlphaOnly="0" shadowOffsetAngle="135" shadowColor="0,0,0,255" shadowDraw="0" shadowOffsetUnit="MM" shadowOpacity="0.7" shadowBlendMode="6" shadowOffsetDist="1" shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowOffsetGlobal="1" shadowRadiusUnit="MM" shadowScale="100" shadowRadius="1.5" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0"/>
         <substitutions/>
       </text-style>
-      <text-format leftDirectionSymbol="&lt;" useMaxLineLengthForAutoWrap="1" formatNumbers="0" reverseDirectionSymbol="0" plussign="0" multilineAlign="0" autoWrapLength="0" placeDirectionSymbol="0" wrapChar="" rightDirectionSymbol=">" decimals="3" addDirectionSymbol="0"/>
-      <placement centroidInside="0" distUnits="MM" overrunDistanceMapUnitScale="3x:0,0,0,0,0,0" priority="5" overrunDistanceUnit="MM" offsetUnits="MapUnit" placement="0" overrunDistance="0" placementFlags="0" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" offsetType="0" maxCurvedCharAngleIn="20" preserveRotation="1" geometryGeneratorEnabled="0" layerType="PointGeometry" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" centroidWhole="0" xOffset="0" geometryGeneratorType="PointGeometry" quadOffset="4" maxCurvedCharAngleOut="-20" fitInPolygonOnly="0" distMapUnitScale="3x:0,0,0,0,0,0" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" repeatDistance="0" repeatDistanceUnits="MM" geometryGenerator="" dist="3" rotationAngle="0" yOffset="0"/>
-      <rendering fontLimitPixelSize="0" maxNumLabels="2000" zIndex="0" scaleVisibility="1" scaleMax="2000" upsidedownLabels="0" scaleMin="1" mergeLines="0" labelPerPart="0" fontMinPixelSize="3" obstacleType="0" obstacleFactor="1" minFeatureSize="0" obstacle="1" fontMaxPixelSize="10000" displayAll="0" drawLabels="1" limitNumLabels="0"/>
+      <text-format formatNumbers="0" autoWrapLength="0" useMaxLineLengthForAutoWrap="1" decimals="3" reverseDirectionSymbol="0" addDirectionSymbol="0" plussign="0" rightDirectionSymbol=">" multilineAlign="0" leftDirectionSymbol="&lt;" placeDirectionSymbol="0" wrapChar=""/>
+      <placement quadOffset="4" centroidInside="0" centroidWhole="0" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" repeatDistance="0" offsetUnits="MapUnit" yOffset="0" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" priority="5" dist="3" maxCurvedCharAngleOut="-20" rotationAngle="0" placementFlags="0" repeatDistanceUnits="MM" xOffset="0" distUnits="MM" offsetType="0" preserveRotation="1" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" fitInPolygonOnly="0" distMapUnitScale="3x:0,0,0,0,0,0" placement="0" maxCurvedCharAngleIn="20"/>
+      <rendering scaleMin="1" upsidedownLabels="0" minFeatureSize="0" limitNumLabels="0" maxNumLabels="2000" fontMaxPixelSize="10000" displayAll="0" obstacleFactor="1" labelPerPart="0" scaleVisibility="1" drawLabels="1" mergeLines="0" obstacle="1" fontLimitPixelSize="0" zIndex="0" fontMinPixelSize="3" obstacleType="0" scaleMax="1000"/>
       <dd_properties>
         <Option type="Map">
-          <Option type="QString" name="name" value=""/>
+          <Option value="" type="QString" name="name"/>
           <Option name="properties"/>
-          <Option type="QString" name="type" value="collection"/>
+          <Option value="collection" type="QString" name="type"/>
         </Option>
       </dd_properties>
-      <callout type="simple">
-        <Option type="Map">
-          <Option type="QString" name="anchorPoint" value="pole_of_inaccessibility"/>
-          <Option type="Map" name="ddProperties">
-            <Option type="QString" name="name" value=""/>
-            <Option name="properties"/>
-            <Option type="QString" name="type" value="collection"/>
-          </Option>
-          <Option type="bool" name="drawToAllParts" value="false"/>
-          <Option type="QString" name="enabled" value="0"/>
-          <Option type="QString" name="lineSymbol" value="&lt;symbol type=&quot;line&quot; force_rhr=&quot;0&quot; clip_to_extent=&quot;1&quot; name=&quot;symbol&quot; alpha=&quot;1&quot;>&lt;layer class=&quot;SimpleLine&quot; locked=&quot;0&quot; enabled=&quot;1&quot; pass=&quot;0&quot;>&lt;prop v=&quot;square&quot; k=&quot;capstyle&quot;/>&lt;prop v=&quot;5;2&quot; k=&quot;customdash&quot;/>&lt;prop v=&quot;3x:0,0,0,0,0,0&quot; k=&quot;customdash_map_unit_scale&quot;/>&lt;prop v=&quot;MM&quot; k=&quot;customdash_unit&quot;/>&lt;prop v=&quot;0&quot; k=&quot;draw_inside_polygon&quot;/>&lt;prop v=&quot;bevel&quot; k=&quot;joinstyle&quot;/>&lt;prop v=&quot;60,60,60,255&quot; k=&quot;line_color&quot;/>&lt;prop v=&quot;solid&quot; k=&quot;line_style&quot;/>&lt;prop v=&quot;0.3&quot; k=&quot;line_width&quot;/>&lt;prop v=&quot;MM&quot; k=&quot;line_width_unit&quot;/>&lt;prop v=&quot;0&quot; k=&quot;offset&quot;/>&lt;prop v=&quot;3x:0,0,0,0,0,0&quot; k=&quot;offset_map_unit_scale&quot;/>&lt;prop v=&quot;MM&quot; k=&quot;offset_unit&quot;/>&lt;prop v=&quot;0&quot; k=&quot;ring_filter&quot;/>&lt;prop v=&quot;0&quot; k=&quot;use_custom_dash&quot;/>&lt;prop v=&quot;3x:0,0,0,0,0,0&quot; k=&quot;width_map_unit_scale&quot;/>&lt;data_defined_properties>&lt;Option type=&quot;Map&quot;>&lt;Option type=&quot;QString&quot; name=&quot;name&quot; value=&quot;&quot;/>&lt;Option name=&quot;properties&quot;/>&lt;Option type=&quot;QString&quot; name=&quot;type&quot; value=&quot;collection&quot;/>&lt;/Option>&lt;/data_defined_properties>&lt;/layer>&lt;/symbol>"/>
-          <Option type="double" name="minLength" value="0"/>
-          <Option type="QString" name="minLengthMapUnitScale" value="3x:0,0,0,0,0,0"/>
-          <Option type="QString" name="minLengthUnit" value="MM"/>
-          <Option type="double" name="offsetFromAnchor" value="0"/>
-          <Option type="QString" name="offsetFromAnchorMapUnitScale" value="3x:0,0,0,0,0,0"/>
-          <Option type="QString" name="offsetFromAnchorUnit" value="MM"/>
-          <Option type="double" name="offsetFromLabel" value="0"/>
-          <Option type="QString" name="offsetFromLabelMapUnitScale" value="3x:0,0,0,0,0,0"/>
-          <Option type="QString" name="offsetFromLabelUnit" value="MM"/>
-        </Option>
-      </callout>
     </settings>
   </labeling>
   <customproperties>
@@ -369,22 +310,22 @@
   <blendMode>0</blendMode>
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
-  <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
-    <DiagramCategory height="15" minScaleDenominator="1" enabled="0" width="15" backgroundAlpha="255" sizeScale="3x:0,0,0,0,0,0" scaleDependency="Area" lineSizeScale="3x:0,0,0,0,0,0" barWidth="5" penWidth="0" labelPlacementMethod="XHeight" maxScaleDenominator="5000" penColor="#000000" lineSizeType="MM" rotationOffset="270" opacity="1" sizeType="MM" minimumSize="0" diagramOrientation="Up" backgroundColor="#ffffff" penAlpha="255" scaleBasedVisibility="1">
+  <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
+    <DiagramCategory barWidth="5" penAlpha="255" maxScaleDenominator="5000" rotationOffset="270" penWidth="0" scaleBasedVisibility="1" width="15" penColor="#000000" minimumSize="0" sizeScale="3x:0,0,0,0,0,0" diagramOrientation="Up" sizeType="MM" lineSizeScale="3x:0,0,0,0,0,0" minScaleDenominator="1" height="15" enabled="0" labelPlacementMethod="XHeight" lineSizeType="MM" backgroundColor="#ffffff" backgroundAlpha="255" opacity="1" scaleDependency="Area">
       <fontProperties description="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" style=""/>
-      <attribute field="" color="#000000" label=""/>
+      <attribute field="" label="" color="#000000"/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings obstacle="0" showAll="1" dist="0" priority="0" placement="0" linePlacementFlags="18" zIndex="0">
+  <DiagramLayerSettings priority="0" obstacle="0" dist="0" linePlacementFlags="18" zIndex="0" showAll="1" placement="0">
     <properties>
       <Option type="Map">
-        <Option type="QString" name="name" value=""/>
+        <Option value="" type="QString" name="name"/>
         <Option name="properties"/>
-        <Option type="QString" name="type" value="collection"/>
+        <Option value="collection" type="QString" name="type"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -489,99 +430,98 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="OGC_FID" name="" index="0"/>
-    <alias field="xtf_id" name="" index="1"/>
-    <alias field="validity" name="" index="2"/>
-    <alias field="plan_accuracy" name="" index="3"/>
-    <alias field="plan_reliability" name="" index="4"/>
-    <alias field="mark" name="" index="5"/>
-    <alias field="fosnr" name="" index="6"/>
-    <alias field="state_of" name="" index="7"/>
-    <alias field="vd_identdn" name="" index="8"/>
-    <alias field="vd_identification" name="" index="9"/>
-    <alias field="defini_exactement" name="" index="10"/>
-    <alias field="coord_e" name="" index="11"/>
-    <alias field="coord_n" name="" index="12"/>
-    <alias field="observation" name="" index="13"/>
+    <alias field="OGC_FID" index="0" name=""/>
+    <alias field="xtf_id" index="1" name=""/>
+    <alias field="validity" index="2" name=""/>
+    <alias field="plan_accuracy" index="3" name=""/>
+    <alias field="plan_reliability" index="4" name=""/>
+    <alias field="mark" index="5" name=""/>
+    <alias field="fosnr" index="6" name=""/>
+    <alias field="state_of" index="7" name=""/>
+    <alias field="vd_identdn" index="8" name=""/>
+    <alias field="vd_identification" index="9" name=""/>
+    <alias field="defini_exactement" index="10" name=""/>
+    <alias field="coord_e" index="11" name=""/>
+    <alias field="coord_n" index="12" name=""/>
+    <alias field="observation" index="13" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default field="OGC_FID" expression="" applyOnUpdate="0"/>
-    <default field="xtf_id" expression="" applyOnUpdate="0"/>
-    <default field="validity" expression="" applyOnUpdate="0"/>
-    <default field="plan_accuracy" expression="" applyOnUpdate="0"/>
-    <default field="plan_reliability" expression="" applyOnUpdate="0"/>
-    <default field="mark" expression="" applyOnUpdate="0"/>
-    <default field="fosnr" expression="" applyOnUpdate="0"/>
-    <default field="state_of" expression="" applyOnUpdate="0"/>
-    <default field="vd_identdn" expression="" applyOnUpdate="0"/>
-    <default field="vd_identification" expression="" applyOnUpdate="0"/>
-    <default field="defini_exactement" expression="" applyOnUpdate="0"/>
-    <default field="coord_e" expression="" applyOnUpdate="0"/>
-    <default field="coord_n" expression="" applyOnUpdate="0"/>
-    <default field="observation" expression="" applyOnUpdate="0"/>
+    <default field="OGC_FID" applyOnUpdate="0" expression=""/>
+    <default field="xtf_id" applyOnUpdate="0" expression=""/>
+    <default field="validity" applyOnUpdate="0" expression=""/>
+    <default field="plan_accuracy" applyOnUpdate="0" expression=""/>
+    <default field="plan_reliability" applyOnUpdate="0" expression=""/>
+    <default field="mark" applyOnUpdate="0" expression=""/>
+    <default field="fosnr" applyOnUpdate="0" expression=""/>
+    <default field="state_of" applyOnUpdate="0" expression=""/>
+    <default field="vd_identdn" applyOnUpdate="0" expression=""/>
+    <default field="vd_identification" applyOnUpdate="0" expression=""/>
+    <default field="defini_exactement" applyOnUpdate="0" expression=""/>
+    <default field="coord_e" applyOnUpdate="0" expression=""/>
+    <default field="coord_n" applyOnUpdate="0" expression=""/>
+    <default field="observation" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint field="OGC_FID" notnull_strength="1" exp_strength="0" constraints="3" unique_strength="1"/>
-    <constraint field="xtf_id" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="validity" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="plan_accuracy" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="plan_reliability" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="mark" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="fosnr" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="state_of" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="vd_identdn" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="vd_identification" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="defini_exactement" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="coord_e" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="coord_n" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
-    <constraint field="observation" notnull_strength="0" exp_strength="0" constraints="0" unique_strength="0"/>
+    <constraint field="OGC_FID" unique_strength="1" exp_strength="0" constraints="3" notnull_strength="1"/>
+    <constraint field="xtf_id" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="validity" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="plan_accuracy" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="plan_reliability" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="mark" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="fosnr" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="state_of" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="vd_identdn" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="vd_identification" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="defini_exactement" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="coord_e" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="coord_n" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
+    <constraint field="observation" unique_strength="0" exp_strength="0" constraints="0" notnull_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="OGC_FID" desc="" exp=""/>
-    <constraint field="xtf_id" desc="" exp=""/>
-    <constraint field="validity" desc="" exp=""/>
-    <constraint field="plan_accuracy" desc="" exp=""/>
-    <constraint field="plan_reliability" desc="" exp=""/>
-    <constraint field="mark" desc="" exp=""/>
-    <constraint field="fosnr" desc="" exp=""/>
-    <constraint field="state_of" desc="" exp=""/>
-    <constraint field="vd_identdn" desc="" exp=""/>
-    <constraint field="vd_identification" desc="" exp=""/>
-    <constraint field="defini_exactement" desc="" exp=""/>
-    <constraint field="coord_e" desc="" exp=""/>
-    <constraint field="coord_n" desc="" exp=""/>
-    <constraint field="observation" desc="" exp=""/>
+    <constraint field="OGC_FID" exp="" desc=""/>
+    <constraint field="xtf_id" exp="" desc=""/>
+    <constraint field="validity" exp="" desc=""/>
+    <constraint field="plan_accuracy" exp="" desc=""/>
+    <constraint field="plan_reliability" exp="" desc=""/>
+    <constraint field="mark" exp="" desc=""/>
+    <constraint field="fosnr" exp="" desc=""/>
+    <constraint field="state_of" exp="" desc=""/>
+    <constraint field="vd_identdn" exp="" desc=""/>
+    <constraint field="vd_identification" exp="" desc=""/>
+    <constraint field="defini_exactement" exp="" desc=""/>
+    <constraint field="coord_e" exp="" desc=""/>
+    <constraint field="coord_n" exp="" desc=""/>
+    <constraint field="observation" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
+  <attributetableconfig sortOrder="0" sortExpression="" actionWidgetStyle="dropDown">
     <columns>
-      <column type="field" width="-1" name="OGC_FID" hidden="0"/>
-      <column type="field" width="-1" name="xtf_id" hidden="0"/>
-      <column type="field" width="-1" name="validity" hidden="0"/>
-      <column type="field" width="-1" name="plan_accuracy" hidden="0"/>
-      <column type="field" width="-1" name="plan_reliability" hidden="0"/>
-      <column type="field" width="-1" name="mark" hidden="0"/>
-      <column type="field" width="-1" name="fosnr" hidden="0"/>
-      <column type="field" width="-1" name="state_of" hidden="0"/>
-      <column type="field" width="-1" name="vd_identdn" hidden="0"/>
-      <column type="field" width="-1" name="vd_identification" hidden="0"/>
-      <column type="field" width="-1" name="defini_exactement" hidden="0"/>
-      <column type="field" width="-1" name="coord_e" hidden="0"/>
-      <column type="field" width="-1" name="coord_n" hidden="0"/>
-      <column type="field" width="-1" name="observation" hidden="0"/>
-      <column type="actions" width="-1" hidden="1"/>
+      <column width="-1" hidden="0" type="field" name="OGC_FID"/>
+      <column width="-1" hidden="0" type="field" name="xtf_id"/>
+      <column width="-1" hidden="0" type="field" name="validity"/>
+      <column width="-1" hidden="0" type="field" name="plan_accuracy"/>
+      <column width="-1" hidden="0" type="field" name="plan_reliability"/>
+      <column width="-1" hidden="0" type="field" name="mark"/>
+      <column width="-1" hidden="0" type="field" name="fosnr"/>
+      <column width="-1" hidden="0" type="field" name="state_of"/>
+      <column width="-1" hidden="0" type="field" name="vd_identdn"/>
+      <column width="-1" hidden="0" type="field" name="vd_identification"/>
+      <column width="-1" hidden="0" type="field" name="defini_exactement"/>
+      <column width="-1" hidden="0" type="field" name="coord_e"/>
+      <column width="-1" hidden="0" type="field" name="coord_n"/>
+      <column width="-1" hidden="0" type="field" name="observation"/>
+      <column width="-1" hidden="1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
     <rowstyles/>
     <fieldstyles/>
   </conditionalstyles>
-  <storedexpressions/>
   <editform tolerant="1"></editform>
   <editforminit/>
   <editforminitcodesource>0</editforminitcodesource>
@@ -605,36 +545,36 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field name="OGC_FID" editable="1"/>
-    <field name="coord_e" editable="1"/>
-    <field name="coord_n" editable="1"/>
-    <field name="defini_exactement" editable="1"/>
-    <field name="fosnr" editable="1"/>
-    <field name="mark" editable="1"/>
-    <field name="observation" editable="1"/>
-    <field name="plan_accuracy" editable="1"/>
-    <field name="plan_reliability" editable="1"/>
-    <field name="state_of" editable="1"/>
-    <field name="validity" editable="1"/>
-    <field name="vd_identdn" editable="1"/>
-    <field name="vd_identification" editable="1"/>
-    <field name="xtf_id" editable="1"/>
+    <field editable="1" name="OGC_FID"/>
+    <field editable="1" name="coord_e"/>
+    <field editable="1" name="coord_n"/>
+    <field editable="1" name="defini_exactement"/>
+    <field editable="1" name="fosnr"/>
+    <field editable="1" name="mark"/>
+    <field editable="1" name="observation"/>
+    <field editable="1" name="plan_accuracy"/>
+    <field editable="1" name="plan_reliability"/>
+    <field editable="1" name="state_of"/>
+    <field editable="1" name="validity"/>
+    <field editable="1" name="vd_identdn"/>
+    <field editable="1" name="vd_identification"/>
+    <field editable="1" name="xtf_id"/>
   </editable>
   <labelOnTop>
-    <field name="OGC_FID" labelOnTop="0"/>
-    <field name="coord_e" labelOnTop="0"/>
-    <field name="coord_n" labelOnTop="0"/>
-    <field name="defini_exactement" labelOnTop="0"/>
-    <field name="fosnr" labelOnTop="0"/>
-    <field name="mark" labelOnTop="0"/>
-    <field name="observation" labelOnTop="0"/>
-    <field name="plan_accuracy" labelOnTop="0"/>
-    <field name="plan_reliability" labelOnTop="0"/>
-    <field name="state_of" labelOnTop="0"/>
-    <field name="validity" labelOnTop="0"/>
-    <field name="vd_identdn" labelOnTop="0"/>
-    <field name="vd_identification" labelOnTop="0"/>
-    <field name="xtf_id" labelOnTop="0"/>
+    <field labelOnTop="0" name="OGC_FID"/>
+    <field labelOnTop="0" name="coord_e"/>
+    <field labelOnTop="0" name="coord_n"/>
+    <field labelOnTop="0" name="defini_exactement"/>
+    <field labelOnTop="0" name="fosnr"/>
+    <field labelOnTop="0" name="mark"/>
+    <field labelOnTop="0" name="observation"/>
+    <field labelOnTop="0" name="plan_accuracy"/>
+    <field labelOnTop="0" name="plan_reliability"/>
+    <field labelOnTop="0" name="state_of"/>
+    <field labelOnTop="0" name="validity"/>
+    <field labelOnTop="0" name="vd_identdn"/>
+    <field labelOnTop="0" name="vd_identification"/>
+    <field labelOnTop="0" name="xtf_id"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>OGC_FID</previewExpression>
