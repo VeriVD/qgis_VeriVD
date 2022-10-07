@@ -103,7 +103,7 @@ VERIF_LAYER_INFOS = {
     ),
     "VerifObjets_divers":	(
         LayerInfo(display_name='Incohérence entre le genre et la désignation',layer_name='121_verif_OD_test_designation',control_layer=True),
-        LayerInfo(display_name='Aboutissant du linéraire non superposé à l\'objet surfacique',
+        LayerInfo(display_name='Aboutissant du linéaire non superposé à l\'objet surfacique',
             layer_name='128_verif_od_test_geom_connbordure',
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={'color': '50, 50, 210'},
