@@ -26,7 +26,8 @@ BASE_LAYER_INFOS = {
     "Base-Biens_fonds": (
         LayerInfo(display_name="DDP Numéro", layer_name="006_ITF_BF_Pos_DDP"),
         LayerInfo(
-            display_name="Bien-fonds Numéro", layer_name="006_ITF_BF_Pos_Bien_fonds"
+            display_name="Bien-fonds Numéro",
+            layer_name="006_ITF_BF_Pos_Bien_fonds",
         ),
         LayerInfo(display_name="Point limite", layer_name="006_ITF_BF_Point_limite"),
         LayerInfo(display_name="DDP", layer_name="006_ITF_BF_DDP"),
@@ -35,7 +36,8 @@ BASE_LAYER_INFOS = {
     ),
     "Base-Couverture_du_sol": (
         LayerInfo(
-            display_name="CS Nom et numéro", layer_name="002_ITF_CS_Pos_Surface_CS"
+            display_name="CS Nom et numéro",
+            layer_name="002_ITF_CS_Pos_Surface_CS",
         ),
         LayerInfo(
             display_name="Point particulier CS",
@@ -47,14 +49,18 @@ BASE_LAYER_INFOS = {
             layer_name="002_ITF_CS_Surface_CS",
             sql_request='"type" = "batiment"',
             symbology_type=SymbologyType.SIMPLE,
-            symbology_properties={"color": "255, 210, 210", "border_color": "black"},
+            symbology_properties={
+                "color": "255, 210, 210",
+                "border_color": "black",
+            },
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
     ),
     "Base-Objets_divers": (
         LayerInfo(display_name="OD linéaire", layer_name="003_ITF_OD_Element_lineaire"),
         LayerInfo(
-            display_name="OD surfacique", layer_name="003_ITF_OD_Element_surfacique"
+            display_name="OD surfacique",
+            layer_name="003_ITF_OD_Element_surfacique",
         ),
         LayerInfo(
             display_name="Point particulier OD",
@@ -84,7 +90,8 @@ BASE_LAYER_INFOS = {
     "Base-Conduite": (
         LayerInfo(display_name="CO Conduite", layer_name="007_itf_co_element_conduite"),
         LayerInfo(
-            display_name="CO Conduite Nom", layer_name="007_itf_co_poselement_conduite"
+            display_name="CO Conduite Nom",
+            layer_name="007_itf_co_poselement_conduite",
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
     ),
@@ -94,7 +101,8 @@ BASE_LAYER_INFOS = {
     ],
     "Base-Altimetrie": [
         LayerInfo(
-            display_name="Courbes de niveau", layer_name="004_itf_al_courbes_de_niveau"
+            display_name="Courbes de niveau",
+            layer_name="004_itf_al_courbes_de_niveau",
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
@@ -104,7 +112,8 @@ BASE_LAYER_INFOS = {
     ],
     "Base-Adresses_des_batiments": (
         LayerInfo(
-            display_name="Numéro d'entrée", layer_name="009_itf_bat_posentree_batiment"
+            display_name="Numéro d'entrée",
+            layer_name="009_itf_bat_posentree_batiment",
         ),
         LayerInfo(
             display_name="Nom de localisation",
@@ -115,7 +124,8 @@ BASE_LAYER_INFOS = {
             layer_name="009_itf_bat_point_depart",
         ),
         LayerInfo(
-            display_name="Entrée de bâtiment", layer_name="009_itf_bat_entree_batiment"
+            display_name="Entrée de bâtiment",
+            layer_name="009_itf_bat_entree_batiment",
         ),
         LayerInfo(display_name="Tronçon de rue", layer_name="009_itf_bat_troncon_rue"),
         LayerInfo(display_name="Lieu dénommé", layer_name="009_itf_bat_lieu_denomme"),
@@ -127,23 +137,28 @@ BASE_LAYER_INFOS = {
             layer_name="008_itf_lt_point_limite_ter",
         ),
         LayerInfo(
-            display_name="Limites territoriales", layer_name="008_itf_lt_autre_limite"
+            display_name="Limites territoriales",
+            layer_name="008_itf_lt_autre_limite",
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
     ),
     "Base-Tous_les_topics": (
         LayerInfo(
-            display_name="CS Nom et numéro", layer_name="002_ITF_CS_Pos_Surface_CS"
+            display_name="CS Nom et numéro",
+            layer_name="002_ITF_CS_Pos_Surface_CS",
         ),
         LayerInfo(display_name="DDP Numéro", layer_name="006_ITF_BF_Pos_DDP"),
         LayerInfo(
-            display_name="Bien-fonds Numéro", layer_name="006_ITF_BF_Pos_Bien_fonds"
+            display_name="Bien-fonds Numéro",
+            layer_name="006_ITF_BF_Pos_Bien_fonds",
         ),
         LayerInfo(
-            display_name="CO Conduite Nom", layer_name="007_itf_co_poselement_conduite"
+            display_name="CO Conduite Nom",
+            layer_name="007_itf_co_poselement_conduite",
         ),
         LayerInfo(
-            display_name="Numéro d'entrée", layer_name="009_itf_bat_posentree_batiment"
+            display_name="Numéro d'entrée",
+            layer_name="009_itf_bat_posentree_batiment",
         ),
         LayerInfo(
             display_name="OD lin Nom et Numéro",
@@ -179,7 +194,8 @@ BASE_LAYER_INFOS = {
         ),
         LayerInfo(display_name="OD linéaire", layer_name="003_ITF_OD_Element_lineaire"),
         LayerInfo(
-            display_name="OD surfacique", layer_name="003_ITF_OD_Element_surfacique"
+            display_name="OD surfacique",
+            layer_name="003_ITF_OD_Element_surfacique",
         ),
         LayerInfo(
             display_name="Point particulier OD",
@@ -213,7 +229,8 @@ BASE_LAYER_INFOS = {
         ),
         LayerInfo(display_name="Plan", layer_name="105_itf_rp"),
         LayerInfo(
-            display_name="Limites territoriales", layer_name="008_itf_lt_autre_limite"
+            display_name="Limites territoriales",
+            layer_name="008_itf_lt_autre_limite",
         ),
         LayerInfo(display_name="DDP", layer_name="006_ITF_BF_DDP"),
         LayerInfo(display_name="Bien-fonds", layer_name="006_ITF_BF_Bien_fonds"),

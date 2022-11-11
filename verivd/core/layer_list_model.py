@@ -156,9 +156,7 @@ class LayerListModel(QAbstractListModel):
 
     def layer_context(self, layer: QgsVectorLayer) -> QgsRenderContext:
         context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
-        context.expressionContext().appendScope(
-            QgsExpressionContextUtils.layerScope(layer)
-        )
+        context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(layer))
         return context
 
     def __load_layer(self, index: QModelIndex):
@@ -168,13 +166,9 @@ class LayerListModel(QAbstractListModel):
             return
         veri_meta_layer = self._veri_meta_layers[index.row()]
         group_name = self.group_name(veri_meta_layer.display_name)
-        layer_tree_group = (
-            QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
-        )
+        layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, group_name)
         veri_meta_layer.layer_group_id = veri_meta_layer.name
-        layer_tree_group.setCustomProperty(
-            VERIVD_GROUP_LAYER_ID, veri_meta_layer.layer_group_id
-        )
+        layer_tree_group.setCustomProperty(VERIVD_GROUP_LAYER_ID, veri_meta_layer.layer_group_id)
         layer_tree_group.setExpanded(False)
         layer_infos = self.layer_infos(veri_meta_layer.name)
         layers = self.gpkg_data.create_layers(veri_meta_layer.name, layer_infos)
@@ -189,18 +183,11 @@ class LayerListModel(QAbstractListModel):
             added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
             layer_tree_group.insertLayer(i, added_qgis_layer)
             if not layer_info.visibility:
-                node = (
-                    QgsProject.instance()
-                    .layerTreeRoot()
-                    .findLayer(added_qgis_layer.id())
-                )
+                node = QgsProject.instance().layerTreeRoot().findLayer(added_qgis_layer.id())
                 if node:
                     node.setItemVisibilityChecked(False)
                 else:
-                    raise Exception(
-                        'La couche "{}" n'
-                        "a pas été chargée.".format(layer_info.display_name)
-                    )
+                    raise Exception('La couche "{}" n' "a pas été chargée.".format(layer_info.display_name))
             loaded_layers.append(layer_info)
             veri_meta_layer.qgis_layers.append(added_qgis_layer)
             i += 1
@@ -217,7 +204,8 @@ class LayerListModel(QAbstractListModel):
             QgsProject.instance().removeMapLayer(layer)
         self.__is_removing_layer = False
         group = self.find_layer_group(
-            QgsProject.instance().layerTreeRoot(), veri_meta_layer.layer_group_id
+            QgsProject.instance().layerTreeRoot(),
+            veri_meta_layer.layer_group_id,
         )
         QgsProject.instance().layerTreeRoot().removeChildNode(group)
         veri_meta_layer.layer_group_id = None

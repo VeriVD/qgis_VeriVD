@@ -34,9 +34,7 @@ from verivd.gui.help import (
     MESSAGE_VERIF,
 )
 
-FORM_CLASS, _ = uic.loadUiType(
-    os.path.join(os.path.dirname(__file__), "../ui/veri_vd_dockwidget_base.ui")
-)
+FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), "../ui/veri_vd_dockwidget_base.ui"))
 
 
 class VeriVDDockWidget(QDockWidget, FORM_CLASS):
@@ -79,9 +77,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.tabWidget.setTabEnabled(2, has_rows)
 
     def update_ili_tab(self):
-        has_rows = (
-            self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) > 0
-        )
+        has_rows = self.layer_models.ili_validator_layer_model.rowCount(QModelIndex()) > 0
         self.tabWidget.setTabEnabled(1, has_rows)
 
     def closeEvent(self, event):

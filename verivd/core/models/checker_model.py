@@ -42,9 +42,7 @@ class CheckerLayerModel(LayerListModel):
         checker_dict = self.gpkg_data.load_table_list("000_checker_decompte")
         for topic in TOPIC_LAYERS:
             if topic in checker_dict:
-                display_name = "Checker - {}: {}".format(
-                    topic, str(checker_dict[topic])
-                )
+                display_name = "Checker - {}: {}".format(topic, str(checker_dict[topic]))
                 self._veri_meta_layers.append(VeriMetaLayer(topic, display_name))
         self.endResetModel()
 
@@ -60,9 +58,7 @@ class CheckerLayerModel(LayerListModel):
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="description",
-                symbology_data_defined_properties={
-                    QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)
-                },
+                symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)},
             ),
             LayerInfo(
                 display_name="Checker - {} surface".format(layer),
@@ -70,9 +66,7 @@ class CheckerLayerModel(LayerListModel):
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="description",
-                symbology_data_defined_properties={
-                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
-                },
+                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 opacity=0.5,
             ),
             LayerInfo(
@@ -82,7 +76,8 @@ class CheckerLayerModel(LayerListModel):
                 symbology_type=SymbologyType.NO_SYMBOL,
             ),
             LayerInfo(
-                display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"
+                display_name="Périmetre du lot",
+                layer_name="112_itf_mise_a_jourrp",
             ),
         )
         return layer_infos
@@ -90,6 +85,4 @@ class CheckerLayerModel(LayerListModel):
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
             for symbol in layer.renderer().symbols(self.layer_context(layer)):
-                symbol.symbolLayer(0).setShape(
-                    MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)]
-                )
+                symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])

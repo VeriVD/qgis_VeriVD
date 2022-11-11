@@ -271,9 +271,7 @@ VERIF_LAYER_INFOS = {
             layer_name="110_od_ogc_geometrie",
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field="issue_found",
-            symbology_data_defined_properties={
-                QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)
-            },
+            symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(2)},
             control_layer=True,
         ),
         LayerInfo(
@@ -342,9 +340,7 @@ VERIF_LAYER_INFOS = {
             layer_name="102_verif_od_lineaire_fid",
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field="fid_od",
-            symbology_data_defined_properties={
-                QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)
-            },
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
             opacity=0.5,
             control_layer=True,
         ),
@@ -353,9 +349,7 @@ VERIF_LAYER_INFOS = {
             layer_name="102_verif_od_surfacique_fid",
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field="fid_od",
-            symbology_data_defined_properties={
-                QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(0.5)
-            },
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(0.5)},
             opacity=0.5,
             control_layer=True,
         ),
@@ -570,9 +564,7 @@ VERIF_LAYER_INFOS = {
             layer_name="119_verif_geomogc",
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field="topic",
-            symbology_data_defined_properties={
-                QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)
-            },
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
             opacity=0.5,
             visibility=True,
             control_layer=True,
@@ -620,9 +612,7 @@ VERIF_LAYER_INFOS = {
             layer_name="112_itf_objet_hors_perimetrelot_point",
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field="nomtable",
-            symbology_data_defined_properties={
-                QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)
-            },
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(3)},
             opacity=0.5,
             visibility=False,
             control_layer=True,
@@ -632,9 +622,7 @@ VERIF_LAYER_INFOS = {
             layer_name="112_itf_objet_hors_perimetrelot_ligne",
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field="nomtable",
-            symbology_data_defined_properties={
-                QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)
-            },
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyWidth: QgsProperty.fromValue(2)},
             opacity=0.5,
             visibility=False,
             control_layer=True,
@@ -644,9 +632,7 @@ VERIF_LAYER_INFOS = {
             layer_name="112_itf_objet_hors_perimetre_surface",
             symbology_type=SymbologyType.RANDOM_CATEGORIZED,
             category_field="nomtable",
-            symbology_data_defined_properties={
-                QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
-            },
+            symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
             opacity=0.5,
             visibility=False,
             control_layer=True,
@@ -668,7 +654,8 @@ def create_veri_meta_layers():
         VeriMetaLayer("VerifCouverture_du_sol", "Vérification - Couverture du sol"),
         VeriMetaLayer("VerifObjets_divers", "Vérification - Objets divers"),
         VeriMetaLayer(
-            "VerifContinuite_des_reseaux", "Vérification - Continuite des reseaux"
+            "VerifContinuite_des_reseaux",
+            "Vérification - Continuite des reseaux",
         ),
         VeriMetaLayer("VerifGeometrie", "Vérification - Géométries"),
         VeriMetaLayer("VerifNomenclature", "Vérification - Nomenclature"),
@@ -684,9 +671,7 @@ def create_veri_meta_layers():
 
 class VerifLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
-        super(VerifLayerModel, self).__init__(
-            iface, create_veri_meta_layers(), has_control_layers=True
-        )
+        super(VerifLayerModel, self).__init__(iface, create_veri_meta_layers(), has_control_layers=True)
 
     def reload(self):
         self.veri_meta_layers = create_veri_meta_layers()

@@ -74,24 +74,16 @@ class GpkgData(object):
 
         layer.renderer().setSymbol(simple_symbol)
 
-    def change_properties(
-        self, layer: QgsVectorLayer, properties: QgsPropertyCollection
-    ):
+    def change_properties(self, layer: QgsVectorLayer, properties: QgsPropertyCollection):
         if layer.renderer() is not None:
             # TODO check context
-            context = QgsRenderContext.fromMapSettings(
-                self.iface.mapCanvas().mapSettings()
-            )
-            context.expressionContext().appendScope(
-                QgsExpressionContextUtils.layerScope(layer)
-            )
+            context = QgsRenderContext.fromMapSettings(self.iface.mapCanvas().mapSettings())
+            context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(layer))
             for symbol in layer.renderer().symbols(context):
                 symbol.symbolLayer(0).setDataDefinedProperties(properties)
             layer.triggerRepaint()
 
-    def create_simple_fill_symbol_layer(
-        self, layer: QgsVectorLayer, fill_color: QColor
-    ):
+    def create_simple_fill_symbol_layer(self, layer: QgsVectorLayer, fill_color: QColor):
         # initialize the default symbol for this geometry type
         symbol = QgsSymbol.defaultSymbol(layer.geometryType())
         # configure a symbol layer
@@ -147,9 +139,7 @@ class GpkgData(object):
             "../qml",
             "{}_{}.qml".format(meta_layer_name, layer_info.layer_name),
         )
-        qml_gen_file = os.path.join(
-            self.plugin_path, "../qml", "{}.qml".format(layer_info.layer_name)
-        )
+        qml_gen_file = os.path.join(self.plugin_path, "../qml", "{}.qml".format(layer_info.layer_name))
         # Check if a specific qml file exist for this layer
         # if not, check if a generic qml file exist
         if os.path.isfile(qml_spec_file):
@@ -159,17 +149,13 @@ class GpkgData(object):
         dbg_info(f"{qml_spec_file} {qml_gen_file}")
         return None
 
-    def create_layers(
-        self, meta_layer_name: str, layer_infos: [LayerInfo]
-    ) -> Dict[LayerInfo, QgsVectorLayer]:
+    def create_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]) -> Dict[LayerInfo, QgsVectorLayer]:
         layers = {}
         for layer_info in layer_infos:
             dbg_info(f"Loading layer {layer_info.layer_name}")
 
             # do not set subset string now, so geometry can be correctly determined
-            layer = self.create_layer(
-                layer_info.display_name, self.schema, layer_info.layer_name
-            )
+            layer = self.create_layer(layer_info.display_name, self.schema, layer_info.layer_name)
 
             # Set the path to the layer's qml file. The qml file must be name at least with the layer name
             if layer.isValid() and layer.featureCount() != 0:
@@ -180,9 +166,7 @@ class GpkgData(object):
                     else:
                         self.iface.messageBar().pushWarning(
                             "VeriVD - fichier QML manquant",
-                            "{} ({})".format(
-                                layer_info.display_name, layer_info.layer_name
-                            ),
+                            "{} ({})".format(layer_info.display_name, layer_info.layer_name),
                         )
 
                 elif layer_info.symbology_type == SymbologyType.RANDOM_CATEGORIZED:

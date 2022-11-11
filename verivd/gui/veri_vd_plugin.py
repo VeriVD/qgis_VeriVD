@@ -22,7 +22,13 @@
 """
 import os.path
 
-from qgis.PyQt.QtCore import Qt, QCoreApplication, QLocale, QSettings, QTranslator
+from qgis.PyQt.QtCore import (
+    Qt,
+    QCoreApplication,
+    QLocale,
+    QSettings,
+    QTranslator,
+)
 from qgis.PyQt.QtWidgets import QAction, QMessageBox
 from qgis.PyQt.QtGui import QIcon
 
@@ -86,9 +92,7 @@ class VeriVD:
 
         for model in self.layer_models.models():
             model.layers_loaded.connect(
-                lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(
-                    model, layer_name, layers_loaded
-                )
+                lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(model, layer_name, layers_loaded)
             )
 
     def unload(self):
@@ -109,9 +113,7 @@ class VeriVD:
                 QMessageBox.question(
                     self.dock_widget,
                     "Veri-VD",
-                    "Voulez-vous conserver les couches chargées par {}?".format(
-                        self.gpkg_data.gpkg_path
-                    ),
+                    "Voulez-vous conserver les couches chargées par {}?".format(self.gpkg_data.gpkg_path),
                 )
                 == QMessageBox.No
             ):
@@ -135,9 +137,7 @@ class VeriVD:
         self.dock_widget.tabWidget.setCurrentIndex(0)
         self.dock_widget.tabWidget.setEnabled(False)
 
-    def __on_layers_loaded(
-        self, model: LayerListModel, layer_name: str, layers_loaded: [LayerInfo]
-    ):
+    def __on_layers_loaded(self, model: LayerListModel, layer_name: str, layers_loaded: [LayerInfo]):
         if model.has_control_layers:
             control_layers_loaded = 0
             layer_names = []

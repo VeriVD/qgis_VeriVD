@@ -38,13 +38,9 @@ class IliValidatorLayerModel(LayerListModel):
         for topic in TOPIC_LAYERS:
             ili_validator_topic = topic.replace(" ", "_")
             if ili_validator_topic in list(ili_validator_dict.keys()):
-                display_name = "IliValidator - {}: {}".format(
-                    topic, str(ili_validator_dict[ili_validator_topic])
-                )
+                display_name = "IliValidator - {}: {}".format(topic, str(ili_validator_dict[ili_validator_topic]))
                 ili_validator_topic = topic.replace(" ", "_")
-                self._veri_meta_layers.append(
-                    VeriMetaLayer(ili_validator_topic, display_name)
-                )
+                self._veri_meta_layers.append(VeriMetaLayer(ili_validator_topic, display_name))
         self.endResetModel()
 
     def group_name(self, layer):
@@ -58,9 +54,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_ilivalidator_point",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={
-                    QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)
-                },
+                symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)},
                 sql_request=sql_request,
             ),
             LayerInfo(
@@ -68,9 +62,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_ilivalidator_ligne",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={
-                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
-                },
+                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 sql_request=sql_request,
                 opacity=0.5,
             ),
@@ -79,9 +71,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_iliValidator_point_Arc",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={
-                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
-                },
+                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 sql_request=sql_request,
                 opacity=0.5,
             ),
@@ -90,9 +80,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_ilivalidator_surface",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={
-                    QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)
-                },
+                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 sql_request=sql_request,
                 opacity=0.5,
             ),
@@ -103,7 +91,8 @@ class IliValidatorLayerModel(LayerListModel):
                 sql_request=sql_request,
             ),
             LayerInfo(
-                display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"
+                display_name="Périmetre du lot",
+                layer_name="112_itf_mise_a_jourrp",
             ),
         )
         return layer_infos
@@ -111,6 +100,4 @@ class IliValidatorLayerModel(LayerListModel):
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
         if layer.geometryType() == QgsWkbTypes.PointGeometry:
             for symbol in layer.renderer().symbols(self.layer_context(layer)):
-                symbol.symbolLayer(0).setShape(
-                    MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)]
-                )
+                symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])
