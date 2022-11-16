@@ -42,6 +42,8 @@ from verivd.core.gpkg_data import GpkgData
 
 from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 
+DEBUG = True
+
 
 class VeriVD:
     """QGIS Plugin Implementation."""
@@ -94,6 +96,9 @@ class VeriVD:
             model.layers_loaded.connect(
                 lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(model, layer_name, layers_loaded)
             )
+
+        if DEBUG:
+            self.open_gpkg_file("/Users/denis/Documents/temp/verivd/221116_justif.gpkg")
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""

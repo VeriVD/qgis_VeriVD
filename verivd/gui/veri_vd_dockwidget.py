@@ -71,6 +71,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.file_widget.fileChanged.connect(self.file_changed)
         self.show_help_button.clicked.connect(self.show_help)
         self.show_help_button.click()
+        self.process_justificatif_button.clicked.connect(self.process_justificatif)
 
     def update_checker_tab(self):
         has_rows = self.layer_models.checker_layer_model.rowCount(QModelIndex()) > 0
@@ -89,3 +90,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.checker_help_frame.setVisible(show)
         self.ili_help_frame.setVisible(show)
         self.verif_help_frame.setVisible(show)
+
+    def process_justificatif(self):
+
+        pass

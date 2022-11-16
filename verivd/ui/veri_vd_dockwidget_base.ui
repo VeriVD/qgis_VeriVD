@@ -28,9 +28,6 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="1">
-     <widget class="QgsFileWidget" name="file_widget" native="true"/>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
@@ -39,6 +36,16 @@
      </widget>
     </item>
     <item row="0" column="3">
+     <widget class="QPushButton" name="process_justificatif_button">
+      <property name="text">
+       <string>Générer les justificatifs pour la session en cours</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QgsFileWidget" name="file_widget"/>
+    </item>
+    <item row="0" column="4">
      <widget class="QToolButton" name="show_help_button">
       <property name="text">
        <string>?</string>
@@ -51,7 +58,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="4">
+    <item row="1" column="0" colspan="5">
      <widget class="QTabWidget" name="tabWidget">
       <property name="minimumSize">
        <size>
@@ -304,7 +311,7 @@
   <customwidget>
    <class>QgsFileWidget</class>
    <extends>QWidget</extends>
-   <header>qgis.gui</header>
+   <header>qgsfilewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
