@@ -1,8 +1,9 @@
-CREATE TABLE 'justficatif' (
+CREATE TABLE 'justificatif' (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   geometry GEOMETRYCOLLECTION,
   geometry_type TEXT,
   session TEXT NOT NULL,
+  layer TEXT NOT NULL,
   topic TEXT NOT NULL,
   statut TEXT NOT NULL,
   texte TEXT NOT NULL

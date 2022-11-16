@@ -148,26 +148,11 @@ BASE_LAYER_INFOS = {
             layer_name="002_ITF_CS_Pos_Surface_CS",
         ),
         LayerInfo(display_name="DDP Numéro", layer_name="006_ITF_BF_Pos_DDP"),
-        LayerInfo(
-            display_name="Bien-fonds Numéro",
-            layer_name="006_ITF_BF_Pos_Bien_fonds",
-        ),
-        LayerInfo(
-            display_name="CO Conduite Nom",
-            layer_name="007_itf_co_poselement_conduite",
-        ),
-        LayerInfo(
-            display_name="Numéro d'entrée",
-            layer_name="009_itf_bat_posentree_batiment",
-        ),
-        LayerInfo(
-            display_name="OD lin Nom et Numéro",
-            layer_name="003_ITF_OD_Pos_Element_lineaire",
-        ),
-        LayerInfo(
-            display_name="OD surf Nom et Numéro",
-            layer_name="003_ITF_OD_Pos_Element_surfacique",
-        ),
+        LayerInfo(display_name="Bien-fonds Numéro", layer_name="006_ITF_BF_Pos_Bien_fonds"),
+        LayerInfo(display_name="CO Conduite Nom", layer_name="007_itf_co_poselement_conduite"),
+        LayerInfo(display_name="Numéro d'entrée", layer_name="009_itf_bat_posentree_batiment"),
+        LayerInfo(display_name="OD lin Nom et Numéro", layer_name="003_ITF_OD_Pos_Element_lineaire"),
+        LayerInfo(display_name="OD surf Nom et Numéro", layer_name="003_ITF_OD_Pos_Element_surfacique"),
         LayerInfo(
             display_name="Nom de localisation",
             layer_name="009_itf_bat_posnom_localisation",

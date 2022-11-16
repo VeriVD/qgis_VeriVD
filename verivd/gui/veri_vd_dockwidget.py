@@ -27,6 +27,8 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget
 from qgis.PyQt.QtCore import pyqtSignal, QModelIndex
 from qgis.gui import QgsFileWidget
+
+from verivd.core.justificatif import process_justificatif
 from verivd.gui.help import (
     MESSAGE_BASE,
     MESSAGE_CHECKER,
@@ -71,7 +73,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.file_widget.fileChanged.connect(self.file_changed)
         self.show_help_button.clicked.connect(self.show_help)
         self.show_help_button.click()
-        self.process_justificatif_button.clicked.connect(self.process_justificatif)
+        self.process_justificatif_button.clicked.connect(self.process_justificatif_clicked)
 
     def update_checker_tab(self):
         has_rows = self.layer_models.checker_layer_model.rowCount(QModelIndex()) > 0
@@ -91,6 +93,5 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.ili_help_frame.setVisible(show)
         self.verif_help_frame.setVisible(show)
 
-    def process_justificatif(self):
-
-        pass
+    def process_justificatif_clicked(self):
+        process_justificatif()

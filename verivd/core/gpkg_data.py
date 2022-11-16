@@ -31,7 +31,7 @@ from qgis.PyQt.QtGui import QColor
 
 from verivd.core.plugin_info import dbg_info
 from verivd.core.layer_info import LayerInfo
-from verivd.core.symbolgy_type import SymbologyType
+from verivd.core.symbology_type import SymbologyType
 
 MARKER_SHAPE = (
     QgsSimpleMarkerSymbolLayerBase.Square,

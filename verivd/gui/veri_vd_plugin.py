@@ -93,9 +93,7 @@ class VeriVD:
         self.dock_widget.file_changed.connect(self.open_gpkg_file)
 
         for model in self.layer_models.models():
-            model.layers_loaded.connect(
-                lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(model, layer_name, layers_loaded)
-            )
+            model.layers_loaded.connect(lambda layer_name, layers_loaded, model=model: self.__on_layers_loaded(model, layer_name, layers_loaded))
 
         if DEBUG:
             self.open_gpkg_file("/Users/denis/Documents/temp/verivd/221116_justif.gpkg")
@@ -156,7 +154,5 @@ class VeriVD:
             else:
                 self.iface.messageBar().pushMessage(
                     "VeriVD",
-                    "Les scripts de vérification n"
-                    "ont pas détecté d"
-                    'élément particulier pour le thème "{}".'.format(layer_name),
+                    "Les scripts de vérification n" "ont pas détecté d" 'élément particulier pour le thème "{}".'.format(layer_name),
                 )

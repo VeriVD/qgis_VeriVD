@@ -21,7 +21,7 @@ from verivd.core.models.base_model import BASE_LAYER_INFOS, BaseLayerModel
 from verivd.core.models.verif_model import VERIF_LAYER_INFOS, VerifLayerModel
 from verivd.core.gpkg_data import GpkgData
 from verivd.core.layer_models import LayerModels
-from verivd.core.symbolgy_type import SymbologyType
+from verivd.core.symbology_type import SymbologyType
 
 
 start_app()

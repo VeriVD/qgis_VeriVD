@@ -15,7 +15,7 @@
 """
 
 
-from verivd.core.symbolgy_type import SymbologyType
+from verivd.core.symbology_type import SymbologyType
 
 
 class LayerInfo(object):
