@@ -26,7 +26,7 @@ from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.topic_layers import TOPIC_LAYERS
 from verivd.core.gpkg_data import MARKER_SHAPE
-from verivd.core.symbolgy_type import SymbologyType
+from verivd.core.symbology_type import SymbologyType
 from verivd.core.veri_meta_layer import VeriMetaLayer
 
 

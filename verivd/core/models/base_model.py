@@ -18,7 +18,7 @@ from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
 from verivd.core.veri_meta_layer import VeriMetaLayer
-from verivd.core.symbolgy_type import SymbologyType
+from verivd.core.symbology_type import SymbologyType
 from verivd.core.layer_list_model import LayerListModel
 
 
