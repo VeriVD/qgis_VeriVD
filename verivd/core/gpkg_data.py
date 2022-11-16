@@ -123,14 +123,15 @@ class GpkgData(object):
             layer.setCrs(QgsCoordinateReferenceSystem.fromEpsgId(2056))
         return layer
 
-    def load_table_list(self, data_source, field_name=1, count_field=2):
+    def load_table_list(self, data_source):
+        topic_field_index = 1
+        decompte_field_index = 2
         layer = self.create_layer("", self.schema, data_source)
         list_feat_dict = {}
         if layer.isValid():
             features = layer.getFeatures()
             for ft in features:
-                attrs = ft.attributes()
-                list_feat_dict[attrs[field_name]] = attrs[count_field]
+                list_feat_dict[ft[topic_field_index]] = ft[decompte_field_index]
         return list_feat_dict
 
     def qml_definition(self, meta_layer_name: str, layer_info: LayerInfo):
