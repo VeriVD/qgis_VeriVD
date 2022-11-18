@@ -94,4 +94,4 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.verif_help_frame.setVisible(show)
 
     def process_justificatif_clicked(self):
-        process_justificatif()
+        process_justificatif(self.layer_models.gpkg_data)

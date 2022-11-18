@@ -51,8 +51,7 @@ class GpkgData(object):
 
     def __init__(self, iface: QgisInterface, gpkg_path: str):
         self.iface = iface
-        self.gpkg_path = gpkg_path
-        self.schema = ""
+        self.path = gpkg_path
         # get the path to your plugin directory
         self.plugin_path = os.path.dirname(__file__)
         self.symbols = None
@@ -112,9 +111,9 @@ class GpkgData(object):
                 property_collection.setProperty(key, value)
             self.change_properties(layer, property_collection)
 
-    def create_layer(self, display_name, schema, layer_name, sql_request=None):
-        print(schema, layer_name)
-        uri = f"{self.gpkg_path}|layername={layer_name}"
+    def create_layer(self, display_name, layer_name, sql_request=None):
+        dbg_info(f"creating QGIS layer {layer_name}")
+        uri = f"{self.path}|layername={layer_name}"
         if sql_request:
             uri += f"|subset={sql_request}"
         # construct the layer
@@ -126,7 +125,7 @@ class GpkgData(object):
     def load_table_list(self, data_source):
         topic_field_index = 1
         decompte_field_index = 2
-        layer = self.create_layer("", self.schema, data_source)
+        layer = self.create_layer("", data_source)
         list_feat_dict = {}
         if layer.isValid():
             features = layer.getFeatures()
@@ -156,7 +155,7 @@ class GpkgData(object):
             dbg_info(f"Loading layer {layer_info.layer_name}")
 
             # do not set subset string now, so geometry can be correctly determined
-            layer = self.create_layer(layer_info.display_name, self.schema, layer_info.layer_name)
+            layer = self.create_layer(layer_info.display_name, layer_info.layer_name)
 
             # Set the path to the layer's qml file. The qml file must be name at least with the layer name
             if layer.isValid() and layer.featureCount() != 0:

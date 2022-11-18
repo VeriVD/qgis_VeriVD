@@ -116,7 +116,7 @@ class VeriVD:
                 QMessageBox.question(
                     self.dock_widget,
                     "Veri-VD",
-                    "Voulez-vous conserver les couches chargées par {}?".format(self.gpkg_data.gpkg_path),
+                    "Voulez-vous conserver les couches chargées par {}?".format(self.gpkg_data.path),
                 )
                 == QMessageBox.No
             ):

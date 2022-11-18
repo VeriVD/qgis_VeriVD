@@ -32,6 +32,7 @@ class LayerModels:
         self.base_layer_model = BaseLayerModel(iface)
 
     def set_gpkg_data(self, gpkg_data):
+        self.gpkg_data = gpkg_data
         self.verif_layer_model.gpkg_data = gpkg_data
         self.ili_validator_layer_model.gpkg_data = gpkg_data
         self.checker_layer_model.gpkg_data = gpkg_data
