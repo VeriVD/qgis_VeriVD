@@ -64,7 +64,7 @@ class Justificatif(QObject):
             "layer_name": "justificatif_point",
             "title": "justificatif - point",
             "features": [],
-            "geometry_type": GeometryType.LINE,
+            "geometry_type": GeometryType.POINT,
         }
         justificatif_layer_line = {
             "qgis_layer": None,
@@ -145,7 +145,10 @@ class Justificatif(QObject):
                 justif_feature = QgsFeature(justif_layer["qgis_layer"].fields())
                 justif_feature.setGeometry(topic_feature.geometry())
                 justif_feature["layer"] = layer.name()
-                justif_feature["topic"] = layer.name()
+                if topic_feature.fields().indexFromName("topic") >= 0:
+                    justif_feature["topic"] = topic_feature["topic"]
+                else:
+                    justif_feature["topic"] = None
                 justif_feature["session"] = date.today().isoformat()
                 justif_feature["statut"] = "nouveau"
                 justif_feature["texte"] = topic_feature["justificatif"]
