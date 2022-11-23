@@ -42,14 +42,20 @@ class GeometryType(Enum):
 class Justificatif(QObject):
     # progress:
     # 0-20: deleting former features (statut = nouveau)
-    # 20-80: finding justificatif in gpkg
+    # 20-50: creating qgis layers
+    # 50-80: finding justificatif in gpkg
     # 80-100: writing to layers
     progress_changed = pyqtSignal(int, str)
 
     def __init__(self, parent=None):
+        self.canceled = False
         super(Justificatif, self).__init__(parent)
 
+    def cancel(self):
+        self.canceled = True
+
     def process_justificatif(self, gpkg_data: GpkgData):
+        self.canceled = False
         progress = 0
 
         justificatif_layer_no_geometry = {
@@ -97,11 +103,13 @@ class Justificatif(QObject):
             if jf["qgis_layer"] is None:
                 jf["qgis_layer"] = gpkg_data.create_qgis_layer(jf["title"], jf["layer_name"], custom_properties={"verid_vd_id": veri_vd_id})
 
-        qgis_layers = [jf["qgis_layer"] for jf in justificatif_layers.values()]
-        QgsProject.instance().addMapLayers(qgis_layers)
+        justificatif_qgis_layers = [jf["qgis_layer"] for jf in justificatif_layers.values()]
+        QgsProject.instance().addMapLayers(justificatif_qgis_layers)
 
         # delete current justificatifs
-        for layer in qgis_layers:
+        for layer in justificatif_qgis_layers:
+            if self.canceled:
+                return
             self.progress_changed.emit(int(progress), f"Suppression des justificatifs de la session dans la couche {layer.name()}")
             progress += 5
 
@@ -116,12 +124,14 @@ class Justificatif(QObject):
         layer_details = QgsProviderRegistry.instance().querySublayers(gpkg_data.path, Qgis.SublayerQueryFlag.ResolveGeometryType)
         layers = []
         for layer_detail in layer_details:
-            progress += 1 / len(layer_details) * 60
+            if self.canceled:
+                return
+            progress += 1 / len(layer_details) * 30
 
             if layer_detail.name().startswith("justificatif"):
                 continue
 
-            self.progress_changed.emit(int(progress), f"Recherche de justificatif dans {layer_detail.name()}")
+            self.progress_changed.emit(int(progress), f"Creation des couches: {layer_detail.name()}")
 
             dbg_info(f"getting layer {layer_detail.name()}")
 
@@ -131,9 +141,12 @@ class Justificatif(QObject):
 
             layers.append(layer)
 
-        layers = QgsProject.instance().addMapLayers(layers, False)
-
         for layer in layers:
+            if self.canceled:
+                return
+            progress += 1 / len(layers) * 30
+            self.progress_changed.emit(int(progress), f"Recherche de justificatif dans {layer_detail.name()}")
+
             req = QgsFeatureRequest()
             req.setFilterExpression("\"justificatif\" != ''")
 
@@ -148,7 +161,7 @@ class Justificatif(QObject):
                 if topic_feature.fields().indexFromName("topic") >= 0:
                     justif_feature["topic"] = topic_feature["topic"]
                 else:
-                    justif_feature["topic"] = None
+                    justif_feature["topic"] = ""
                 justif_feature["session"] = date.today().isoformat()
                 justif_feature["statut"] = "nouveau"
                 justif_feature["texte"] = topic_feature["justificatif"]
@@ -157,7 +170,6 @@ class Justificatif(QObject):
                 justif_layer["features"].append(justif_feature)
 
         for layer in justificatif_layers.values():
-            progress += 5
             dbg_info(f"couche justificatif {layer['geometry_type'].value}: enregistrement de {len(layer['features'])} objets")
             if len(layer["features"]):
                 self.progress_changed.emit(int(progress), f"Ecriture des justificatifs ({len(layer['features'])}) dans la couche {layer['layer_name']}")
@@ -165,8 +177,6 @@ class Justificatif(QObject):
                 dbg_info(f"qgis layer valid: {qgs_layer.isValid()}")
                 with edit(qgs_layer):
                     ok = qgs_layer.addFeatures(layer["features"])
-                    dbg_info(ok)
-                # QgsProject.instance().addMapLayer(qgs_layer)
-
-        for layer in layers:
-            QgsProject.instance().removeMapLayer(layer)
+                    dbg_info(f"features added: {ok}")
+            progress += 5
+            self.progress_changed.emit(100, None)
