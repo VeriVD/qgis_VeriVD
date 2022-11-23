@@ -1,13 +1,51 @@
-CREATE TABLE 'justificatif' (
+CREATE TABLE 'justificatif_nogeometry' (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  geometry GEOMETRYCOLLECTION,
-  geometry_type TEXT,
   session TEXT NOT NULL,
   layer TEXT NOT NULL,
   topic TEXT NOT NULL,
   statut TEXT NOT NULL,
   texte TEXT NOT NULL
 )
+
+CREATE TABLE 'justificatif_point' (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  geometry POINT,
+  session TEXT NOT NULL,
+  layer TEXT NOT NULL,
+  topic TEXT NOT NULL,
+  statut TEXT NOT NULL,
+  texte TEXT NOT NULL
+)
+
+CREATE TABLE 'justificatif_line' (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  geometry COMPOUNDCURVE,
+  session TEXT NOT NULL,
+  layer TEXT NOT NULL,
+  topic TEXT NOT NULL,
+  statut TEXT NOT NULL,
+  texte TEXT NOT NULL
+)
+
+CREATE TABLE 'justificatif_polygon' (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  geometry CURVEPOLYGON,
+  session TEXT NOT NULL,
+  layer TEXT NOT NULL,
+  topic TEXT NOT NULL,
+  statut TEXT NOT NULL,
+  texte TEXT NOT NULL
+)
+
+INSERT INTO gpkg_contents (table_name, data_type) values ('justificatif_nogeometry','attributes');
+INSERT INTO gpkg_contents (table_name, data_type) values ('justificatif_point','features');
+INSERT INTO gpkg_geometry_columns (table_name, column_name, geometry_type_name, srs_id, z, m) VALUES ('justificatif_point', 'geometry', 'POINT', 2056, 0, 0);
+INSERT INTO gpkg_contents (table_name, data_type) values ('justificatif_line','features');
+INSERT INTO gpkg_geometry_columns (table_name, column_name, geometry_type_name, srs_id, z, m) VALUES ('justificatif_line', 'geometry', 'COMPOUNDCURVE', 2056, 0, 0);
+INSERT INTO gpkg_contents (table_name, data_type) values ('justificatif_polygon','features');
+INSERT INTO gpkg_geometry_columns (table_name, column_name, geometry_type_name, srs_id, z, m) VALUES ('justificatif_polygon', 'geometry', 'CURVEPOLYGON', 2056, 0, 0);
+
+
 
 -- insert example
 insert into commentaires (

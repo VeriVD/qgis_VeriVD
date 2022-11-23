@@ -22,6 +22,9 @@
 """
 
 from enum import Enum
+from datetime import date
+
+from qgis.PyQt.QtCore import pyqtSignal, QObject
 
 from qgis.core import Qgis, QgsFeatureRequest, QgsFeature, QgsProject, QgsWkbTypes, edit, QgsProviderRegistry, QgsProviderSublayerDetails
 
@@ -36,81 +39,131 @@ class GeometryType(Enum):
     POINT = "POINT"
 
 
-def process_justificatif(gpkg_data: GpkgData):
+class Justificatif(QObject):
+    # progress:
+    # 0-20: deleting former features (statut = nouveau)
+    # 20-80: finding justificatif in gpkg
+    # 80-100: writing to layers
+    progress_changed = pyqtSignal(int, str)
 
-    justificatif_layer_no_geometry = {
-        "layer": gpkg_data.create_layer("justificatif - sans géométrie", "justificatif", f"\"GEOMETRY_TYPE\" = '{GeometryType.NO_GEOMETRY.value}'"),
-        "features": [],
-        "geometry_type": GeometryType.NO_GEOMETRY,
-    }
-    justificatif_layer_point = {
-        "layer": gpkg_data.create_layer("justificatif - point", "justificatif", f"\"GEOMETRY_TYPE\" = '{GeometryType.POINT.value}'"),
-        "features": [],
-        "geometry_type": GeometryType.POINT,
-    }
-    justificatif_layer_line = {
-        "layer": gpkg_data.create_layer("justificatif - lignes", "justificatif", f"\"GEOMETRY_TYPE\" = '{GeometryType.LINE.value}'"),
-        "features": [],
-        "geometry_type": GeometryType.LINE,
-    }
-    justificatif_layer_polygon = {
-        "layer": gpkg_data.create_layer("justificatif - polygones", "justificatif", f"\"GEOMETRY_TYPE\" = '{GeometryType.POLYGON.value}'"),
-        "features": [],
-        "geometry_type": GeometryType.POLYGON,
-    }
+    def __init__(self, parent=None):
+        super(Justificatif, self).__init__(parent)
 
-    layers = [jf["layer"] for jf in [justificatif_layer_no_geometry, justificatif_layer_point, justificatif_layer_line, justificatif_layer_polygon]]
-    QgsProject.instance().addMapLayers(layers)
+    def process_justificatif(self, gpkg_data: GpkgData):
+        progress = 0
 
-    justificatif_layers = {
-        QgsWkbTypes.PointGeometry: justificatif_layer_point,
-        QgsWkbTypes.LineGeometry: justificatif_layer_line,
-        QgsWkbTypes.PolygonGeometry: justificatif_layer_polygon,
-    }
+        justificatif_layer_no_geometry = {
+            "qgis_layer": None,
+            "layer_name": "justificatif_nogeometry",
+            "title": "justificatif - sans géométrie",
+            "features": [],
+            "geometry_type": GeometryType.NO_GEOMETRY,
+        }
+        justificatif_layer_point = {
+            "qgis_layer": None,
+            "layer_name": "justificatif_point",
+            "title": "justificatif - point",
+            "features": [],
+            "geometry_type": GeometryType.LINE,
+        }
+        justificatif_layer_line = {
+            "qgis_layer": None,
+            "layer_name": "justificatif_line",
+            "title": "justificatif - lignes",
+            "features": [],
+            "geometry_type": GeometryType.LINE,
+        }
+        justificatif_layer_polygon = {
+            "qgis_layer": None,
+            "layer_name": "justificatif_polygon",
+            "title": "justificatif - polygones",
+            "features": [],
+            "geometry_type": GeometryType.POLYGON,
+        }
 
-    layer_details = QgsProviderRegistry.instance().querySublayers(gpkg_data.path, Qgis.SublayerQueryFlag.ResolveGeometryType)
-    layers = []
-    for layer_detail in layer_details:
-        dbg_info(f"processing layer: {layer_detail.name()}")
+        justificatif_layers = {
+            QgsWkbTypes.NoGeometry: justificatif_layer_no_geometry,
+            QgsWkbTypes.PointGeometry: justificatif_layer_point,
+            QgsWkbTypes.LineGeometry: justificatif_layer_line,
+            QgsWkbTypes.PolygonGeometry: justificatif_layer_polygon,
+        }
 
-        if layer_detail.name() == "justificatif":
-            continue
+        for jf in justificatif_layers.values():
+            veri_vd_id = f'VERID_VD_{jf["geometry_type"].value}'
+            for ql in QgsProject.instance().mapLayers().values():
+                if ql.customProperty("verid_vd_id") == veri_vd_id:
+                    jf["qgis_layer"] = ql
+                    break
+            if jf["qgis_layer"] is None:
+                jf["qgis_layer"] = gpkg_data.create_qgis_layer(jf["title"], jf["layer_name"], custom_properties={"verid_vd_id": veri_vd_id})
 
-        options = QgsProviderSublayerDetails.LayerOptions(QgsProject.instance().transformContext())
-        options.loadDefaultStyle = False
-        layer = layer_detail.toLayer(options)
+        qgis_layers = [jf["qgis_layer"] for jf in justificatif_layers.values()]
+        QgsProject.instance().addMapLayers(qgis_layers)
 
-        layers.append(layer)
+        # delete current justificatifs
+        for layer in qgis_layers:
+            self.progress_changed.emit(int(progress), f"Suppression des justificatifs de la session dans la couche {layer.name()}")
+            progress += 5
 
-    layers = QgsProject.instance().addMapLayers(layers, False)
+            req = QgsFeatureRequest()
+            req.setFilterExpression("\"statut\" = 'nouveau'")
+            features_to_delete = []
+            for justif_feature in layer.getFeatures(req):
+                features_to_delete.append(justif_feature.id())
+            with edit(layer):
+                layer.deleteFeatures(features_to_delete)
 
-    for layer in layers:
-        req = QgsFeatureRequest()
-        req.setFilterExpression("\"justificatif\" != ''")
+        layer_details = QgsProviderRegistry.instance().querySublayers(gpkg_data.path, Qgis.SublayerQueryFlag.ResolveGeometryType)
+        layers = []
+        for layer_detail in layer_details:
+            progress += 1 / len(layer_details) * 60
 
-        for topic_feature in layer.getFeatures(req):
-            dbg_info(f"found feature {topic_feature.id()}")
-            geometry_type = topic_feature.geometry().type()
-            justif_layer = justificatif_layers.get(geometry_type, justificatif_layer_no_geometry)
+            if layer_detail.name().startswith("justificatif"):
+                continue
 
-            justif_feature = QgsFeature(justif_layer["layer"].fields())
-            justif_feature.setGeometry(topic_feature.geometry())
-            justif_feature["topic"] = layer.name()
-            justif_feature["geometry_type"] = justif_layer["geometry_type"]
-            justif_feature["session"] = "XXX"
-            justif_feature["statut"] = "nouveau"
-            justif_feature["texte"] = topic_feature["justificatif"]
-            justif_feature["operateur"] = "xxx"
+            self.progress_changed.emit(int(progress), f"Recherche de justificatif dans {layer_detail.name()}")
 
-            justif_layer["features"].append(justif_feature)
+            dbg_info(f"getting layer {layer_detail.name()}")
 
-    for layer in justificatif_layers.values():
-        dbg_info(f"couche justificatif {layer['geometry_type'].value}: enregistrement de {len(layer['features'])} objets")
-        if len(layer["features"]):
-            qgs_layer = layer["layer"]
-            with edit(qgs_layer):
-                qgs_layer.addFeatures(layer["features"])
-            # QgsProject.instance().addMapLayer(qgs_layer)
+            options = QgsProviderSublayerDetails.LayerOptions(QgsProject.instance().transformContext())
+            options.loadDefaultStyle = False
+            layer = layer_detail.toLayer(options)
 
-    for layer in layers:
-        QgsProject.instance().removeMapLayer(layer)
+            layers.append(layer)
+
+        layers = QgsProject.instance().addMapLayers(layers, False)
+
+        for layer in layers:
+            req = QgsFeatureRequest()
+            req.setFilterExpression("\"justificatif\" != ''")
+
+            for topic_feature in layer.getFeatures(req):
+                dbg_info(f"layer {layer.name()}: found feature {topic_feature.id()}")
+                geometry_type = topic_feature.geometry().type()
+                justif_layer = justificatif_layers.get(geometry_type, justificatif_layer_no_geometry)
+
+                justif_feature = QgsFeature(justif_layer["qgis_layer"].fields())
+                justif_feature.setGeometry(topic_feature.geometry())
+                justif_feature["layer"] = layer.name()
+                justif_feature["topic"] = layer.name()
+                justif_feature["session"] = date.today().isoformat()
+                justif_feature["statut"] = "nouveau"
+                justif_feature["texte"] = topic_feature["justificatif"]
+                justif_feature["operateur"] = "xxx"
+
+                justif_layer["features"].append(justif_feature)
+
+        for layer in justificatif_layers.values():
+            progress += 5
+            dbg_info(f"couche justificatif {layer['geometry_type'].value}: enregistrement de {len(layer['features'])} objets")
+            if len(layer["features"]):
+                self.progress_changed.emit(int(progress), f"Ecriture des justificatifs ({len(layer['features'])}) dans la couche {layer['layer_name']}")
+                qgs_layer = layer["qgis_layer"]
+                dbg_info(f"qgis layer valid: {qgs_layer.isValid()}")
+                with edit(qgs_layer):
+                    ok = qgs_layer.addFeatures(layer["features"])
+                    dbg_info(ok)
+                # QgsProject.instance().addMapLayer(qgs_layer)
+
+        for layer in layers:
+            QgsProject.instance().removeMapLayer(layer)

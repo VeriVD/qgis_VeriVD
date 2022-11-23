@@ -24,11 +24,11 @@
 import os
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDockWidget
-from qgis.PyQt.QtCore import pyqtSignal, QModelIndex
+from qgis.PyQt.QtCore import pyqtSignal, QModelIndex, Qt
+from qgis.PyQt.QtWidgets import QDockWidget, QProgressDialog, QApplication
 from qgis.gui import QgsFileWidget
 
-from verivd.core.justificatif import process_justificatif
+from verivd.core.justificatif import Justificatif
 from verivd.gui.help import (
     MESSAGE_BASE,
     MESSAGE_CHECKER,
@@ -94,4 +94,16 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.verif_help_frame.setVisible(show)
 
     def process_justificatif_clicked(self):
-        process_justificatif(self.layer_models.gpkg_data)
+        j = Justificatif(self)
+        p = QProgressDialog("Traitement des justificatifs …", "Annuler", 0, 100, self)
+        p.setWindowModality(Qt.WindowModal)
+        p.show()
+
+        def update_progress(progress, text):
+            p.setValue(progress)
+            p.setLabelText(text)
+            QApplication.processEvents()
+
+        j.progress_changed.connect(update_progress)
+
+        j.process_justificatif(self.layer_models.gpkg_data)
