@@ -111,19 +111,6 @@ class GpkgData(object):
                 property_collection.setProperty(key, value)
             self.change_properties(layer, property_collection)
 
-    def create_qgis_layer(self, display_name, layer_name, sql_request=None, custom_properties={}):
-        dbg_info(f"creating QGIS layer {layer_name}")
-        uri = f"{self.path}|layername={layer_name}"
-        if sql_request:
-            uri += f"|subset={sql_request}"
-        # construct the layer
-        layer = QgsVectorLayer(uri, display_name, "ogr")
-        if layer.isSpatial():
-            layer.setCrs(QgsCoordinateReferenceSystem.fromEpsgId(2056))
-        for key, value in custom_properties.items():
-            layer.setCustomProperty(key, value)
-        return layer
-
     def load_table_list(self, data_source):
         topic_field_index = 1
         decompte_field_index = 2
@@ -151,12 +138,24 @@ class GpkgData(object):
         dbg_info(f"{qml_spec_file} {qml_gen_file}")
         return None
 
+    def create_qgis_layer(self, display_name, layer_name, sql_request=None, custom_properties={}):
+        dbg_info(f"creating QGIS layer {layer_name}")
+        uri = f"{self.path}|layername={layer_name}"
+        if sql_request:
+            uri += f"|subset={sql_request}"
+        # construct the layer
+        layer = QgsVectorLayer(uri, display_name, "ogr")
+        if layer.isSpatial():
+            layer.setCrs(QgsCoordinateReferenceSystem.fromEpsgId(2056))
+        for key, value in custom_properties.items():
+            layer.setCustomProperty(key, value)
+        return layer
+
     def create_qgis_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]) -> Dict[LayerInfo, QgsVectorLayer]:
         layers = {}
         for layer_info in layer_infos:
             dbg_info(f"Loading layer {layer_info.layer_name}")
 
-            # do not set subset string now, so geometry can be correctly determined
             layer = self.create_qgis_layer(layer_info.display_name, layer_info.layer_name, sql_request=layer_info.sql_request)
 
             # Set the path to the layer's qml file. The qml file must be name at least with the layer name

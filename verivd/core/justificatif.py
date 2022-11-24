@@ -164,7 +164,7 @@ class Justificatif(QObject):
 
                 justif_feature = QgsFeature(justif_layer["qgis_layer"].fields())
                 justif_feature.setGeometry(topic_feature.geometry())
-                justif_feature["layer"] = layer.name()
+                justif_feature["layer"] = layer.name().lower()
                 if topic_feature.fields().indexFromName("topic") >= 0:
                     justif_feature["topic"] = topic_feature["topic"]
                 else:

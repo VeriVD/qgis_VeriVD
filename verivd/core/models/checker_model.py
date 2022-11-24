@@ -55,19 +55,19 @@ class CheckerLayerModel(LayerListModel):
             LayerInfo(
                 display_name="Justificatifs - {} point".format(layer),
                 layer_name="justificatif_point",
-                sql_request=f"\"layer\" = '000_Checker_Point' AND {sql_request}",
+                sql_request=f"\"layer\" = '000_checker_point' AND {sql_request}",
                 symbology_type=SymbologyType.SIMPLE,
             ),
             LayerInfo(
                 display_name="Justificatifs - {} surface".format(layer),
                 layer_name="justificatif_poylgon",
-                sql_request=f"\"layer\" = '000_Checker_Surface' AND {sql_request}",
+                sql_request=f"\"layer\" = '000_checker_surface' AND {sql_request}",
                 symbology_type=SymbologyType.SIMPLE,
             ),
             LayerInfo(
                 display_name="Justificatifs - {} sans géométrie".format(layer),
                 layer_name="justificatif_nogeometry",
-                sql_request=f"\"layer\" = '000_Checker_Sans_geometrie' AND {sql_request}",
+                sql_request=f"\"layer\" = '000_checker_sans_geometrie' AND {sql_request}",
                 symbology_type=SymbologyType.NO_SYMBOL,
             ),
             LayerInfo(
