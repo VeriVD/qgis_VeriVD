@@ -49,6 +49,7 @@ class Justificatif(QObject):
 
     def __init__(self, parent=None):
         self.canceled = False
+        self.layer_tree_group = None
         super(Justificatif, self).__init__(parent)
 
     def cancel(self):
@@ -94,6 +95,10 @@ class Justificatif(QObject):
             QgsWkbTypes.PolygonGeometry: justificatif_layer_polygon,
         }
 
+        if self.layer_tree_group is None:
+            self.layer_tree_group = QgsProject.instance().layerTreeRoot().insertGroup(0, "Justificatifs")
+
+        lpi = 0
         for jf in justificatif_layers.values():
             veri_vd_id = f'VERID_VD_{jf["geometry_type"].value}'
             for ql in QgsProject.instance().mapLayers().values():
@@ -102,9 +107,11 @@ class Justificatif(QObject):
                     break
             if jf["qgis_layer"] is None:
                 jf["qgis_layer"] = gpkg_data.create_qgis_layer(jf["title"], jf["layer_name"], custom_properties={"verid_vd_id": veri_vd_id})
+                QgsProject.instance().addMapLayer(jf["qgis_layer"], False)
+                self.layer_tree_group.insertLayer(lpi, jf["qgis_layer"])
+                lpi += 1
 
         justificatif_qgis_layers = [jf["qgis_layer"] for jf in justificatif_layers.values()]
-        QgsProject.instance().addMapLayers(justificatif_qgis_layers)
 
         # delete current justificatifs
         for layer in justificatif_qgis_layers:
@@ -161,11 +168,11 @@ class Justificatif(QObject):
                 if topic_feature.fields().indexFromName("topic") >= 0:
                     justif_feature["topic"] = topic_feature["topic"]
                 else:
-                    justif_feature["topic"] = ""
+                    justif_feature["topic"] = None
                 justif_feature["session"] = date.today().isoformat()
                 justif_feature["statut"] = "nouveau"
                 justif_feature["texte"] = topic_feature["justificatif"]
-                # justif_feature["operateur"] = ""
+                justif_feature["operateur"] = None
 
                 justif_layer["features"].append(justif_feature)
 
