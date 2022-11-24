@@ -139,7 +139,7 @@ class LayerListModel(QAbstractListModel):
         # Qt QAbstractListModel virtual method
         if role == Qt.CheckStateRole:
             if value == Qt.Checked and self.data(index, role) != Qt.PartiallyChecked:
-                self.__load_layer(index)
+                self.__load_verivd_layer(index)
             else:
                 self.__unload_layer(index)
                 self.iface.mapCanvas().refresh()
@@ -159,7 +159,7 @@ class LayerListModel(QAbstractListModel):
         context.expressionContext().appendScope(QgsExpressionContextUtils.layerScope(layer))
         return context
 
-    def __load_layer(self, index: QModelIndex):
+    def __load_verivd_layer(self, index: QModelIndex):
         if Debug:
             print("Load layer")
         if not self.gpkg_data:
@@ -171,7 +171,7 @@ class LayerListModel(QAbstractListModel):
         layer_tree_group.setCustomProperty(VERIVD_GROUP_LAYER_ID, veri_meta_layer.layer_group_id)
         layer_tree_group.setExpanded(False)
         layer_infos = self.layer_infos(veri_meta_layer.name)
-        layers = self.gpkg_data.create_layers(veri_meta_layer.name, layer_infos)
+        layers = self.gpkg_data.create_qgis_layers(veri_meta_layer.name, layer_infos)
         veri_meta_layer.qgis_layers = []
         i = 0
         loaded_layers = []

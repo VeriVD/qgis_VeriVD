@@ -165,7 +165,7 @@ class Justificatif(QObject):
                 justif_feature["session"] = date.today().isoformat()
                 justif_feature["statut"] = "nouveau"
                 justif_feature["texte"] = topic_feature["justificatif"]
-                justif_feature["operateur"] = "xxx"
+                # justif_feature["operateur"] = ""
 
                 justif_layer["features"].append(justif_feature)
 

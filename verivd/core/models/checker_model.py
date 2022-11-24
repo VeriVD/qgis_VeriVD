@@ -50,11 +50,29 @@ class CheckerLayerModel(LayerListModel):
         return "Résultat du checker - {}".format(layer)
 
     def layer_infos(self, layer: str) -> [LayerInfo]:
-        sql_request = '"topic" = "{}"'.format(layer)
+        sql_request = "\"topic\" = '{}'".format(layer)
         layer_infos = (
             LayerInfo(
+                display_name="Justificatifs - {} point".format(layer),
+                layer_name="justificatif_point",
+                sql_request=f"\"layer\" = '000_Checker_Point' AND {sql_request}",
+                symbology_type=SymbologyType.SIMPLE,
+            ),
+            LayerInfo(
+                display_name="Justificatifs - {} surface".format(layer),
+                layer_name="justificatif_poylgon",
+                sql_request=f"\"layer\" = '000_Checker_Surface' AND {sql_request}",
+                symbology_type=SymbologyType.SIMPLE,
+            ),
+            LayerInfo(
+                display_name="Justificatifs - {} sans géométrie".format(layer),
+                layer_name="justificatif_nogeometry",
+                sql_request=f"\"layer\" = '000_Checker_Sans_geometrie' AND {sql_request}",
+                symbology_type=SymbologyType.NO_SYMBOL,
+            ),
+            LayerInfo(
                 display_name="Checker - {} point".format(layer),
-                layer_name="000_Checker_point",
+                layer_name="000_Checker_Point",
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="description",
@@ -62,7 +80,7 @@ class CheckerLayerModel(LayerListModel):
             ),
             LayerInfo(
                 display_name="Checker - {} surface".format(layer),
-                layer_name="000_Checker_surface",
+                layer_name="000_Checker_Surface",
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="description",
@@ -71,7 +89,7 @@ class CheckerLayerModel(LayerListModel):
             ),
             LayerInfo(
                 display_name="Checker - {} sans géométrie".format(layer),
-                layer_name="000_Checker_sans_geometrie",
+                layer_name="000_Checker_Sans_geometrie",
                 sql_request=sql_request,
                 symbology_type=SymbologyType.NO_SYMBOL,
             ),

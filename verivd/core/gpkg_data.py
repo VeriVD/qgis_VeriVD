@@ -151,13 +151,13 @@ class GpkgData(object):
         dbg_info(f"{qml_spec_file} {qml_gen_file}")
         return None
 
-    def create_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]) -> Dict[LayerInfo, QgsVectorLayer]:
+    def create_qgis_layers(self, meta_layer_name: str, layer_infos: [LayerInfo]) -> Dict[LayerInfo, QgsVectorLayer]:
         layers = {}
         for layer_info in layer_infos:
             dbg_info(f"Loading layer {layer_info.layer_name}")
 
             # do not set subset string now, so geometry can be correctly determined
-            layer = self.create_qgis_layer(layer_info.display_name, layer_info.layer_name)
+            layer = self.create_qgis_layer(layer_info.display_name, layer_info.layer_name, sql_request=layer_info.sql_request)
 
             # Set the path to the layer's qml file. The qml file must be name at least with the layer name
             if layer.isValid() and layer.featureCount() != 0:
@@ -182,9 +182,10 @@ class GpkgData(object):
                 if layer_info.opacity != 1:
                     layer.setOpacity(layer_info.opacity)
 
-                layer.setSubsetString(layer_info.sql_request)
+                # layer.setSubsetString(layer_info.sql_request)
 
                 layers[layer_info] = layer
+
             else:
                 layers[layer_info] = None
         return layers
