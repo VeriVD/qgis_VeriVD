@@ -72,7 +72,7 @@ BASE_LAYER_INFOS = {
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "Base-Points_fixes": [
-        LayerInfo(display_name="PFP-PFA3", layer_name="001_ITF_PF_Points_fixes"),
+        LayerInfo(display_name="PFP-PFA3", layer_name="001_itf_pf_points_fixes"),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "Base-Altimetrie": [
@@ -116,7 +116,7 @@ BASE_LAYER_INFOS = {
             opacity=0.5,
             visibility=False,
         ),
-        LayerInfo(display_name="PFP-PFA3", layer_name="001_ITF_PF_Points_fixes"),
+        LayerInfo(display_name="PFP-PFA3", layer_name="001_itf_pf_points_fixes"),
         LayerInfo(display_name="Point limite", layer_name="006_ITF_BF_Point_limite"),
         LayerInfo(
             display_name="Point particulier CS",
