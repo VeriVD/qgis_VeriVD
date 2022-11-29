@@ -26,10 +26,16 @@ from datetime import date
 
 from qgis.PyQt.QtCore import pyqtSignal, QObject
 
-from qgis.core import Qgis, QgsFeatureRequest, QgsFeature, QgsProject, QgsWkbTypes, edit, QgsProviderRegistry, QgsProviderSublayerDetails
+from qgis.core import Qgis, QgsFeatureRequest, QgsFeature, QgsProject, QgsWkbTypes, edit, QgsProviderRegistry
 
 from verivd.core.plugin_info import dbg_info
 from verivd.core.gpkg_data import GpkgData
+
+HAS_JUSTIFICATIF = True
+try:
+    from qgis.core import QgsProviderSublayerDetails
+except ImportError:
+    HAS_JUSTIFICATIF = False
 
 
 class GeometryType(Enum):
@@ -179,7 +185,9 @@ class Justificatif(QObject):
         for layer in justificatif_layers.values():
             dbg_info(f"couche justificatif {layer['geometry_type'].value}: enregistrement de {len(layer['features'])} objets")
             if len(layer["features"]):
-                self.progress_changed.emit(int(progress), f"Ecriture des justificatifs ({len(layer['features'])}) dans la couche {layer['layer_name']}")
+                self.progress_changed.emit(
+                    int(progress), f"Ecriture des justificatifs ({len(layer['features'])}) dans la couche {layer['layer_name']}"
+                )
                 qgs_layer = layer["qgis_layer"]
                 dbg_info(f"qgis layer valid: {qgs_layer.isValid()}")
                 with edit(qgs_layer):

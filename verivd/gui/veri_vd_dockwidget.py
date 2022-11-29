@@ -28,7 +28,7 @@ from qgis.PyQt.QtCore import pyqtSignal, QModelIndex, Qt
 from qgis.PyQt.QtWidgets import QDockWidget, QProgressDialog, QApplication
 from qgis.gui import QgsFileWidget
 
-from verivd.core.justificatif import Justificatif
+from verivd.core.justificatif import HAS_JUSTIFICATIF, Justificatif
 from verivd.gui.help import (
     MESSAGE_BASE,
     MESSAGE_CHECKER,
@@ -73,7 +73,12 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.file_widget.fileChanged.connect(self.file_changed)
         self.show_help_button.clicked.connect(self.show_help)
         self.show_help_button.click()
-        self.process_justificatif_button.clicked.connect(self.process_justificatif_clicked)
+
+        if HAS_JUSTIFICATIF:
+            self.process_justificatif_button.clicked.connect(self.process_justificatif_clicked)
+        else:
+            self.process_justificatif_button.setEnabled(False)
+            self.process_justificatif_button.setToolTip("Pour générer les justificatifs, QGIS 3.22 est nécessaire.")
 
     def update_checker_tab(self):
         has_rows = self.layer_models.checker_layer_model.rowCount(QModelIndex()) > 0
