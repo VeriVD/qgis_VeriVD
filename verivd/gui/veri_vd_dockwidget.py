@@ -74,10 +74,11 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.show_help_button.clicked.connect(self.show_help)
         self.show_help_button.click()
 
+        self.process_justificatif_button.setEnabled(False)
+
         if HAS_JUSTIFICATIF:
             self.process_justificatif_button.clicked.connect(self.process_justificatif_clicked)
         else:
-            self.process_justificatif_button.setEnabled(False)
             self.process_justificatif_button.setToolTip("Pour générer les justificatifs, QGIS 3.22 est nécessaire.")
 
     def update_checker_tab(self):

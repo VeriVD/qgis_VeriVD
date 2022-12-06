@@ -39,10 +39,11 @@ from verivd.core.layer_models import LayerModels
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.layer_info import LayerInfo
 from verivd.core.gpkg_data import GpkgData
+from verivd.core.justificatif import HAS_JUSTIFICATIF
 
 from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 
-DEBUG = True
+DEBUG = False
 TEST_FILE = "/Users/denis/Documents/temp/verivd/221116_justif.gpkg"
 
 
@@ -128,9 +129,11 @@ class VeriVD:
             self.gpkg_data = GpkgData(self.iface, uFile)
             self.layer_models.set_gpkg_data(self.gpkg_data)
             self.dock_widget.tabWidget.setEnabled(True)
+            self.dock_widget.process_justificatif_button.setEnabled(HAS_JUSTIFICATIF)
         else:
             self.gpkg_data = None
             self.dock_widget.tabWidget.setEnabled(False)
+            self.dock_widget.process_justificatif_button.setEnabled(False)
             self.layer_models.set_gpkg_data(None)
 
     def run(self):
