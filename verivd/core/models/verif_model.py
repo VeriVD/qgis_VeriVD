@@ -26,7 +26,7 @@ from verivd.core.veri_meta_layer import VeriMetaLayer
 
 
 VERIF_LAYER_INFOS = {
-    "VerifCalage": (
+    "VerifCalage": [
         LayerInfo(
             display_name="Limites des immeubles (ITF) avec ecart significatif",
             layer_name="132_callagebf_ddp_inter",
@@ -44,8 +44,8 @@ VERIF_LAYER_INFOS = {
             visibility=True,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifBiens_fonds": (
+    ],
+    "VerifBiens_fonds": [
         LayerInfo(
             display_name='Point limite non-matérialisé, vérification de l\'attribut "defini_exactement"',
             layer_name="122_verif_BF_PL_non_mat_def_exa",
@@ -136,8 +136,8 @@ VERIF_LAYER_INFOS = {
             visibility=False,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifNomenclature": (
+    ],
+    "VerifNomenclature": [
         LayerInfo(
             display_name="Sifflet entre les immeubles et la nomenclature",
             layer_name="103_VERIF_BF_NO_Surface",
@@ -154,8 +154,8 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifAdresses": (
+    ],
+    "VerifAdresses": [
         LayerInfo(
             display_name="Numéro d'entrée",
             layer_name="009_itf_bat_posentree_batiment",
@@ -221,8 +221,8 @@ VERIF_LAYER_INFOS = {
             visibility=False,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifCouverture_du_sol": (
+    ],
+    "VerifCouverture_du_sol": [
         LayerInfo(
             display_name="Point particulier manquant sous un angle de bâtiment",
             layer_name="113_cs_pointbatiment",
@@ -252,8 +252,8 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifObjets_divers": (
+    ],
+    "VerifObjets_divers": [
         LayerInfo(
             display_name="Incohérence entre le genre et la désignation",
             layer_name="121_verif_OD_test_designation",
@@ -354,8 +354,8 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifContinuite_des_reseaux": (
+    ],
+    "VerifContinuite_des_reseaux": [
         LayerInfo(
             display_name="CS Nom et numéro",
             layer_name="002_ITF_CS_Pos_Surface_CS",
@@ -409,8 +409,8 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifPoints_fixes": (
+    ],
+    "VerifPoints_fixes": [
         LayerInfo(
             display_name="Point fixes dont les attributs ITF vs BDMO ne sont pas identiques",
             layer_name="115_itf_pfp_problemeattribut",
@@ -439,8 +439,8 @@ VERIF_LAYER_INFOS = {
             layer_name="115_itf_pfp",
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifLimites_territoriales_et_administratives": (
+    ],
+    "VerifLimites_territoriales_et_administratives": [
         LayerInfo(
             display_name="Géometrie de limite de canton incorrecte (OGC)",
             layer_name="116_LigneCANT_OGC_fail",
@@ -503,8 +503,8 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
-    "VerifNumerotation": (
+    ],
+    "VerifNumerotation": [
         LayerInfo(
             display_name="Fléche du doublon de numéro",
             layer_name="123_verif_numdoublonfleche",
@@ -557,8 +557,8 @@ VERIF_LAYER_INFOS = {
             display_name="Plans alentours",
             layer_name="111_bdmo_repartition_plans_alentours",
         ),
-    ),
-    "VerifGeometrie": (
+    ],
+    "VerifGeometrie": [
         LayerInfo(
             display_name="Test OGC",
             layer_name="119_verif_geomogc",
@@ -643,8 +643,38 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
-    ),
+    ],
 }
+
+# adding justificatifs layers
+for veri_vd_layer, layer_infos in VERIF_LAYER_INFOS.items():
+    layer_names = ", ".join([f"'{li.layer_name.lower()}'" for li in layer_infos])
+    VERIF_LAYER_INFOS[veri_vd_layer] = [
+        LayerInfo(
+            display_name="Justificatifs - point",
+            layer_name="justificatif_point",
+            sql_request=f'lower("layer") in ({layer_names})',
+            symbology_type=SymbologyType.SIMPLE,
+        ),
+        LayerInfo(
+            display_name="Justificatifs - ligne",
+            layer_name="justificatif_line",
+            sql_request=f'lower("layer") in ({layer_names})',
+            symbology_type=SymbologyType.SIMPLE,
+        ),
+        LayerInfo(
+            display_name="Justificatifs - surface",
+            layer_name="justificatif_poylgon",
+            sql_request=f'lower("layer") in ({layer_names})',
+            symbology_type=SymbologyType.SIMPLE,
+        ),
+        LayerInfo(
+            display_name="Justificatifs - sans géométrie",
+            layer_name="justificatif_nogeometry",
+            sql_request=f'lower("layer") in ({layer_names})',
+            symbology_type=SymbologyType.NO_SYMBOL,
+        ),
+    ] + layer_infos
 
 
 def create_veri_meta_layers():
@@ -653,17 +683,11 @@ def create_veri_meta_layers():
         VeriMetaLayer("VerifBiens_fonds", "Vérification - Biens fonds"),
         VeriMetaLayer("VerifCouverture_du_sol", "Vérification - Couverture du sol"),
         VeriMetaLayer("VerifObjets_divers", "Vérification - Objets divers"),
-        VeriMetaLayer(
-            "VerifContinuite_des_reseaux",
-            "Vérification - Continuite des reseaux",
-        ),
+        VeriMetaLayer("VerifContinuite_des_reseaux", "Vérification - Continuite des reseaux"),
         VeriMetaLayer("VerifGeometrie", "Vérification - Géométries"),
         VeriMetaLayer("VerifNomenclature", "Vérification - Nomenclature"),
         VeriMetaLayer("VerifNumerotation", "Vérification - Nom & Numérotation"),
-        VeriMetaLayer(
-            "VerifLimites_territoriales_et_administratives",
-            "Vérification - Limites territoriales et administratives",
-        ),
+        VeriMetaLayer("VerifLimites_territoriales_et_administratives", "Vérification - Limites territoriales et administratives"),
         VeriMetaLayer("VerifPoints_fixes", "Vérification - Points fixes"),
         VeriMetaLayer("VerifCalage", "Vérification - Calage des immeubles"),
     )
