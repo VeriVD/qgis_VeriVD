@@ -26,7 +26,7 @@ from datetime import date
 
 from qgis.PyQt.QtCore import pyqtSignal, QObject
 
-from qgis.core import Qgis, QgsFeatureRequest, QgsFeature, QgsProject, QgsWkbTypes, edit, QgsProviderRegistry
+from qgis.core import Qgis, QgsFeatureRequest, QgsFeature, QgsProject, QgsWkbTypes, edit, QgsProviderRegistry, QgsExpressionContextUtils
 
 from verivd.core.plugin_info import dbg_info
 from verivd.core.gpkg_data import GpkgData
@@ -178,7 +178,7 @@ class Justificatif(QObject):
                 justif_feature["session"] = date.today().isoformat()
                 justif_feature["statut"] = "nouveau"
                 justif_feature["texte"] = topic_feature["justificatif"]
-                justif_feature["operateur"] = None
+                justif_feature["operateur"] = QgsExpressionContextUtils.globalScope().variable("user_full_name")
 
                 justif_layer["features"].append(justif_feature)
 
