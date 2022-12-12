@@ -188,7 +188,7 @@ for veri_vd_layer, layer_infos in BASE_LAYER_INFOS.items():
         ),
         LayerInfo(
             display_name="Justificatifs - surface",
-            layer_name="justificatif_poylgon",
+            layer_name="justificatif_polygon",
             sql_request=f'lower("layer") in ({layer_names})',
             symbology_type=SymbologyType.SIMPLE,
         ),

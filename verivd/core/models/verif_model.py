@@ -654,19 +654,19 @@ for veri_vd_layer, layer_infos in VERIF_LAYER_INFOS.items():
             display_name="Justificatifs - point",
             layer_name="justificatif_point",
             sql_request=f'lower("layer") in ({layer_names})',
-            symbology_type=SymbologyType.SIMPLE,
+            symbology_type=SymbologyType.QML,
         ),
         LayerInfo(
             display_name="Justificatifs - ligne",
             layer_name="justificatif_line",
             sql_request=f'lower("layer") in ({layer_names})',
-            symbology_type=SymbologyType.SIMPLE,
+            symbology_type=SymbologyType.QML,
         ),
         LayerInfo(
             display_name="Justificatifs - surface",
-            layer_name="justificatif_poylgon",
+            layer_name="justificatif_polygon",
             sql_request=f'lower("layer") in ({layer_names})',
-            symbology_type=SymbologyType.SIMPLE,
+            symbology_type=SymbologyType.QML,
         ),
         LayerInfo(
             display_name="Justificatifs - sans géométrie",

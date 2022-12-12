@@ -35,6 +35,7 @@ from qgis.PyQt.QtGui import QIcon
 from qgis.gui import QgisInterface
 
 # Initialize layers
+from verivd.core.plugin_info import DEBUG
 from verivd.core.layer_models import LayerModels
 from verivd.core.layer_list_model import LayerListModel
 from verivd.core.layer_info import LayerInfo
@@ -43,7 +44,6 @@ from verivd.core.justificatif import HAS_JUSTIFICATIF
 
 from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 
-DEBUG = False
 TEST_FILE = "/Users/denis/Documents/temp/verivd/221116_justif.gpkg"
 
 

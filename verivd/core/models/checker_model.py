@@ -60,7 +60,7 @@ class CheckerLayerModel(LayerListModel):
             ),
             LayerInfo(
                 display_name="Justificatifs - {} surface".format(layer),
-                layer_name="justificatif_poylgon",
+                layer_name="justificatif_polygon",
                 sql_request=f"\"layer\" = '000_checker_surface' AND {sql_request}",
                 symbology_type=SymbologyType.SIMPLE,
             ),

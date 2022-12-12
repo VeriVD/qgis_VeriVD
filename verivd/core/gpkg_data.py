@@ -29,7 +29,7 @@ from qgis.core import (
 from qgis.gui import QgisInterface
 from qgis.PyQt.QtGui import QColor
 
-from verivd.core.plugin_info import dbg_info
+from verivd.core.plugin_info import dbg_info, DEBUG, DEBUG_KEEP_LAYER
 from verivd.core.layer_info import LayerInfo
 from verivd.core.symbology_type import SymbologyType
 
@@ -71,7 +71,8 @@ class GpkgData(object):
         elif layer.geometryType() == QgsWkbTypes.PolygonGeometry:
             simple_symbol = QgsFillSymbol.createSimple(properties)
 
-        layer.renderer().setSymbol(simple_symbol)
+        if layer.renderer():
+            layer.renderer().setSymbol(simple_symbol)
 
     def change_properties(self, layer: QgsVectorLayer, properties: QgsPropertyCollection):
         if layer.renderer() is not None:
@@ -126,7 +127,7 @@ class GpkgData(object):
         qml_spec_file = os.path.join(
             self.plugin_path,
             "../qml",
-            "{}_{}.qml".format(meta_layer_name, layer_info.layer_name),
+            f"{meta_layer_name}_{layer_info.layer_name}.qml",
         )
         qml_gen_file = os.path.join(self.plugin_path, "../qml", "{}.qml".format(layer_info.layer_name))
         # Check if a specific qml file exist for this layer
@@ -159,7 +160,7 @@ class GpkgData(object):
             layer = self.create_qgis_layer(layer_info.display_name, layer_info.layer_name, sql_request=layer_info.sql_request)
 
             # Set the path to the layer's qml file. The qml file must be name at least with the layer name
-            if layer.isValid() and layer.featureCount() != 0:
+            if (layer.isValid() and layer.featureCount() != 0) or (DEBUG is True and DEBUG_KEEP_LAYER is True):
                 if layer_info.symbology_type == SymbologyType.QML:
                     qml_file = self.qml_definition(meta_layer_name, layer_info)
                     if qml_file:
@@ -167,7 +168,7 @@ class GpkgData(object):
                     else:
                         self.iface.messageBar().pushWarning(
                             "VeriVD - fichier QML manquant",
-                            "{} ({})".format(layer_info.display_name, layer_info.layer_name),
+                            f"{layer_info.display_name} ({layer_info.layer_name}): {qml_file}",
                         )
 
                 elif layer_info.symbology_type == SymbologyType.RANDOM_CATEGORIZED:
