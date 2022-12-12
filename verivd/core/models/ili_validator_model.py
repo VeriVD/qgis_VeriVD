@@ -53,19 +53,19 @@ class IliValidatorLayerModel(LayerListModel):
                 display_name="Justificatifs - {} point".format(layer),
                 layer_name="justificatif_point",
                 sql_request=f"\"layer\" = '000_ilivalidator_point' AND {sql_request}",
-                symbology_type=SymbologyType.SIMPLE,
+                symbology_type=SymbologyType.QML,
             ),
             LayerInfo(
                 display_name="Justificatifs - {} ligne".format(layer),
                 layer_name="justificatif_line",
                 sql_request=f"\"layer\" = '000_ilivalidator_ligne' AND {sql_request}",
-                symbology_type=SymbologyType.SIMPLE,
+                symbology_type=SymbologyType.QML,
             ),
             LayerInfo(
                 display_name="Justificatifs - {} surface".format(layer),
                 layer_name="justificatif_polygon",
                 sql_request=f"\"layer\" = '000_ilivalidator_surface' AND {sql_request}",
-                symbology_type=SymbologyType.SIMPLE,
+                symbology_type=SymbologyType.QML,
             ),
             LayerInfo(
                 display_name="Justificatifs - {} sans géométrie".format(layer),
