@@ -58,7 +58,8 @@ class IliValidatorLayerModel(LayerListModel):
             LayerInfo(
                 display_name="Justificatifs - {} ligne".format(layer),
                 layer_name="justificatif_line",
-                sql_request=f"\"layer\" = '000_ilivalidator_ligne' AND {sql_request}",
+                # les lignes sont dans la couche _surface
+                sql_request=f"\"layer\" = '000_ilivalidator_surface' AND {sql_request}",
                 symbology_type=SymbologyType.QML,
             ),
             LayerInfo(

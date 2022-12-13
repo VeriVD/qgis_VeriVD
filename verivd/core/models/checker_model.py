@@ -59,6 +59,13 @@ class CheckerLayerModel(LayerListModel):
                 symbology_type=SymbologyType.QML,
             ),
             LayerInfo(
+                display_name="Justificatifs - {} ligne".format(layer),
+                layer_name="justificatif_line",
+                # les lignes sont dans la couche _surface
+                sql_request=f"\"layer\" = '000_checker_surface' AND {sql_request}",
+                symbology_type=SymbologyType.QML,
+            ),
+            LayerInfo(
                 display_name="Justificatifs - {} surface".format(layer),
                 layer_name="justificatif_polygon",
                 sql_request=f"\"layer\" = '000_checker_surface' AND {sql_request}",
