@@ -28,7 +28,7 @@ from verivd.core.veri_meta_layer import VeriMetaLayer
 VERIF_LAYER_INFOS = {
     "VerifCalage": [
         LayerInfo(
-            display_name="Limites des immeubles (ITF) avec ecart significatif",
+            display_name="Ecart très significatif (ITF)",
             layer_name="132_callagebf_ddp_inter",
             control_layer=True,
             visibility=True,
@@ -39,7 +39,7 @@ VERIF_LAYER_INFOS = {
             visibility=True,
         ),
         LayerInfo(
-            display_name="Ecart significatif selon échelle du plan (BDMO)",
+            display_name="Marge 1mm sur ancien plan (BDMO)",
             layer_name="132_callagebf_ddp_buff_ae",
             visibility=True,
         ),
@@ -260,7 +260,7 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(
-            display_name="Aboutissant du linéraire non superposé à l'objet surfacique",
+            display_name="Aboutissant du linéraire non-superposé à l'objet surfacique",
             layer_name="128_verif_od_test_geom_connbordure",
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={"color": "50, 50, 210"},
@@ -506,7 +506,7 @@ VERIF_LAYER_INFOS = {
     ],
     "VerifNumerotation": [
         LayerInfo(
-            display_name="Fléche du doublon de numéro",
+            display_name="Flèche du doublon de numéro",
             layer_name="123_verif_numdoublonfleche",
             control_layer=True,
         ),
