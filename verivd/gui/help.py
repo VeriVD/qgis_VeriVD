@@ -28,5 +28,5 @@ MESSAGE_CHECKER = f"""Cet onglet permet le chargement des données issues du <a 
 </a>. Pour plus d'informations, veuiller consulter la page web s'y référant. """
 
 MESSAGE_VERIF = f"""Cet onglet permet le chargement des données des tests de vérification dévelopés en interne à 
-la DCG (office de l'information sur le territoire). Des explications relatives à chacun de ces tests sont disponnible 
+la DCG (direction du cadastre et de la géoinformation). Des explications relatives à chacun de ces tests sont disponnibles 
 dans la fiche <a href='{WEB_6052}'>6052</a>. """
