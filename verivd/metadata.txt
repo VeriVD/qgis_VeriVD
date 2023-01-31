@@ -4,10 +4,10 @@ name=VeriVD
 qgisMinimumVersion=3.4
 description=Vérification des mensurations vaudoises
 version=DEV
-author=FSN/OIT
+author=FSN/DCG
 email=fabien.simon@vd.ch
 
-about=Ce plugin permet le chargement et la représentation de données contenues dans un fichier geopackage, produit par les scripts de vérification des mensuration de l'office de l'information sur le térritoire (OIT) Vaud.
+about=Ce plugin permet le chargement et la représentation de données contenues dans un fichier geopackage, produit par les scripts de vérification des mensurations de la direction du cadastre et de la géoinformation (DCG) Vaud.
 
 homepage=https://github.com/VeriVD/qgis_VeriVD
 tracker=https://github.com/VeriVD/qgis_VeriVD/issues
