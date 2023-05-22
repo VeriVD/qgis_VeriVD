@@ -25,6 +25,7 @@ from enum import Enum
 
 from qgis.core import (
     Qgis,
+    QgsCompoundCurve,
     QgsExpressionContextUtils,
     QgsFeature,
     QgsFeatureRequest,
@@ -176,7 +177,15 @@ class Justificatif(QObject):
                 justif_layer = justificatif_layers.get(geometry_type, justificatif_layer_no_geometry)
 
                 justif_feature = QgsFeature(justif_layer["qgis_layer"].fields())
-                justif_feature.setGeometry(topic_feature.geometry())
+                if (
+                    justif_layer["qgis_layer"].wkbType() == QgsWkbTypes.CompoundCurve
+                    and topic_feature.geometry().wkbType() == QgsWkbTypes.CircularString
+                ):
+                    g = QgsCompoundCurve()
+                    g.addCurve(topic_feature.geometry().constGet().clone())
+                    justif_feature.setGeometry(g)
+                else:
+                    justif_feature.setGeometry(topic_feature.geometry())
                 justif_feature["layer"] = layer.name().lower()
                 if topic_feature.fields().indexFromName("topic") >= 0:
                     justif_feature["topic"] = topic_feature["topic"]
