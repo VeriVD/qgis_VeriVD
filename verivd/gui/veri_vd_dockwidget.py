@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVDDockWidget
@@ -23,10 +22,10 @@
 
 import os
 
-from qgis.PyQt import uic
-from qgis.PyQt.QtCore import pyqtSignal, QModelIndex, Qt
-from qgis.PyQt.QtWidgets import QDockWidget, QProgressDialog, QApplication
 from qgis.gui import QgsFileWidget
+from qgis.PyQt import uic
+from qgis.PyQt.QtCore import QModelIndex, Qt, pyqtSignal
+from qgis.PyQt.QtWidgets import QApplication, QDockWidget, QProgressDialog
 
 from verivd.core.justificatif import HAS_JUSTIFICATIF, Justificatif
 from verivd.gui.help import (
@@ -40,12 +39,11 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), "../ui/ve
 
 
 class VeriVDDockWidget(QDockWidget, FORM_CLASS):
-
     file_changed = pyqtSignal(str)
     closingPlugin = pyqtSignal()
 
     def __init__(self, layer_models, parent=None):
-        super(VeriVDDockWidget, self).__init__(parent)
+        super().__init__(parent)
         self.setupUi(self)
         self.tabWidget.setEnabled(False)
 

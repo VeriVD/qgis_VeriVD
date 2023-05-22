@@ -1,4 +1,3 @@
-# coding: utf-8
 """
 /***************************************************************************
  VeriVD
@@ -22,26 +21,19 @@
 """
 import os.path
 
-from qgis.PyQt.QtCore import (
-    Qt,
-    QCoreApplication,
-    QLocale,
-    QSettings,
-    QTranslator,
-)
-from qgis.PyQt.QtWidgets import QAction, QMessageBox
-from qgis.PyQt.QtGui import QIcon
-
 from qgis.gui import QgisInterface
+from qgis.PyQt.QtCore import QCoreApplication, QLocale, QSettings, Qt, QTranslator
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction, QMessageBox
+
+from verivd.core.gpkg_data import GpkgData
+from verivd.core.justificatif import HAS_JUSTIFICATIF
+from verivd.core.layer_info import LayerInfo
+from verivd.core.layer_list_model import LayerListModel
+from verivd.core.layer_models import LayerModels
 
 # Initialize layers
 from verivd.core.plugin_info import DEBUG
-from verivd.core.layer_models import LayerModels
-from verivd.core.layer_list_model import LayerListModel
-from verivd.core.layer_info import LayerInfo
-from verivd.core.gpkg_data import GpkgData
-from verivd.core.justificatif import HAS_JUSTIFICATIF
-
 from verivd.gui.veri_vd_dockwidget import VeriVDDockWidget
 
 TEST_FILE = "/Users/denis/Documents/temp/verivd/221116_justif.gpkg"
@@ -118,7 +110,7 @@ class VeriVD:
                 QMessageBox.question(
                     self.dock_widget,
                     "Veri-VD",
-                    "Voulez-vous conserver les couches chargées par {}?".format(self.gpkg_data.path),
+                    f"Voulez-vous conserver les couches chargées par {self.gpkg_data.path}?",
                 )
                 == QMessageBox.No
             ):

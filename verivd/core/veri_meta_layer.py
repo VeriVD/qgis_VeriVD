@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVD plugin
@@ -14,8 +13,8 @@
  ***************************************************************************/
 """
 
+from qgis.core import QgsLayerTreeGroup, QgsVectorLayer
 from qgis.PyQt.QtCore import Qt
-from qgis.core import QgsVectorLayer, QgsLayerTreeGroup
 
 
 class VeriMetaLayer:

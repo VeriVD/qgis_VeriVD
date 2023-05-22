@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVD plugin
@@ -18,7 +17,7 @@
 from verivd.core.symbology_type import SymbologyType
 
 
-class LayerInfo(object):
+class LayerInfo:
     def __init__(
         self,
         display_name: str,

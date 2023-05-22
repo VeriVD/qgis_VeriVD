@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVDDockWidget
@@ -21,15 +20,23 @@
  ***************************************************************************/
 """
 
-from enum import Enum
 from datetime import date
+from enum import Enum
 
-from qgis.PyQt.QtCore import pyqtSignal, QObject
+from qgis.core import (
+    Qgis,
+    QgsExpressionContextUtils,
+    QgsFeature,
+    QgsFeatureRequest,
+    QgsProject,
+    QgsProviderRegistry,
+    QgsWkbTypes,
+    edit,
+)
+from qgis.PyQt.QtCore import QObject, pyqtSignal
 
-from qgis.core import Qgis, QgsFeatureRequest, QgsFeature, QgsProject, QgsWkbTypes, edit, QgsProviderRegistry, QgsExpressionContextUtils
-
-from verivd.core.plugin_info import dbg_info
 from verivd.core.gpkg_data import GpkgData
+from verivd.core.plugin_info import dbg_info
 
 HAS_JUSTIFICATIF = True
 try:
@@ -56,7 +63,7 @@ class Justificatif(QObject):
     def __init__(self, parent=None):
         self.canceled = False
         self.layer_tree_group = None
-        super(Justificatif, self).__init__(parent)
+        super().__init__(parent)
 
     def cancel(self):
         self.canceled = True

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 WEB_GEOPACKAGE = "https://www.geopackage.org/"
 WEB_MOPUBLIC = "https://www.cadastre.ch/fr/services/service/mopublic.html"

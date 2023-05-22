@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVD plugin
@@ -14,16 +13,14 @@
  ***************************************************************************/
 """
 
+from qgis.core import QgsProperty, QgsSymbolLayer
+from qgis.gui import QgisInterface
 from qgis.PyQt.QtCore import Qt
 
-from qgis.core import QgsSymbolLayer, QgsProperty
-from qgis.gui import QgisInterface
-
-from verivd.core.symbology_type import SymbologyType
 from verivd.core.layer_info import LayerInfo
 from verivd.core.layer_list_model import LayerListModel
+from verivd.core.symbology_type import SymbologyType
 from verivd.core.veri_meta_layer import VeriMetaLayer
-
 
 VERIF_LAYER_INFOS = {
     "VerifCalage": [
@@ -695,7 +692,7 @@ def create_veri_meta_layers():
 
 class VerifLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
-        super(VerifLayerModel, self).__init__(iface, create_veri_meta_layers(), has_control_layers=True)
+        super().__init__(iface, create_veri_meta_layers(), has_control_layers=True)
 
     def reload(self):
         self.veri_meta_layers = create_veri_meta_layers()

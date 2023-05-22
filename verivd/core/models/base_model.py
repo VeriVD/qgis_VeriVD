@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVD plugin
@@ -17,10 +16,9 @@
 from qgis.gui import QgisInterface
 
 from verivd.core.layer_info import LayerInfo
-from verivd.core.veri_meta_layer import VeriMetaLayer
-from verivd.core.symbology_type import SymbologyType
 from verivd.core.layer_list_model import LayerListModel
-
+from verivd.core.symbology_type import SymbologyType
+from verivd.core.veri_meta_layer import VeriMetaLayer
 
 BASE_LAYER_INFOS = {
     "Base-Biens_fonds": [
@@ -219,7 +217,7 @@ def create_veri_meta_layers():
 
 class BaseLayerModel(LayerListModel):
     def __init__(self, iface: QgisInterface):
-        super(BaseLayerModel, self).__init__(iface, create_veri_meta_layers())
+        super().__init__(iface, create_veri_meta_layers())
 
     def layer_infos(self, layer: str) -> [LayerInfo]:
         return BASE_LAYER_INFOS[layer]

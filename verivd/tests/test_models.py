@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVD plugin
@@ -17,12 +16,11 @@
 from qgis.testing import start_app, unittest
 from qgis.testing.mocked import get_iface
 
-from verivd.core.models.base_model import BASE_LAYER_INFOS, BaseLayerModel
-from verivd.core.models.verif_model import VERIF_LAYER_INFOS, VerifLayerModel
 from verivd.core.gpkg_data import GpkgData
 from verivd.core.layer_models import LayerModels
+from verivd.core.models.base_model import BASE_LAYER_INFOS, BaseLayerModel
+from verivd.core.models.verif_model import VERIF_LAYER_INFOS, VerifLayerModel
 from verivd.core.symbology_type import SymbologyType
-
 
 start_app()
 
@@ -62,5 +60,5 @@ class OfflineConverterTest(unittest.TestCase):
                             continue
                         self.assertIsNotNone(
                             gpkg_data.qml_definition(veri_layer.name, layer_info),
-                            "Layer {} has no QML file".format(layer_info.layer_name),
+                            f"Layer {layer_info.layer_name} has no QML file",
                         )

@@ -1,36 +1,34 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """ A simple class used to load a layer in QGIS """
 
 # Some commonly used imports
 
-from builtins import object
 import os.path
 from random import randrange
 from typing import Dict
 
 from qgis.core import (
-    QgsSimpleMarkerSymbolLayerBase,
-    QgsWkbTypes,
-    QgsExpressionContextUtils,
-    QgsVectorLayer,
-    QgsPropertyCollection,
-    QgsSymbol,
-    QgsSimpleFillSymbolLayer,
-    QgsRendererCategory,
     QgsCategorizedSymbolRenderer,
     QgsCoordinateReferenceSystem,
-    QgsMarkerSymbol,
-    QgsLineSymbol,
+    QgsExpressionContextUtils,
     QgsFillSymbol,
+    QgsLineSymbol,
+    QgsMarkerSymbol,
+    QgsPropertyCollection,
     QgsRenderContext,
+    QgsRendererCategory,
+    QgsSimpleFillSymbolLayer,
+    QgsSimpleMarkerSymbolLayerBase,
+    QgsSymbol,
+    QgsVectorLayer,
+    QgsWkbTypes,
 )
 from qgis.gui import QgisInterface
 from qgis.PyQt.QtGui import QColor
 
-from verivd.core.plugin_info import dbg_info, DEBUG, DEBUG_KEEP_LAYER
 from verivd.core.layer_info import LayerInfo
+from verivd.core.plugin_info import DEBUG, DEBUG_KEEP_LAYER, dbg_info
 from verivd.core.symbology_type import SymbologyType
 
 MARKER_SHAPE = (
@@ -46,7 +44,7 @@ MARKER_SHAPE = (
 )
 
 
-class GpkgData(object):
+class GpkgData:
     """This class Contain generic attributes and methods"""
 
     def __init__(self, iface: QgisInterface, gpkg_path: str):
@@ -129,7 +127,7 @@ class GpkgData(object):
             "../qml",
             f"{meta_layer_name}_{layer_info.layer_name}.qml",
         )
-        qml_gen_file = os.path.join(self.plugin_path, "../qml", "{}.qml".format(layer_info.layer_name))
+        qml_gen_file = os.path.join(self.plugin_path, "../qml", f"{layer_info.layer_name}.qml")
         # Check if a specific qml file exist for this layer
         # if not, check if a generic qml file exist
         if os.path.isfile(qml_spec_file):

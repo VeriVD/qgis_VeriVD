@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 /***************************************************************************
  VeriVD plugin
@@ -15,20 +14,19 @@
 """
 
 
-from qgis.PyQt.QtCore import Qt, QAbstractListModel, QModelIndex, pyqtSignal
-
 from qgis.core import (
-    QgsProject,
-    QgsVectorLayer,
-    QgsRenderContext,
     QgsExpressionContextUtils,
     QgsLayerTree,
     QgsLayerTreeGroup,
+    QgsProject,
+    QgsRenderContext,
+    QgsVectorLayer,
 )
 from qgis.gui import QgisInterface
+from qgis.PyQt.QtCore import QAbstractListModel, QModelIndex, Qt, pyqtSignal
 
-from verivd.core.layer_info import LayerInfo
 from verivd.core.gpkg_data import GpkgData
+from verivd.core.layer_info import LayerInfo
 from verivd.core.veri_meta_layer import VeriMetaLayer
 
 Debug = True
@@ -37,7 +35,6 @@ VERIVD_GROUP_LAYER_ID = "verivd-layergropup-id"
 
 
 class LayerListModel(QAbstractListModel):
-
     # signal emitted when layers are loaded (group_name, loaded_layers)
     layers_loaded = pyqtSignal(str, list)
 
@@ -177,7 +174,7 @@ class LayerListModel(QAbstractListModel):
         loaded_layers = []
         for layer_info, qgis_layer in layers.items():
             if qgis_layer is None:
-                print("no layer loaded for {}".format(layer_info.display_name))
+                print(f"no layer loaded for {layer_info.display_name}")
                 continue
             self.post_process_layer(qgis_layer, i)
             added_qgis_layer = QgsProject.instance().addMapLayer(qgis_layer, False)
