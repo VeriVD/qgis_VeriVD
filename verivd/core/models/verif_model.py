@@ -40,7 +40,7 @@ VERIF_LAYER_INFOS = {
             layer_name="132_callagebf_ddp_buff_ae",
             visibility=True,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifBiens_fonds": [
         LayerInfo(
@@ -132,7 +132,7 @@ VERIF_LAYER_INFOS = {
             layer_name="111_bdmo_repartition_plan_en_vigueur_du_lot",
             visibility=False,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifNomenclature": [
         LayerInfo(
@@ -150,7 +150,7 @@ VERIF_LAYER_INFOS = {
             layer_name="131_no_bf_rp_geom_verif_no_manqueetiquette",
             control_layer=True,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifAdresses": [
         LayerInfo(
@@ -172,6 +172,18 @@ VERIF_LAYER_INFOS = {
         LayerInfo(
             display_name="Différence avec les entrées du RCB",
             layer_name="104_verif_entreemo_diff_rcb",
+            visibility=False,
+            control_layer=True,
+        ),
+        LayerInfo(
+            display_name="Numéro cantonal de localisation absent dans le RCB",
+            layer_name="104_VERIF_numLocalisation_pas_dans_RCB",
+            visibility=False,
+            control_layer=True,
+        ),
+        LayerInfo(
+            display_name="Doublon de numéro de localisation",
+            layer_name="104_VERIF_numLocalisation_doublon",
             visibility=False,
             control_layer=True,
         ),
@@ -217,7 +229,7 @@ VERIF_LAYER_INFOS = {
             },
             visibility=False,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifCouverture_du_sol": [
         LayerInfo(
@@ -248,7 +260,7 @@ VERIF_LAYER_INFOS = {
             layer_name="126_verif_point_cs_od",
             control_layer=True,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifObjets_divers": [
         LayerInfo(
@@ -257,7 +269,7 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(
-            display_name="Aboutissant du linéraire non-superposé à l'objet surfacique",
+            display_name="Aboutissant du linéaire non-superposé à l'objet surfacique",
             layer_name="128_verif_od_test_geom_connbordure",
             symbology_type=SymbologyType.SIMPLE,
             symbology_properties={"color": "50, 50, 210"},
@@ -272,9 +284,24 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(
-            display_name="Point particulier pas sur sommet de OD",
+            display_name="Point particulier OD pas sur sommet OD",
             layer_name="126_verif_point_cs_od",
             sql_request='"source" = "Objets_divers"',
+            control_layer=True,
+        ),
+        LayerInfo(
+            display_name="Point particulier OD sur limite CS",
+            layer_name="126_verif_Point_ODsurCS",
+            control_layer=True,
+        ),        
+        LayerInfo(
+            display_name="Sifflet entre les biens-fonds et les souterrains, couverts",
+            layer_name="103_VERIF_BF_OD_Surface",
+            control_layer=True,
+        ),
+        LayerInfo(
+            display_name="Sifflet entre les DDP et les souterrains, couverts",
+            layer_name="103_VERIF_DDP_OD_Surface",
             control_layer=True,
         ),
         LayerInfo(
@@ -350,7 +377,7 @@ VERIF_LAYER_INFOS = {
             opacity=0.5,
             control_layer=True,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifContinuite_des_reseaux": [
         LayerInfo(
@@ -405,7 +432,7 @@ VERIF_LAYER_INFOS = {
             sql_request='"number" LIKE "DP%"',
             control_layer=True,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifPoints_fixes": [
         LayerInfo(
@@ -414,6 +441,19 @@ VERIF_LAYER_INFOS = {
             opacity=0.5,
             visibility=False,
             control_layer=True,
+        ),
+        LayerInfo(
+            display_name="Précision altimétrique des points fixes hors tolérance",
+            layer_name="115_itf_pfp",
+            sql_request='"geomalt" <= 300  OR "geomalt" >= 3500',
+            visibility=False,
+            control_layer=True,
+            symbology_type=SymbologyType.SIMPLE,
+            symbology_properties={
+                "color": "255, 0, 0, 180",
+                "border_color": "255, 255, 0",
+                "size": "5",
+            },
         ),
         LayerInfo(
             display_name="Points fixes en BDMO mais pas dans le fichier ITF",
@@ -435,7 +475,7 @@ VERIF_LAYER_INFOS = {
             display_name="Précision planimétrique des points fixes",
             layer_name="115_itf_pfp",
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifLimites_territoriales_et_administratives": [
         LayerInfo(
@@ -499,7 +539,7 @@ VERIF_LAYER_INFOS = {
             layer_name="103_VERIF_BF_COM_Surface",
             control_layer=True,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
     "VerifNumerotation": [
         LayerInfo(
@@ -542,14 +582,14 @@ VERIF_LAYER_INFOS = {
             layer_name="123_verif_num_baths_dwh",
         ),
         LayerInfo(
-            display_name="Bâtment soutterrain hors lot, sur la commune - BDMO",
+            display_name="Bâtiment souterrain hors lot, sur la commune - BDMO",
             layer_name="123_verif_num_batss_dwh",
         ),
         LayerInfo(
             display_name="Parcelles hors lot, sur la commune - BDMO",
             layer_name="123_verif_num_bf_dwh",
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
         LayerInfo(
             display_name="Plans alentours",
             layer_name="111_bdmo_repartition_plans_alentours",
@@ -567,6 +607,12 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(
+            display_name="Overlap intra-couche",
+            layer_name="133_NO_BF_RP_GEOMDetectionArcOverlap",
+            visibility=True,
+            control_layer=True,
+        ),
+        LayerInfo(
             display_name="Arc dont la flèche est inférieure à 3.5cm",
             layer_name="106_verif_segmentarc",
             sql_request='"fleche" < 0.035',
@@ -577,6 +623,12 @@ VERIF_LAYER_INFOS = {
             display_name="Arc de cercle",
             layer_name="106_verif_segmentarc",
             visibility=False,
+        ),
+        LayerInfo(
+            display_name="Label inexistant",
+            layer_name="125_verif_PosInexistante",
+            visibility=True,
+            control_layer=True,
         ),
         LayerInfo(
             display_name="Position de label à vérifier",
@@ -635,11 +687,11 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(
-            display_name="Différence entre le contour des biens-fonds et le périmetre du lot",
+            display_name="Différence entre le contour des biens-fonds et le périmètre du lot",
             layer_name="112_itf_diff_mise_a_jourrp_perimbf",
             control_layer=True,
         ),
-        LayerInfo(display_name="Périmetre du lot", layer_name="112_itf_mise_a_jourrp"),
+        LayerInfo(display_name="Périmètre du lot", layer_name="112_itf_mise_a_jourrp"),
     ],
 }
 
