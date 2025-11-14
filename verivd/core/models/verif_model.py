@@ -177,7 +177,7 @@ VERIF_LAYER_INFOS = {
         ),
         LayerInfo(
             display_name="Numéro cantonal de localisation pas dans le RCB",
-            layer_name="104_VERIF_numLocalisation_pas_dans_RCB",
+            layer_name="104_verif_numLocalisation_pas_dans_RCB",
             visibility=False,
             control_layer=True,
         ),
