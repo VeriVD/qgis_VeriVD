@@ -183,13 +183,13 @@ VERIF_LAYER_INFOS = {
         ),
         LayerInfo(
             display_name="Doublon de numéro de localisation",
-            layer_name="104_VERIF_numLocalisation_doublon",
+            layer_name="104_verif_numLocalisation_doublon",
             visibility=False,
             control_layer=True,
         ),
         LayerInfo(
             display_name="Lien entre les entrées et les localisations",
-            layer_name="109_VERIF_Entree_Vers_Localisation",
+            layer_name="109_verif_Entree_Vers_Localisation",
             control_layer=True,
         ),
         LayerInfo(
@@ -199,12 +199,12 @@ VERIF_LAYER_INFOS = {
         ),
         LayerInfo(
             display_name="Genre du lieu denommé incorrect",
-            layer_name="129_VERIF_loc_LieuDenGenreErr",
+            layer_name="129_verif_loc_LieuDenGenreErr",
             control_layer=True,
         ),
         LayerInfo(
             display_name="Genre de la rue ou place incorrect",
-            layer_name="129_VERIF_loc_RueGenreErr",
+            layer_name="129_verif_loc_RueGenreErr",
             control_layer=True,
         ),
         LayerInfo(
