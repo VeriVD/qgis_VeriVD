@@ -32,6 +32,7 @@ BASE_LAYER_INFOS = {
     "Base-Couverture_du_sol": [
         LayerInfo(display_name="CS Nom et numéro", layer_name="002_ITF_CS_Pos_Surface_CS"),
         LayerInfo(display_name="Point particulier CS", layer_name="002_ITF_CS_Point_particulier"),
+        LayerInfo(display_name="Symbole CS", layer_name="002_ITF_CS_Surface_CS_Symb"),	
         LayerInfo(display_name="Surface CS", layer_name="002_ITF_CS_Surface_CS"),
         LayerInfo(
             display_name="Bâtiment",
