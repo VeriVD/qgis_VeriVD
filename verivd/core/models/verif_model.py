@@ -295,12 +295,12 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),        
         LayerInfo(
-            display_name="Sifflet entre les biens-fonds et les soutterains-couverts",
+            display_name="Sifflet entre les biens-fonds et les souterrains, couverts",
             layer_name="103_VERIF_BF_OD_Surface",
             control_layer=True,
         ),
         LayerInfo(
-            display_name="Sifflet entre les DDP et les soutterains-couverts",
+            display_name="Sifflet entre les DDP et les souterrains, couverts",
             layer_name="103_VERIF_DDP_OD_Surface",
             control_layer=True,
         ),
