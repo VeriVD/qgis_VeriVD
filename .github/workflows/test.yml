@@ -9,7 +9,7 @@ on:
       - master
 
 env:
-  QGIS_TEST_VERSION: latest
+  QGIS_TEST_VERSION: 3.44
 
 
 jobs:
@@ -20,5 +20,5 @@ jobs:
 
       - name: docker test
         run: |
-          docker run -v $(pwd):/usr/src opengisch/qgis:${QGIS_TEST_VERSION} /usr/src/.docker/run-docker-tests.sh
+          docker run -v $(pwd):/usr/src qgis/qgis:${QGIS_TEST_VERSION} /usr/src/.docker/run-docker-tests.sh
     
