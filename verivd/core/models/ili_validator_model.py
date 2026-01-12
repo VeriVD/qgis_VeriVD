@@ -78,7 +78,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_iliValidator_Point",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)},
+                symbology_data_defined_properties={QgsSymbolLayer.Property.PropertySize: QgsProperty.fromValue(5)},
                 sql_request=sql_request,
             ),
             LayerInfo(
@@ -86,7 +86,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_iliValidator_Ligne",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+                symbology_data_defined_properties={QgsSymbolLayer.Property.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 sql_request=sql_request,
                 opacity=0.5,
             ),
@@ -95,7 +95,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_iliValidator_Point_Arc",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+                symbology_data_defined_properties={QgsSymbolLayer.Property.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 sql_request=sql_request,
                 opacity=0.5,
             ),
@@ -104,7 +104,7 @@ class IliValidatorLayerModel(LayerListModel):
                 layer_name="000_iliValidator_Surface",
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="observation",
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+                symbology_data_defined_properties={QgsSymbolLayer.Property.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 sql_request=sql_request,
                 opacity=0.5,
             ),
@@ -122,6 +122,6 @@ class IliValidatorLayerModel(LayerListModel):
         return layer_infos
 
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
-        if layer.geometryType() == QgsWkbTypes.PointGeometry:
+        if layer.geometryType() == QgsWkbTypes.GeometryType.PointGeometry:
             for symbol in layer.renderer().symbols(self.layer_context(layer)):
                 symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])

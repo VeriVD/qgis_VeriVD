@@ -4,7 +4,7 @@ DEBUG = True
 DEBUG_KEEP_LAYER = False
 
 
-def info(msg, level=Qgis.Info):
+def info(msg, level=Qgis.MessageLevel.Info):
     QgsMessageLog.logMessage(str(msg), "VeriVD", level)
 
 

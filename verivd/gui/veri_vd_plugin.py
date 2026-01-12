@@ -82,7 +82,7 @@ class VeriVD:
         self.iface.addToolBarIcon(self.actions["main"])
 
         self.dock_widget = VeriVDDockWidget(self.layer_models)
-        self.iface.addDockWidget(Qt.TopDockWidgetArea, self.dock_widget)
+        self.iface.addDockWidget(Qt.DockWidgetArea.TopDockWidgetArea, self.dock_widget)
 
         self.dock_widget.file_changed.connect(self.open_gpkg_file)
 
@@ -112,7 +112,7 @@ class VeriVD:
                     "Veri-VD",
                     f"Voulez-vous conserver les couches chargées par {self.gpkg_data.path}?",
                 )
-                == QMessageBox.No
+                == QMessageBox.StandardButton.No
             ):
                 self.layer_models.unload_all_layers()
             self.layer_models.reset_models()

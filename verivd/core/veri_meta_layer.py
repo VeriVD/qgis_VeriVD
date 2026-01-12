@@ -27,7 +27,7 @@ class VeriMetaLayer:
     def __init__(self, name: str, display_name: str = None):
         self._name = name
         self._display_name = display_name or name
-        self._loaded = Qt.Unchecked
+        self._loaded = Qt.CheckState.Unchecked
         self._layer_group_id = None
         self._qgis_layers: [QgsVectorLayer] = []
 

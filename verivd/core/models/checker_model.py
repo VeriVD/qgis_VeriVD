@@ -77,7 +77,7 @@ class CheckerLayerModel(LayerListModel):
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="description",
-                symbology_data_defined_properties={QgsSymbolLayer.PropertySize: QgsProperty.fromValue(5)},
+                symbology_data_defined_properties={QgsSymbolLayer.Property.PropertySize: QgsProperty.fromValue(5)},
             ),
             LayerInfo(
                 display_name=f"Checker - {layer} surface",
@@ -85,7 +85,7 @@ class CheckerLayerModel(LayerListModel):
                 sql_request=sql_request,
                 symbology_type=SymbologyType.RANDOM_CATEGORIZED,
                 category_field="description",
-                symbology_data_defined_properties={QgsSymbolLayer.PropertyStrokeWidth: QgsProperty.fromValue(2)},
+                symbology_data_defined_properties={QgsSymbolLayer.Property.PropertyStrokeWidth: QgsProperty.fromValue(2)},
                 opacity=0.5,
             ),
             LayerInfo(
@@ -102,6 +102,6 @@ class CheckerLayerModel(LayerListModel):
         return layer_infos
 
     def post_process_layer(self, layer: QgsVectorLayer, position: int):
-        if layer.geometryType() == QgsWkbTypes.PointGeometry:
+        if layer.geometryType() == QgsWkbTypes.GeometryType.PointGeometry:
             for symbol in layer.renderer().symbols(self.layer_context(layer)):
                 symbol.symbolLayer(0).setShape(MARKER_SHAPE[position % (len(MARKER_SHAPE) - 1)])

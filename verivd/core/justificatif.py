@@ -103,10 +103,10 @@ class Justificatif(QObject):
         }
 
         justificatif_layers = {
-            QgsWkbTypes.NoGeometry: justificatif_layer_no_geometry,
-            QgsWkbTypes.PointGeometry: justificatif_layer_point,
-            QgsWkbTypes.LineGeometry: justificatif_layer_line,
-            QgsWkbTypes.PolygonGeometry: justificatif_layer_polygon,
+            QgsWkbTypes.Type.NoGeometry: justificatif_layer_no_geometry,
+            QgsWkbTypes.GeometryType.PointGeometry: justificatif_layer_point,
+            QgsWkbTypes.GeometryType.LineGeometry: justificatif_layer_line,
+            QgsWkbTypes.GeometryType.PolygonGeometry: justificatif_layer_polygon,
         }
 
         # if self.layer_tree_group is None:
@@ -178,8 +178,8 @@ class Justificatif(QObject):
 
                 justif_feature = QgsFeature(justif_layer["qgis_layer"].fields())
                 if (
-                    justif_layer["qgis_layer"].wkbType() == QgsWkbTypes.CompoundCurve
-                    and topic_feature.geometry().wkbType() == QgsWkbTypes.CircularString
+                    justif_layer["qgis_layer"].wkbType() == QgsWkbTypes.Type.CompoundCurve
+                    and topic_feature.geometry().wkbType() == QgsWkbTypes.Type.CircularString
                 ):
                     g = QgsCompoundCurve()
                     g.addCurve(topic_feature.geometry().constGet().clone())
