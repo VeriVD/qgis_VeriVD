@@ -126,6 +126,7 @@ BASE_LAYER_INFOS = {
             layer_name="008_itf_lt_point_limite_ter",
         ),
         LayerInfo(display_name="OD linéaire", layer_name="003_ITF_OD_Element_lineaire"),
+		LayerInfo(display_name="Symbole CS", layer_name="002_ITF_CS_Surface_CS_Symb"),	
         LayerInfo(
             display_name="OD surfacique",
             layer_name="003_ITF_OD_Element_surfacique",
