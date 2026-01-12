@@ -2,6 +2,10 @@
 [general]
 name=VeriVD
 qgisMinimumVersion=3.4
+qgisMaximumVersion=4.99
+supportsQt6=yes
+
+
 description=Vérification des mensurations vaudoises
 version=DEV
 author=FSN/DCG
