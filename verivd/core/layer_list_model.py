@@ -117,30 +117,30 @@ class LayerListModel(QAbstractListModel):
 
     def flags(self, index: QModelIndex) -> Qt.ItemFlags:
         # Qt QAbstractListModel virtual method
-        return Qt.ItemIsEnabled | Qt.ItemIsUserCheckable
+        return Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsUserCheckable
 
     def data(self, index: QModelIndex, role: int):
         # Qt QAbstractListModel virtual method
         if index.row() < 0 or index.row() >= len(self._veri_meta_layers):
             return None
 
-        if role == Qt.DisplayRole:
+        if role == Qt.ItemDataRole.DisplayRole:
             return self._veri_meta_layers[index.row()].display_name
 
-        if role == Qt.CheckStateRole:
+        if role == Qt.ItemDataRole.CheckStateRole:
             return self._veri_meta_layers[index.row()].loaded
 
         return None
 
     def setData(self, index: QModelIndex, value, role: int) -> bool:
         # Qt QAbstractListModel virtual method
-        if role == Qt.CheckStateRole:
-            if value == Qt.Checked and self.data(index, role) != Qt.PartiallyChecked:
+        if role == Qt.ItemDataRole.CheckStateRole:
+            if value == Qt.CheckState.Checked and self.data(index, role) != Qt.CheckState.PartiallyChecked:
                 self.__load_verivd_layer(index)
             else:
                 self.__unload_layer(index)
                 self.iface.mapCanvas().refresh()
-            self.dataChanged.emit(index, index, [Qt.CheckStateRole])
+            self.dataChanged.emit(index, index, [Qt.ItemDataRole.CheckStateRole])
             return True
         return False
 
@@ -188,7 +188,7 @@ class LayerListModel(QAbstractListModel):
             loaded_layers.append(layer_info)
             veri_meta_layer.qgis_layers.append(added_qgis_layer)
             i += 1
-        veri_meta_layer.loaded = Qt.Checked
+        veri_meta_layer.loaded = Qt.CheckState.Checked
         if i > 0:
             self.layers_loaded.emit(group_name, loaded_layers)
 
@@ -207,7 +207,7 @@ class LayerListModel(QAbstractListModel):
         QgsProject.instance().layerTreeRoot().removeChildNode(group)
         veri_meta_layer.layer_group_id = None
         veri_meta_layer.qgis_layers = []
-        veri_meta_layer.loaded = Qt.Unchecked
+        veri_meta_layer.loaded = Qt.CheckState.Unchecked
 
     @staticmethod
     def find_layer_group(node: QgsLayerTreeGroup, group_id: str) -> QgsLayerTreeGroup:
@@ -236,7 +236,7 @@ class LayerListModel(QAbstractListModel):
                 for layer in layers_to_remove:
                     veri_layer.qgis_layers.remove(layer)
                 if len(veri_layer.qgis_layers) > 0:
-                    veri_layer.loaded = Qt.PartiallyChecked
+                    veri_layer.loaded = Qt.CheckState.PartiallyChecked
                 else:
-                    veri_layer.loaded = Qt.Unchecked
+                    veri_layer.loaded = Qt.CheckState.Unchecked
         self.endResetModel()

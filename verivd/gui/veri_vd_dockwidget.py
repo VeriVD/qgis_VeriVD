@@ -50,7 +50,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
         self.layer_models = layer_models
 
         self.file_widget.setDialogTitle("Ouvrir un fichier Geopackage")
-        self.file_widget.setRelativeStorage(QgsFileWidget.Absolute)
+        self.file_widget.setRelativeStorage(QgsFileWidget.RelativeStorage.Absolute)
         self.file_widget.setFilter("fichiers Geopackage (*.gpkg *.GPKG)")
 
         self.base_help_label.setText(MESSAGE_BASE)
@@ -100,7 +100,7 @@ class VeriVDDockWidget(QDockWidget, FORM_CLASS):
     def process_justificatif_clicked(self):
         j = Justificatif(self)
         p = QProgressDialog("Traitement des justificatifs …", "Annuler", 0, 100, self)
-        p.setWindowModality(Qt.WindowModal)
+        p.setWindowModality(Qt.WindowModality.WindowModal)
         p.show()
 
         def update_progress(progress, text):

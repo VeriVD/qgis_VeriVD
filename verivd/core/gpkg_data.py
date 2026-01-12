@@ -32,15 +32,15 @@ from verivd.core.plugin_info import DEBUG, DEBUG_KEEP_LAYER, dbg_info
 from verivd.core.symbology_type import SymbologyType
 
 MARKER_SHAPE = (
-    QgsSimpleMarkerSymbolLayerBase.Square,
-    QgsSimpleMarkerSymbolLayerBase.Diamond,
-    QgsSimpleMarkerSymbolLayerBase.Pentagon,
-    QgsSimpleMarkerSymbolLayerBase.Triangle,
-    QgsSimpleMarkerSymbolLayerBase.EquilateralTriangle,
-    QgsSimpleMarkerSymbolLayerBase.Star,
-    QgsSimpleMarkerSymbolLayerBase.Arrow,
-    QgsSimpleMarkerSymbolLayerBase.Circle,
-    QgsSimpleMarkerSymbolLayerBase.ArrowHeadFilled,
+    QgsSimpleMarkerSymbolLayerBase.Shape.Square,
+    QgsSimpleMarkerSymbolLayerBase.Shape.Diamond,
+    QgsSimpleMarkerSymbolLayerBase.Shape.Pentagon,
+    QgsSimpleMarkerSymbolLayerBase.Shape.Triangle,
+    QgsSimpleMarkerSymbolLayerBase.Shape.EquilateralTriangle,
+    QgsSimpleMarkerSymbolLayerBase.Shape.Star,
+    QgsSimpleMarkerSymbolLayerBase.Shape.Arrow,
+    QgsSimpleMarkerSymbolLayerBase.Shape.Circle,
+    QgsSimpleMarkerSymbolLayerBase.Shape.ArrowHeadFilled,
 )
 
 
@@ -62,11 +62,11 @@ class GpkgData:
 
     def create_simple_symbol(self, layer: QgsVectorLayer, properties: dict):
         simple_symbol = None
-        if layer.geometryType() == QgsWkbTypes.PointGeometry:
+        if layer.geometryType() == QgsWkbTypes.GeometryType.PointGeometry:
             simple_symbol = QgsMarkerSymbol.createSimple(properties)
-        elif layer.geometryType() == QgsWkbTypes.LineGeometry:
+        elif layer.geometryType() == QgsWkbTypes.GeometryType.LineGeometry:
             simple_symbol = QgsLineSymbol.createSimple(properties)
-        elif layer.geometryType() == QgsWkbTypes.PolygonGeometry:
+        elif layer.geometryType() == QgsWkbTypes.GeometryType.PolygonGeometry:
             simple_symbol = QgsFillSymbol.createSimple(properties)
 
         if layer.renderer():
