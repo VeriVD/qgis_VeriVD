@@ -187,7 +187,7 @@ VERIF_LAYER_INFOS = {
             control_layer=True,
         ),
         LayerInfo(
-            display_name="7.1.10	Doublon attribut Numero_localisation ",
+            display_name="Doublon attribut Numero_localisation",
             layer_name="104_verif_numLocalisation_doublon",
             visibility=False,
             control_layer=True,
